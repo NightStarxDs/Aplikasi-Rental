@@ -10,7 +10,7 @@ export default defineConfig({
     ],
     server:{
         watch:{
-            ignoreed: ['**/storage/framework/views/**']
+            ignored: ['**/storage/framework/views/**']
         }
     }
 });
