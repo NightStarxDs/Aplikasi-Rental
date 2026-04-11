@@ -1,0 +1,9 @@
+*Untuk Ruben*
+
+1. Setup Env
+2. Install Composer
+3. Migrate Database
+4. Migrate Key
+5. Setup Node JS
+6. Setup NPM
+7. Install Flowbite 

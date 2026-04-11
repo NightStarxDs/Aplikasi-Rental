@@ -1,0 +1,26 @@
+Yang Perlu Dibuat
+
+Agung:
+1. Halaman Dashboard Admin
+2. Halaman Dashboard Admin (Manajemen Inventaris)
+3. Halaman Dashboard Admin (Transaksi Penyewaan)
+10. Form Edit Barang (Admin)
+11. Halaman Profil (Admin dan Pelanggan)
+12. Halaman Checkout (Pelanggan)
+
+
+Fauzan:
+4. Halaman Dashboard Admin (Kelola Pengguna)
+5. Halaman Dashboard Admin (Kelola Penyewaan)
+6. Dashbaord Admin (Riwayat Pelanggan)
+13. Halaman Penjualan (Pelanggan)
+14. Halaman Keranjang (Pelanggan)
+
+
+Ruben:
+7. Halaman Pengambilan & Pengembalian
+8. Halaman Detail Barang (Admin)
+9. Form Tambah Barang(Admin)
+15. Halaman Detail Barang (Pelanggan)
+16. Halaman Riwayat Transaksi (Pelanggan)
+
