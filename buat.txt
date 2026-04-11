@@ -1,7 +1,6 @@
 Yang Perlu Dibuat
 
 Agung:
-1. Halaman Dashboard Admin
 2. Halaman Dashboard Admin (Manajemen Inventaris)
 3. Halaman Dashboard Admin (Transaksi Penyewaan)
 10. Form Edit Barang (Admin)
@@ -23,4 +22,3 @@ Ruben:
 9. Form Tambah Barang(Admin)
 15. Halaman Detail Barang (Pelanggan)
 16. Halaman Riwayat Transaksi (Pelanggan)
-
