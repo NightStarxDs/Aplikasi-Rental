@@ -44,7 +44,7 @@ Route::get('/Admin_kelola_Penyewaan', function () {
 
 Route::get('/Admin_Kelola_User', function () {
     return view('Admin.Admin_Kelola_User');
-});
+})->name('Kelola_User');
 
 Route::get('/Admin_Riwayat_Pelanggan', function () {
     return view('Admin.Admin_Riwayat_Pelanggan');
