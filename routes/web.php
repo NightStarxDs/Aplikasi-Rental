@@ -36,14 +36,14 @@ Route::get('/Admin_Edit_User', function () {
 
 Route::get('/Admin_Inventaris_Barang', function () {
     return view('Admin.Admin_Inventaris_Barang');
-});
+})->name('Inventaris');
 
 Route::get('/Admin_kelola_Penyewaan', function () {
     return view('Admin.Admin_kelola_Penyewaan');
 });
 
-Route::get('/Admin_Edit_User', function () {
-    return view('Admin.Admin_Edit_User');
+Route::get('/Admin_Kelola_User', function () {
+    return view('Admin.Admin_Kelola_User');
 });
 
 Route::get('/Admin_Riwayat_Pelanggan', function () {
@@ -56,7 +56,7 @@ Route::get('/Admin_Tambah_User', function () {
 
 Route::get('/Admin_Transaksi_Penyewaan', function () {
     return view('Admin.Admin_Transaksi_Penyewaan');
-});
+})->name('Transaksi');
 
 Route::get('/Admin_Edit_Barang', function () {
     return view('Admin.Admin_Edit_Barang');
