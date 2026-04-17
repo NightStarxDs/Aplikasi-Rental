@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-[#014737] border-b border-gray-100 h-screen w-64">
+<nav x-data="{ open: false }" class="fixed top-0 z-50 bg-[#014737] border-b border-gray-100 h-screen w-64">
     <div class="flex flex-col p-4">
         <div class="flex items-center space-x-3">
             <div class="shrink-0">
