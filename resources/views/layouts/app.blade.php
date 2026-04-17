@@ -29,17 +29,22 @@
             <div class="flex items-center">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
+                            <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                                <button type="button" class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                                    <span class="sr-only">Open user menu</span>
+                                    <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                                </button>
                                 </div>
-                            </button>
                         </x-slot>
 
+                        
+                        
                         <x-slot name="content">
+                            <div class="px-4 py-3 text-sm border-b border-default">
+                                <span class="block text-heading font-medium">{{ Auth::user()->name }}</span>
+                                <span class="block text-body truncate">{{ Auth::user()->email }}</span>
+                            </div>
+
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>

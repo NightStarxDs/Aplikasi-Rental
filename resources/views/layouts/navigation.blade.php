@@ -7,7 +7,9 @@
                 </a>
             </div>
             <div class="font-bold text-lg text-white">
-                OutRent
+                <h2 class="font-black text-xl text-white-800 leading-tight">
+            {{ __('OutRent') }}
+        </h2>
             </div>
         </div> <br><hr><hr><hr><hr>
 
