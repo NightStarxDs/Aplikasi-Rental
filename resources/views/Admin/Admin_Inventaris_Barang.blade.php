@@ -1,22 +1,18 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="font-semibold text-3xl text-gray-800 leading-tight">
-            {{ __('Manajemen Inventaris Barang') }}
-        </h1>
-    </x-slot>
-
     <body class="bg-gray-100">
 
     <div class="p-6">
-        <h1 class="text-2xl font-bold mb-4">Daftar Inventaris</h1>
+        <h1 class="text-2xl font-semibold mb-4">Manajemen Inventaris Barang</h1>
 
+    <div class="space-y-6">
         <!-- Button -->
-        <button class="mb-4 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
+        <a href="{{ route('Tambah_Barang') }}" 
+        class="btn bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
             Tambah Data Barang
-        </button>
+        </a>
 
         <!-- Search & Filter -->
-        <div class="flex gap-2 mb-4">
+        <div class="flex gap-2">
             <div class="relative w-full">
                 <input type="text" class="w-full p-2 pl-10 border rounded-lg" placeholder="Cari Barang">
                 <span class="absolute left-3 top-2.5 text-gray-500">
@@ -30,10 +26,11 @@
                 <option>Camping</option>
             </select>
         </div>
+    </div>
 
         <!-- Table -->
         <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500 border">
+            <table class="w-full text-sm text-center text-gray-500 border">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                     <tr>
                         <th class="px-2 py-2 border">No</th>
@@ -62,10 +59,16 @@
                         <td class="px-2 py-2 border">
                             <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Tersedia</span>
                         </td>
-     </body>            <td class="px-2 py-2 border">
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">Edit</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">Hapus</button>
-                        </td>
+                    </body>           
+                    <td class="px-4 py-2">
+                        <div class="flex items-center gap-4 justify-center">
+                            <!-- {{-- Tombol Edit --}} -->
+                            <a href="{{ route('Detail_Barang', $i) }}"
+                                class="inline-flex items-center gap-1.5 px-6 py-1.5 text-xs font-medium bg-yellow-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+                                Detail Barang
+                            </a>
+                        </div>
+                    </td>
                     </tr>
                     @endfor
                 </tbody>

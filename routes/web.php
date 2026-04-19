@@ -60,7 +60,7 @@ Route::get('/Admin_Transaksi_Penyewaan', function () {
 
 Route::get('/Admin_Edit_Barang', function () {
     return view('Admin.Admin_Edit_Barang');
-});
+})->name('Edit_Barang');
 
 // Pelanggan
 Route::get('/Halaman_Checkout', function () {
@@ -82,3 +82,11 @@ Route::get('/Profil_Pelanggan', function () {
 Route::get('/LandingPage', function () {
     return view('LandingPage');
 });
+
+Route::get('/Tambah_Barang', function () {
+    return view('Admin.Admin_Tambah_Barang');
+})->name('Tambah_Barang');
+
+Route::get('/Detail_Barang', function () {
+    return view('Admin.Admin_Detail_Barang');
+})->name('Detail_Barang');
