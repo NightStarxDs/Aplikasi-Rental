@@ -12,67 +12,27 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-gray-100">
-        <div class="flex min-h-screen bg-gray-100">
-        <aside class="w-64 bg-white border-r border-gray-200">
-            @include('layouts.navigation')
-        </aside>
+    <body class="font-sans antialiased bg-emerald-50/40 text-gray-800">
+        <div class="min-h-screen flex">
+            <aside class="w-72 shrink-0 border-r border-emerald-100 bg-white">
+                @include('layouts.navigation')
+            </aside>
 
-        <div class="flex-1 flex flex-col">
-            
-            <nav class="bg-white border-b border-gray-100 h-16 flex items-center justify-between px-8 shadow-sm">
-            <div>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </div>    
-            <div class="flex items-center">
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                                <button type="button" class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-                                    <span class="sr-only">Open user menu</span>
-                                    <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="user photo">
-                                </button>
-                                </div>
-                        </x-slot>
+            <div class="flex-1 min-w-0 flex flex-col">
+                <div class="h-1.5 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500"></div>
 
-                        
-                        
-                        <x-slot name="content">
-                            <div class="px-4 py-3 text-sm border-b border-default">
-                                <span class="block text-heading font-medium">{{ Auth::user()->name }}</span>
-                                <span class="block text-body truncate">{{ Auth::user()->email }}</span>
-                            </div>
+                @isset($header)
+                    <header class="border-b border-emerald-100 bg-white/80 backdrop-blur">
+                        <div class="px-6 py-4 md:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
 
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link :href="route('logout')"
-                                        onclick="event.preventDefault(); this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
-                </div>
-            </nav>
-
-            @isset($header)
-                <header class="">
-                    <div class="py-4 px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <main class="">
-                {{ $slot }}
-            </main>
+                <main class="flex-1 p-5 md:p-8">
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

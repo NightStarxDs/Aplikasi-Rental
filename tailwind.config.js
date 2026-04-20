@@ -12,20 +12,27 @@ export default {
     theme: {
         extend: {
             keyframes: {
-                marquee: {
-                '0%': { transform: 'translateX(0%)' },
+            marquee: {
+                '0%':   { transform: 'translateX(0%)' },
                 '100%': { transform: 'translateX(-50%)' },
-                }
             },
+        },
 
             animation: {
-        marquee: 'marquee 15s linear infinite',
-            },
+            marquee: 'marquee 25s linear infinite',
+        },
 
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors:{
+                'surface': '#022c22',
+                'primary': '#064e3b',
+                'secondary': '#065f46', 
+                'accent': '#10b981',     
+                'text-main': '#f0fdf4',  
+                'text-sub': '#a7f3d0',   
+                'border-color': '#065f46', 
                 neutral:{
                     secondary:{
                         soft: 'rgb(213, 213, 213)',
