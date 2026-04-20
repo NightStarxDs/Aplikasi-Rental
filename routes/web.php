@@ -95,3 +95,15 @@ Route::get('/Tambah_Barang', function () {
 Route::get('/Detail_Barang', function () {
     return view('Admin.Admin_Detail_Barang');
 })->name('Detail_Barang');
+
+Route::get('/Pengambilan_dan_Pengembalian', function () {
+    return view('Admin.Admin_pengambilan_dan_Pengembalian');
+})->name('Pengambilan_dan_Pengembalian');
+
+Route::get('/Edit_User', function () {
+    return view('Admin.Admin_Edit_User');
+})->name('Edit_User');
+
+Route::get('/Riwayat_Pelanggan', function () {
+    return view('Admin.Admin_Riwayat_Pelanggan');
+})->name('Riwayat_Pelanggan');

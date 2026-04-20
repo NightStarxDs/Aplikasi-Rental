@@ -5,10 +5,6 @@
                 <h1 class="text-2xl font-semibold text-gray-800">Detail Barang</h1>
                 <p class="text-sm text-gray-500 mt-1">Informasi lengkap data barang</p>
             </div>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                Inventaris Aktif
-            </span>
         </div>
     </x-slot>
 
@@ -17,36 +13,43 @@
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 flex gap-5">
 
-            {{-- Foto --}}
-            <div class="flex-shrink-0 w-44 h-36 rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center">
-                <div class="flex flex-col items-center gap-2 text-gray-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                    </svg>
+        {{-- Foto dengan Thumbnail --}}
+        <div class="flex-shrink-0 flex flex-col gap-2">
+
+            {{-- Foto Utama --}}
+            <div class="w-44 h-36 rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer" id="mainPhoto">
+                <div class="flex flex-col items-center gap-2 text-gray-400" id="mainPlaceholder">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" ...></svg>
                     <p class="text-xs">Foto Barang</p>
                 </div>
+                <img id="mainImg" src="" class="w-full h-full object-cover hidden rounded-xl" />
             </div>
+
+            {{-- 4 Thumbnail --}}
+            <div class="grid grid-cols-4 gap-1.5">
+                @foreach([0,1,2,3] as $i)
+                <div class="thumb aspect-square bg-white border border-gray-200 rounded-lg overflow-hidden flex items-center justify-center cursor-pointer relative"
+                    data-index="{{ $i }}" onclick="selectThumb({{ $i }})">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="{{ $fotos[$i] ?? '' }}"
+                        onerror="this.style.display='none'"
+                        alt="Foto {{ $i + 1 }}" />
+                </div>
+                @endforeach
+            </div>
+
+        </div>
 
             {{-- Info --}}
             <div class="flex flex-col justify-center gap-3">
                 <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
                     Kamera
                 </span>
-                <p class="text-lg font-semibold text-gray-800">Canon EOS R50</p>
-                <p class="text-base font-semibold text-emerald-700">
+                <p class="text-xl font-semibold text-gray-800">Canon EOS R50</p>
+                <p class="text-xl font-semibold text-emerald-700">
                     Rp 25.000
-                    <span class="text-xs font-normal text-gray-400">/ Jam</span>
+                    <span class="text-base font-normal text-gray-400">/ Jam</span>
                 </p>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs text-gray-500">Stok tersedia:</span>
-                    <span class="text-sm font-medium text-gray-800">5 unit</span>
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-50 text-emerald-800">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                        Tersedia
-                    </span>
-                </div>
             </div>
 
         </div>
@@ -54,16 +57,22 @@
         {{-- Stat Cards --}}
         <div class="grid grid-cols-3 gap-3">
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
-                <p class="text-xs text-gray-500 mb-1">Total Dipinjam</p>
-                <p class="text-base font-semibold text-gray-800">128 kali</p>
+                <p class="text-xs text-gray-500 mb-1">Total Sedang Dipinjam</p>
+                <div class="flex items-baseline gap-1">
+                    <p class="text-base font-semibold text-gray-800">20 </p>
+                    <p class="text-base font-semibold text-gray-800 text-gray-500">Unit</p>
+                </div>
             </div>
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
-                <p class="text-xs text-gray-500 mb-1">Ditambahkan</p>
-                <p class="text-base font-semibold text-gray-800">01 Jan 2025</p>
+                <p class="text-xs text-gray-500 mb-1">Stok Tersedia</p>
+                <p class="text-base font-semibold text-gray-800">5 Unit</p>
             </div>
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
-                <p class="text-xs text-gray-500 mb-1">Terakhir Diupdate</p>
-                <p class="text-base font-semibold text-gray-800">10 Apr 2026</p>
+                <p class="text-xs text-gray-500 mb-1">Status Barang</p>
+                <span class="inline-flex items-center gap-1 px-2 py-1.5 text-xs font-medium rounded-full bg-emerald-50 text-emerald-800">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+                        Tersedia
+                </span>
             </div>
         </div>
 

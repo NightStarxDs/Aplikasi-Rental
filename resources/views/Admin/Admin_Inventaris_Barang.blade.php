@@ -1,79 +1,206 @@
 <x-app-layout>
-    <body class="bg-gray-100">
-
-    <div class="p-6">
-        <h1 class="text-2xl font-semibold mb-4">Manajemen Inventaris Barang</h1>
-
-    <div class="space-y-6">
-        <!-- Button -->
-        <a href="{{ route('Tambah_Barang') }}" 
-        class="btn bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
-            Tambah Data Barang
-        </a>
-
-        <!-- Search & Filter -->
-        <div class="flex gap-2">
-            <div class="relative w-full">
-                <input type="text" class="w-full p-2 pl-10 border rounded-lg" placeholder="Cari Barang">
-                <span class="absolute left-3 top-2.5 text-gray-500">
-                    🔍
-                </span>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-xl font-semibold text-gray-800">Manajemen Inventaris Barang</h1>
+                <p class="text-sm text-gray-500 mt-1">Kelola seluruh data barang dan stok tersedia</p>
             </div>
 
-            <select class="p-2 border rounded-lg">
-                <option>Kategori</option>
-                <option>Kamera</option>
-                <option>Camping</option>
-            </select>
+            <a href="{{ route('Tambah_Barang')}}"
+                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-800 hover:bg-emerald-900 rounded-lg transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                Tambah Barang
+            </a>
         </div>
-    </div>
+    </x-slot>
 
-        <!-- Table -->
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm text-center text-gray-500 border">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-200">
-                    <tr>
-                        <th class="px-2 py-2 border">No</th>
-                        <th class="px-2 py-2 border">Gambar</th>
-                        <th class="px-2 py-2 border">Nama Barang</th>
-                        <th class="px-2 py-2 border">Deskripsi</th>
-                        <th class="px-2 py-2 border">Kategori</th>
-                        <th class="px-2 py-2 border">Harga</th>
-                        <th class="px-2 py-2 border">Stok</th>
-                        <th class="px-2 py-2 border">Status</th>
-                        <th class="px-2 py-2 border">Aksi</th>
+    <div class="py-6 px-6">
+
+        {{-- Search & Filter --}}
+        <div class="flex items-center mb-4">
+            <select class="px-3 py-2 text-sm text-white bg-emerald-800 hover:bg-emerald-900 rounded-l-lg outline-none cursor-pointer">
+                <option value="">Semua Kategori</option>
+                <option value="kamera">Kamera</option>
+                <option value="camping">Camping</option>
+            </select>
+            <input type="text" placeholder="Cari nama barang..."
+                class="flex-1 px-3 py-2 text-sm bg-white border border-gray-200 border-l-0 border-r-0 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-emerald-500">
+            <button class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-800 hover:bg-emerald-900 rounded-r-lg transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                Cari
+            </button>
+        </div>
+
+        {{-- Tabel --}}
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <table class="w-full text-sm text-left" style="table-layout:fixed">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                    <tr class=" text-center">
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-10">No</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-14">Foto</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-36">Nama Barang</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-36">Deskripsi</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-24">Kategori</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-24">Harga/Hari</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-14 text-center">Stok</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-24">Status</th>
+                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-28">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @for ($i = 1; $i <= 10; $i++)
-                    <tr class="bg-white border">
-                        <td class="px-2 py-2 border">{{ $i }}</td>
-                        <td class="px-2 py-2 border">
-                            <img src="https://via.placeholder.com/50" class="w-12 h-12 rounded" />
+                <tbody class="divide-y divide-gray-100 text-center">
+
+                    {{-- 1 --}}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-3 py-3 text-gray-400 text-xs">1</td>
+                        <td class="px-3 py-3">
+                            <div class="w-9 h-9 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
                         </td>
-                        <td class="px-2 py-2 border">Barang {{ $i }}</td>
-                        <td class="px-2 py-2 border">Deskripsi barang</td>
-                        <td class="px-2 py-2 border">Kamera</td>
-                        <td class="px-2 py-2 border">Rp 100.000</td>
-                        <td class="px-2 py-2 border">10</td>
-                        <td class="px-2 py-2 border">
-                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Tersedia</span>
+                        <td class="px-3 py-3 font-medium text-gray-800 truncate">Canon EOS R50</td>
+                        <td class="px-3 py-3 text-gray-500 truncate">Kamera mirrorless ringan</td>
+                        <td class="px-3 py-3"><span class="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">Kamera</span></td>
+                        <td class="px-3 py-3 text-gray-700 text-xs">Rp 25.000</td>
+                        <td class="px-3 py-3 text-center font-medium text-gray-800">5</td>
+                        <td class="px-3 py-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-50 text-emerald-800">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>Tersedia
+                            </span>
                         </td>
-                    </body>           
-                    <td class="px-4 py-2">
-                        <div class="flex items-center gap-4 justify-center">
-                            <!-- {{-- Tombol Edit --}} -->
-                            <a href="{{ route('Detail_Barang', $i) }}"
-                                class="inline-flex items-center gap-1.5 px-6 py-1.5 text-xs font-medium bg-yellow-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                Detail Barang
+                        <td class="px-3 py-3">
+                            <a href="{{ route('Detail_Barang')}}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Detail
                             </a>
-                        </div>
-                    </td>
+                        </td>
                     </tr>
-                    @endfor
+
+                    {{-- 2 --}}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-3 py-3 text-gray-400 text-xs">2</td>
+                        <td class="px-3 py-3">
+                            <div class="w-9 h-9 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                        </td>
+                        <td class="px-3 py-3 font-medium text-gray-800 truncate">Tenda Dome 4P</td>
+                        <td class="px-3 py-3 text-gray-500 truncate">Tenda camping 4 orang</td>
+                        <td class="px-3 py-3"><span class="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">Camping</span></td>
+                        <td class="px-3 py-3 text-gray-700 text-xs">Rp 50.000</td>
+                        <td class="px-3 py-3 text-center font-medium text-gray-800">0</td>
+                        <td class="px-3 py-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-red-50 text-red-800">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 inline-block"></span>Habis
+                            </span>
+                        </td>
+                        <td class="px-3 py-3">
+                            <a href="{{ route('Detail_Barang')}}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Detail
+                            </a>
+                        </td>
+                    </tr>
+
+                    {{-- 3 --}}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-3 py-3 text-gray-400 text-xs">3</td>
+                        <td class="px-3 py-3">
+                            <div class="w-9 h-9 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                        </td>
+                        <td class="px-3 py-3 font-medium text-gray-800 truncate">Sony A7 III</td>
+                        <td class="px-3 py-3 text-gray-500 truncate">Full-frame mirrorless</td>
+                        <td class="px-3 py-3"><span class="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">Kamera</span></td>
+                        <td class="px-3 py-3 text-gray-700 text-xs">Rp 40.000</td>
+                        <td class="px-3 py-3 text-center font-medium text-gray-800">0</td>
+                        <td class="px-3 py-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-red-50 text-red-800">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 inline-block"></span>Habis
+                            </span>
+                        </td>
+                        <td class="px-3 py-3">
+                            <a href="{{ route('Detail_Barang')}}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Detail
+                            </a>
+                        </td>
+                    </tr>
+
+                    {{-- 4 --}}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-3 py-3 text-gray-400 text-xs">4</td>
+                        <td class="px-3 py-3">
+                            <div class="w-9 h-9 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                        </td>
+                        <td class="px-3 py-3 font-medium text-gray-800 truncate">Sleeping Bag</td>
+                        <td class="px-3 py-3 text-gray-500 truncate">Kapasitas -5 derajat</td>
+                        <td class="px-3 py-3"><span class="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">Camping</span></td>
+                        <td class="px-3 py-3 text-gray-700 text-xs">Rp 15.000</td>
+                        <td class="px-3 py-3 text-center font-medium text-gray-800">8</td>
+                        <td class="px-3 py-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-50 text-emerald-800">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>Tersedia
+                            </span>
+                        </td>
+                        <td class="px-3 py-3">
+                            <a href="{{ route('Detail_Barang')}}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Detail
+                            </a>
+                        </td>
+                    </tr>
+
+                    {{-- 5 --}}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-3 py-3 text-gray-400 text-xs">5</td>
+                        <td class="px-3 py-3">
+                            <div class="w-9 h-9 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                        </td>
+                        <td class="px-3 py-3 font-medium text-gray-800 truncate">DJI Osmo Pocket</td>
+                        <td class="px-3 py-3 text-gray-500 truncate">Kamera action gimbal</td>
+                        <td class="px-3 py-3"><span class="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">Kamera</span></td>
+                        <td class="px-3 py-3 text-gray-700 text-xs">Rp 20.000</td>
+                        <td class="px-3 py-3 text-center font-medium text-gray-800">2</td>
+                        <td class="px-3 py-3">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-50 text-emerald-800">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>Tersedia
+                            </span>
+                        </td>
+                        <td class="px-3 py-3">
+                            <a href="{{ route('Detail_Barang')}}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Detail
+                            </a>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
+
+            <div class="flex items-center justify-between px-4 py-3 border-t border-gray-100 bg-gray-50">
+                <p class="text-xs text-gray-500">Menampilkan 10 dari 10 barang</p>
+                <p class="text-xs text-gray-500">Halaman 1 dari 1</p>
+            </div>
         </div>
 
+    </div>
 </x-app-layout>
-
