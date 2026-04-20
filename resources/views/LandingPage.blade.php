@@ -3,15 +3,15 @@
         
         <div class="relative w-[1470px] h-[570px]">
             <img src="{{ asset('images/Gambar-Gunung.jpg') }}" alt="Gunung" class="w-full h-full object-cover rounded-lg">
-            <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
+            <div class="absolute inset-0 bg-green-800 bg-opacity-30 rounded-lg"></div>
             
             <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
                 <h1 class="text-6xl font-bold">Selamat Datang di <span class="text-green-600">Out</span>Rent</h1>
                 <p class="text-2xl mt-4">Solusi sewa alat camping dan kamera termudah.</p>
                 
                 <div class="inline-flex items-center gap-10 mt-5">
-                    <x-primary-button>Belanja Sekarang</x-primary-button>
-                    <x-primary-button>Lihat Katalog</x-primary-button>
+                    <a href="" class="btn">Belanja Sekarang</a>
+                    <a href="" class="btn">Lihat Katalog</a>
                 </div>
             </div>
 

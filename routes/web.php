@@ -77,7 +77,7 @@ Route::get('/Halaman_Keranjang', function () {
 });
 
 Route::get('/Halaman_Penjualan', function () {
-    return view('User.Halaman_Penjualan');
+    return view('user.Halaman_Penjualan');
 });
 
 Route::get('/Profil_Pelanggan', function () {
