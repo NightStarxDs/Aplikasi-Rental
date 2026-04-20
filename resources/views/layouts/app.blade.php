@@ -19,7 +19,6 @@
             </aside>
 
             <div class="flex-1 min-w-0 flex flex-col">
-                <div class="h-1.5 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500"></div>
 
                 @isset($header)
                     <header class="border-b border-emerald-100 bg-white/80 backdrop-blur">
