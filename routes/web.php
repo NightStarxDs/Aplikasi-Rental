@@ -107,3 +107,7 @@ Route::get('/Edit_User', function () {
 Route::get('/Riwayat_Pelanggan', function () {
     return view('Admin.Admin_Riwayat_Pelanggan');
 })->name('Riwayat_Pelanggan');
+
+Route::get('/Penjualan', function () {
+    return view('User.Halaman_Penjualan');
+})->name('Penjualan');

@@ -4,14 +4,7 @@
             <div>
                 <h1 class="text-xl font-semibold text-gray-800">Riwayat Pelanggan</h1>
                 <p class="text-sm text-gray-500 mt-1">Detail identitas dan riwayat transaksi pelanggan</p>
-            </div>
-            <a href="{{ route('Kelola_User') }}"
-                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-100 transition">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <polyline points="15 18 9 12 15 6"/>
-                </svg>
-                Kembali
-            </a>
+            </div>     
         </div>
     </x-slot>
 
@@ -269,5 +262,12 @@
             </div>
         </div>
 
+        <a href="{{ route('Kelola_User') }}"
+                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-100 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Kembali
+            </a>
     </div>
 </x-app-layout>
