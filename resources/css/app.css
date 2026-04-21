@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .auth-panel {
+        @apply absolute top-0 flex h-full w-1/2 flex-col justify-center px-11 py-12;
+    }
+}
