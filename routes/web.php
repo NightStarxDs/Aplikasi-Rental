@@ -72,10 +72,6 @@ Route::get('/Halaman_Checkout', function () {
     return view('User.Halaman_Checkout');
 });
 
-Route::get('/Halaman_Keranjang', function () {
-    return view('User.Halaman_Keranjang');
-});
-
 Route::get('/Halaman_Penjualan', function () {
     return view('user.Halaman_Penjualan');
 });
@@ -111,3 +107,11 @@ Route::get('/Riwayat_Pelanggan', function () {
 Route::get('/Penjualan', function () {
     return view('User.Halaman_Penjualan');
 })->name('Penjualan');
+
+Route::get('/Detail_Barang_Pelanggan/{id}', function () {
+    return view('User.Detail_Barang_Pelanggan');
+})->name('Detail_Barang_Pelanggan');
+
+Route::get('/Keranjang', function () {
+    return view('user.Keranjang');
+})->name('Keranjang');
