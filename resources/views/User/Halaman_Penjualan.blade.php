@@ -12,26 +12,18 @@
 
         {{-- Hero Banner --}}
         <div class="grid grid-cols-3 gap-3 h-48">
-            <div class="col-span-2 bg-emerald-800 rounded-2xl flex flex-col items-center justify-center overflow-hidden relative">
-                <svg class="w-10 h-10 text-emerald-600 mb-2" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
-                </svg>
-                <p class="text-emerald-300 text-sm font-medium">Banner Utama</p>
+            <div class="col-span-2 rounded-2xl overflow-hidden relative">
+                <img src="{{ asset('images/banner-utama.jpg') }}" alt="Banner Utama"
+                     class="w-full h-full object-cover">
             </div>
             <div class="flex flex-col gap-3">
-                <div class="flex-1 bg-emerald-700 rounded-2xl flex flex-col items-center justify-center gap-1">
-                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                    <p class="text-emerald-300 text-xs font-medium">Foto</p>
+                <div class="flex-1 rounded-2xl overflow-hidden">
+                    <img src="{{ asset('images/banner-foto-1.jpg') }}" alt="Foto 1"
+                         class="w-full h-full object-cover">
                 </div>
-                <div class="flex-1 bg-emerald-700 rounded-2xl flex flex-col items-center justify-center gap-1">
-                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                    <p class="text-emerald-300 text-xs font-medium">Foto</p>
+                <div class="flex-1 rounded-2xl overflow-hidden">
+                    <img src="{{ asset('images/banner-foto-2.jpg') }}" alt="Foto 2"
+                         class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
@@ -79,24 +71,22 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
                 @foreach ([
-                    ['id' => 1, 'nama' => 'Canon EOS R50',   'harga' => 'Rp 25.000', 'kat' => 'Kamera'],
-                    ['id' => 2, 'nama' => 'Tenda Dome 4P',   'harga' => 'Rp 50.000', 'kat' => 'Camping'],
-                    ['id' => 3, 'nama' => 'Sony A7 III',     'harga' => 'Rp 40.000', 'kat' => 'Kamera'],
-                    ['id' => 4, 'nama' => 'Sleeping Bag',    'harga' => 'Rp 15.000', 'kat' => 'Camping'],
-                    ['id' => 5, 'nama' => 'DJI Osmo Pocket', 'harga' => 'Rp 20.000', 'kat' => 'Kamera'],
-                    ['id' => 6, 'nama' => 'Matras Gunung',   'harga' => 'Rp 8.000',  'kat' => 'Camping'],
-                    ['id' => 7, 'nama' => 'GoPro Hero 12',   'harga' => 'Rp 18.000', 'kat' => 'Kamera'],
-                    ['id' => 8, 'nama' => 'Carrier 60L',     'harga' => 'Rp 35.000', 'kat' => 'Camping'],
+                    ['id' => 1, 'nama' => 'Canon EOS R50',   'harga' => 'Rp 25.000', 'kat' => 'Kamera',  'foto' => 'canon-eos-r50.jpg'],
+                    ['id' => 2, 'nama' => 'Tenda Dome 4P',   'harga' => 'Rp 50.000', 'kat' => 'Camping', 'foto' => 'tenda-dome.jpg'],
+                    ['id' => 3, 'nama' => 'Sony A7 III',     'harga' => 'Rp 40.000', 'kat' => 'Kamera',  'foto' => 'sony-a7iii.jpg'],
+                    ['id' => 4, 'nama' => 'Sleeping Bag',    'harga' => 'Rp 15.000', 'kat' => 'Camping', 'foto' => 'sleeping-bag.jpg'],
+                    ['id' => 5, 'nama' => 'DJI Osmo Pocket', 'harga' => 'Rp 20.000', 'kat' => 'Kamera',  'foto' => 'dji-osmo.jpg'],
+                    ['id' => 6, 'nama' => 'Matras Gunung',   'harga' => 'Rp 8.000',  'kat' => 'Camping', 'foto' => 'matras.jpg'],
+                    ['id' => 7, 'nama' => 'GoPro Hero 12',   'harga' => 'Rp 18.000', 'kat' => 'Kamera',  'foto' => 'gopro-hero12.jpg'],
+                    ['id' => 8, 'nama' => 'Carrier 60L',     'harga' => 'Rp 35.000', 'kat' => 'Camping', 'foto' => 'carrier-60l.jpg'],
                 ] as $produk)
 
-                {{-- Card sebagai link ke detail --}}
                 <a href="{{ route('Detail_Barang_Pelanggan', $produk['id']) }}"
-                    class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-emerald-400 hover:shadow-sm transition group">
-                    {{-- Foto --}}
-                    <div class="h-36 bg-gray-100 flex items-center justify-center group-hover:bg-emerald-50 transition">
-                        <svg class="w-8 h-8 text-gray-300 group-hover:text-emerald-300 transition" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                        </svg>
+                   class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-emerald-400 hover:shadow-sm transition group">
+                    {{-- Foto Produk --}}
+                    <div 
+                        class="w-full h-[210px] overflow-hidden bg-cover bg-center group-hover:scale-105 transition duration-300"
+                        style="background-image: url('{{ asset('images/sonyA7.png') }}');">
                     </div>
                     {{-- Info --}}
                     <div class="p-3 space-y-1.5">

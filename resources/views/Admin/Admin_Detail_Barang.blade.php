@@ -19,7 +19,7 @@
             {{-- Foto Utama --}}
             <div class="w-44 h-36 rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer" id="mainPhoto">
                 <div class="flex flex-col items-center gap-2 text-gray-400" id="mainPlaceholder">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" ...></svg>
+                    <img src="{{ asset('images/produk/dji-osmo.jpg') }}" alt="Foto Utama" class="w-full h-full object-cover rounded-lg hidden" id="mainImg">
                     <p class="text-xs">Foto Barang</p>
                 </div>
                 <img id="mainImg" src="" class="w-full h-full object-cover hidden rounded-xl" />

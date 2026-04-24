@@ -8,7 +8,7 @@
         </div>
     </x-slot>
 
-    <div class="py-6 px-6 pt-24 space-y-4">
+    <div class="py-6 px-6 pt-15 space-y-4">
 
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
@@ -18,26 +18,17 @@
                 <div class="flex-shrink-0 flex flex-col gap-2">
 
                     {{-- Foto Utama --}}
-                    <div class="w-44 h-36 rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center">
-                        <div class="flex flex-col items-center gap-2 text-gray-400">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                            <p class="text-xs">Foto Barang</p>
+                    <div class="w-[295px] h-[250px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center">
+                        <div class="flex flex-col items-center gap-2 text-gray-400 w-full h-[210px] overflow-hidden bg-cover bg-center group-hover:scale-105 transition duration-300"
+                        style="background-image: url('{{ asset('images/sonyA7.png') }}');">
                         </div>
                     </div>
 
                     {{-- 4 Thumbnail --}}
                     <div class="grid grid-cols-4 gap-1.5">
                         @foreach([0,1,2,3] as $i)
-                        <div class="aspect-square bg-white border border-gray-200 rounded-lg flex items-center justify-center cursor-pointer hover:border-emerald-400 transition">
-                            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
+                        <div class="aspect-square bg-white border border-gray-200 rounded-lg flex items-center justify-center cursor-pointer hover:border-emerald-400 transition" 
+                        style="background-image: url('{{ asset('images/sonyA7.png') }}'); background-size: cover; background-position: center;">
                         </div>
                         @endforeach
                     </div>
@@ -52,12 +43,12 @@
                         <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
                             Kamera
                         </span>
-                        <p class="text-xl font-semibold text-gray-800">Canon EOS R50</p>
-                        <p class="text-xl font-semibold text-emerald-700">
+                        <p class="text-5xl font-bold text-gray-800">Canon EOS R50</p>
+                        <p class="text-3xl font-semibold text-emerald-700">
                             Rp 25.000
                             <span class="text-base font-normal text-gray-400">/ Hari</span>
                         </p>
-                    </div>
+                    
 
                     {{-- Kuantitas & Tombol --}}
                     <div class="flex flex-col gap-3">
@@ -77,7 +68,7 @@
                                 </button>
                             </div>
                         </div>
-
+                    </div>
                         {{-- Tombol Aksi --}}
                         <div class="flex items-center gap-2">
                             <x-primary-button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg transition">
