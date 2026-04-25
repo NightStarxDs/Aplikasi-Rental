@@ -101,9 +101,7 @@
                 </div>
                 <div class="col-span-4 flex items-center gap-3">
                     <div class="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                        </svg>
+                        <img src="{{ asset('images/canon.png') }}" alt="Canon EOS R50" class="w-full h-full object-cover rounded-lg">
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-800">Canon EOS R50</p>
@@ -141,9 +139,7 @@
                 </div>
                 <div class="col-span-4 flex items-center gap-3">
                     <div class="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                        </svg>
+                         <img src="{{ asset('images/tendadome.jpg') }}" alt="Tenda Dome 4P" class="w-full h-full object-cover rounded-lg">
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-800">Tenda Dome 4P</p>
@@ -181,9 +177,7 @@
                 </div>
                 <div class="col-span-4 flex items-center gap-3">
                     <div class="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                        </svg>
+                        <img src="{{ asset('images/sleapingbag.jpg') }}" alt="Sleeping Bag" class="w-full h-full object-cover rounded-lg">
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-800">Sleeping Bag</p>
@@ -228,12 +222,12 @@
                         <p class="text-xs text-gray-400" id="label-produk">Total (0 Produk)</p>
                         <p class="text-sm font-bold text-emerald-700" id="grand-total">Rp 0</p>
                     </div>
-                    <button class="inline-flex items-center gap-1.5 px-5 py-2 text-sm font-medium text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition">
+                    <a href="{{ route('Checkout') }}" class="inline-flex items-center gap-1.5 px-5 py-2 text-sm font-medium text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
                         Checkout
-                    </button>
+                    </a>
                 </div>
             </div>
 

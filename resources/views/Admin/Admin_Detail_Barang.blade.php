@@ -16,22 +16,23 @@
         {{-- Foto dengan Thumbnail --}}
         <div class="flex-shrink-0 flex flex-col gap-2">
 
-            {{-- Foto Utama --}}
-            <div class="w-44 h-36 rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer" id="mainPhoto">
-                <div class="flex flex-col items-center gap-2 text-gray-400" id="mainPlaceholder">
-                    <img src="{{ asset('images/produk/dji-osmo.jpg') }}" alt="Foto Utama" class="w-full h-full object-cover rounded-lg hidden" id="mainImg">
-                    <p class="text-xs">Foto Barang</p>
-                </div>
-                <img id="mainImg" src="" class="w-full h-full object-cover hidden rounded-xl" />
-            </div>
-
+          {{-- Foto Utama --}}
+        <div class="w-50 h-40 rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center" id="mainPhoto">
+            <img 
+                id="mainImg" 
+                src="{{ asset('images/sonyA7.png') }}" 
+                alt="Foto Utama" 
+                class="w-full h-full object-cover rounded-xl"
+                onerror="this.style.display='none'"
+            />
+        </div>
             {{-- 4 Thumbnail --}}
             <div class="grid grid-cols-4 gap-1.5">
                 @foreach([0,1,2,3] as $i)
                 <div class="thumb aspect-square bg-white border border-gray-200 rounded-lg overflow-hidden flex items-center justify-center cursor-pointer relative"
                     data-index="{{ $i }}" onclick="selectThumb({{ $i }})">
-                    <img class="w-full h-full object-cover rounded-lg"
-                        src="{{ $fotos[$i] ?? '' }}"
+                    <img class="w-full h-full object-cover rounded-lg w-[50px] h-[50px]"
+                        src="{{ asset('images/canon.png') }}" 
                         onerror="this.style.display='none'"
                         alt="Foto {{ $i + 1 }}" />
                 </div>
