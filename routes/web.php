@@ -70,7 +70,7 @@ Route::get('/Admin_Edit_Barang', function () {
 // Pelanggan
 Route::get('/Halaman_Checkout', function () {
     return view('User.Halaman_Checkout');
-});
+})->name('Checkout');
 
 Route::get('/Halaman_Penjualan', function () {
     return view('user.Halaman_Penjualan');

@@ -281,18 +281,24 @@
         </div>
 
         {{-- Tombol Aksi --}}
-        <div class="flex items-center justify-end gap-3 pt-1 pb-6">
+        <div class="flex items-center justify-between pt-1">
             <a href="{{ route('Transaksi') }}"
-                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-100 transition">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
                 Kembali
             </a>
-            <button id="btn-selesai" disabled onclick="selesaiTransaksi()"
+
+            <div class="flex items-center gap-2">
+
+              <button id="btn-selesai" disabled onclick="selesaiTransaksi()"
                 class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 Transaksi Selesai
             </button>
-        </div>
+
+            </div>
 
     </div>
 
