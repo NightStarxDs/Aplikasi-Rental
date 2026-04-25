@@ -13,25 +13,25 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased bg-emerald-50/40 text-gray-800">
-        <div class="min-h-screen flex">
-            <aside class="w-72 shrink-0 border-r border-emerald-100 bg-white">
-                @include('layouts.navigation')
-            </aside>
+    <div class="min-h-screen flex">
+        <aside class="w-72 shrink-0 fixed top-0 h-screen border-r border-emerald-100 bg-white">
+            @include('layouts.navigation')
+        </aside>
 
-            <div class="flex-1 min-w-0 flex flex-col">
+        <div class="flex-1 flex flex-col ml-72 h-screen overflow-hidden">
 
-                @isset($header)
-                    <header class="border-b border-emerald-100 bg-white/80 backdrop-blur">
-                        <div class="px-6 py-4 md:px-8">
-                            {{ $header }}
-                        </div>
-                    </header>
-                @endisset
+            @isset($header)
+                <header class="shrink-0 border-b border-emerald-100 bg-white/80 backdrop-blur">
+                    <div class="px-6 py-4 md:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
 
-                <main class="flex-1 p-5 md:p-8">
-                    {{ $slot }}
-                </main>
-            </div>
+            <main class="flex-1 overflow-y-auto p-5 md:p-8">
+                {{ $slot }}
+            </main>
         </div>
-    </body>
+    </div>
+</body>
 </html>
