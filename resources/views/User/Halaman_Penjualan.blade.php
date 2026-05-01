@@ -8,52 +8,67 @@
         </div>
     </x-slot>
 
-    <div class="pt-[35px] px-6 pb-6 space-y-5">
+    <div class="pt-[30px] px-6 pb-6 space-y-10">
 
         {{-- Hero Banner --}}
         <div class="grid grid-cols-3 gap-3 h-48">
             <div class="col-span-2 rounded-2xl overflow-hidden relative">
-                <img src="{{ asset('images/banner-utama.jpg') }}" alt="Banner Utama"
-                     class="w-full h-full object-cover">
+                <img src="{{ asset('images/Test.jpg') }}" alt="Banner Utama"
+                     class="w-full h-full object-cover bg-no-repeat bg-center">
             </div>
             <div class="flex flex-col gap-3">
                 <div class="flex-1 rounded-2xl overflow-hidden">
-                    <img src="{{ asset('images/banner-foto-1.jpg') }}" alt="Foto 1"
-                         class="w-full h-full object-cover">
+                    <img src="{{ asset('images/Test.jpg') }}" alt="Foto 1"
+                         class="w-full h-full object-cover bg-no-repeat bg-center">
                 </div>
                 <div class="flex-1 rounded-2xl overflow-hidden">
-                    <img src="{{ asset('images/banner-foto-2.jpg') }}" alt="Foto 2"
-                         class="w-full h-full object-cover">
+                    <img src="{{ asset('images/Test.jpg') }}" alt="Foto 2"
+                         class="w-full h-full object-cover bg-no-repeat bg-center">
                 </div>
             </div>
         </div>
 
         {{-- Kategori --}}
-        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4">
-            <div class="flex items-start gap-6">
-                <div class="flex flex-col gap-2">
+        <div class="relative rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5 lg:p-6">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+                <div class="flex h-full flex-col gap-3 rounded-xl bg-white/70 p-3 sm:p-4">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Alat Camping</p>
-                    <div class="flex items-center gap-2">
+                    <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
                         @foreach (['Tenda', 'Sleeping Bag', 'Matras', 'Kompor'] as $item)
-                        <button class="flex flex-col items-center gap-1.5 w-16 h-16 bg-white border border-gray-200 rounded-xl justify-center hover:border-emerald-500 hover:bg-emerald-50 transition group">
-                            <svg class="w-5 h-5 text-gray-400 group-hover:text-emerald-600 transition" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                            <span class="text-xs text-gray-400 group-hover:text-emerald-600 transition leading-none">{{ $item }}</span>
+                        <button class="group relative h-20 w-full overflow-hidden rounded-xl border border-gray-200 transition hover:border-emerald-500">
+                            <img
+                                src="{{ asset(match($item) {
+                                    'Tenda' => 'images/Tent.jpg',
+                                    'Sleeping Bag' => 'images/sleapingbag.jpg',
+                                    'Matras' => 'images/Matras.png',
+                                    'Kompor' => 'images/Kompor-Portable.jpg',
+                                    default => 'images/tendadome.jpg',
+                                }) }}"
+                                alt="{{ $item }}"
+                                class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/35 transition group-hover:bg-black/45"></div>
+                            <span class="absolute inset-x-1 bottom-1 text-center text-[11px] font-medium text-white leading-none">{{ $item }}</span>
                         </button>
                         @endforeach
                     </div>
                 </div>
-                <div class="h-20 w-px bg-gray-200 self-center"></div>
-                <div class="flex flex-col gap-2">
+                <div class="flex h-full flex-col gap-3 rounded-xl bg-white/70 p-3 sm:p-4">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Kamera</p>
-                    <div class="flex items-center gap-2">
+                    <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
                         @foreach (['Canon', 'Sony', 'Nikon', 'GoPro'] as $item)
-                        <button class="flex flex-col items-center gap-1.5 w-16 h-16 bg-white border border-gray-200 rounded-xl justify-center hover:border-emerald-500 hover:bg-emerald-50 transition group">
-                            <svg class="w-5 h-5 text-gray-400 group-hover:text-emerald-600 transition" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                            <span class="text-xs text-gray-400 group-hover:text-emerald-600 transition leading-none">{{ $item }}</span>
+                        <button class="group relative h-20 w-full overflow-hidden rounded-xl border border-gray-200 transition hover:border-emerald-500">
+                            <img
+                                src="{{ asset(match($item) {
+                                    'Canon' => 'images/canon.png',
+                                    'Sony' => 'images/sonyA7.png',
+                                    'Nikon' => 'images/Nikon-D500.jpg',
+                                    'GoPro' => 'images/Go-Pro.jpg',
+                                    default => 'images/dji-osmo.jpg',
+                                }) }}"
+                                alt="{{ $item }}"
+                                class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/35 transition group-hover:bg-black/45"></div>
+                            <span class="absolute inset-x-1 bottom-1 text-center text-[11px] font-medium text-white leading-none">{{ $item }}</span>
                         </button>
                         @endforeach
                     </div>

@@ -1,9 +1,10 @@
-<nav class="bg-white text-gray-800 fixed w-full z-20 top-0 start-0 border-b border-gray-200">
-    <div class="flex flex-wrap justify-between items-center mx-[40px] max-w-[1440px] p-4">
-        <a href="https://flowbite.com" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo" />
-            <span class="self-center text-xl font-semibold whitespace-nowrap text-gray-900">Flowbite</span>
-        </a>
+<nav class="fixed start-0 top-0 z-20 h-[60px] w-full border-b border-gray-200 bg-white text-gray-800">
+    <div class="mx-[40px] flex h-full max-w-[1440px] flex-wrap items-center justify-between">
+        <h1 class="font-extrabold text-xl">
+          <a href="/" class="text-gray-950 cursor-pointer block">
+              <span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
+          </a>
+        </h1>
 
         <button data-collapse-toggle="mega-menu-full" type="button" 
             class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden 

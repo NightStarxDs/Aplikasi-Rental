@@ -1,4 +1,4 @@
-<header class="flex items-center justify-between px-6 py-3 bg-white border-b shadow-sm">
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white border-b shadow-sm">
     <div class="flex-shrink-0 inline-flex gap-2 items-center">
         <h1 class="font-extrabold text-xl">
           <a href="/" class="text-gray-950 cursor-pointer block">

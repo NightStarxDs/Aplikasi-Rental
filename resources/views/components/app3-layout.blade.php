@@ -12,10 +12,10 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-   <body class="font-sans antialiased bg-gray-100">
+<body class="bg-gray-200 font-sans antialiased">
     @include('layouts.navigation3')
 
-    <main class="">
+    <main class="pt-20">
         {{ $slot }}
     </main>
 </body>
