@@ -23,7 +23,7 @@
         </button>
     </a>
           
-        <div class="h-6 w-px bg-gray-300"></div> <x-secondary-button class="px-5 py-2.5 rounded-lg">Masuk</x-secondary-button>
+        <div class="h-6 w-px bg-gray-300"></div> <x-secondary-button class="px-5 py-2.5 rounded-lg text-green-500">Masuk</x-secondary-button>
         <x-primary-button class="px-5 py-2.5 rounded-lg ">Daftar</x-primary-button>
     </div>
 </header>
