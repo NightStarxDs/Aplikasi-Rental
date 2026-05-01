@@ -5,13 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataBarang;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('LandingPage');
 });
-
-Route::get('/login2', function () {
-    return view('login');
-});
-
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');

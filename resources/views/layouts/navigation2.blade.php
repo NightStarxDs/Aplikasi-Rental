@@ -17,7 +17,7 @@
         </button>
 
         <div id="mega-menu-full" class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
-            <ul class="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
+            <ul class="flex flex-col mt-4 font-medium md:flex-row md:items-center md:mt-0 md:space-x-8 rtl:space-x-reverse">
                 <li>
                     <a href="#" 
                         class="block py-2 px-3 text-primary font-semibold border-b-2 border-primary
@@ -46,9 +46,9 @@
                                hover:text-primary md:border-0 md:p-0 transition-colors duration-150">Resources</a>
                 </li>
                 <li>
-                    <a href="#" 
-                        class="block py-2 px-3 text-gray-600 border-b border-gray-100 
-                               hover:text-primary md:border-0 md:p-0 transition-colors duration-150">Contact</a>
+                    <a href="{{ route('login') }}">
+                    <x-secondary-button class="px-5 py-2.5 rounded-lg text-green-500" href="{{ route('login') }}">Masuk</x-secondary-button>
+                    </a>
                 </li>
             </ul>
         </div>
