@@ -5,10 +5,7 @@
                 <h1 class="text-2xl font-semibold text-gray-800">Tambah Barang</h1>
                 <p class="text-sm text-gray-500 mt-1">Isi detail barang baru untuk ditambahkan ke inventaris</p>
             </div>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                Inventaris Aktif
-            </span>
+
         </div>
     </x-slot>
 

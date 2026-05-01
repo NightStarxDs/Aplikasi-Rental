@@ -1,6 +1,5 @@
 <header class="flex items-center justify-between px-6 py-3 bg-white border-b shadow-sm">
     <div class="flex-shrink-0 inline-flex gap-2 items-center">
-        <img src="logo-tokopedia.png" alt="Logo" class="h-8">
         <h1 class="font-extrabold text-xl">
           <a href="/" class="text-gray-950 cursor-pointer block">
               <span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent

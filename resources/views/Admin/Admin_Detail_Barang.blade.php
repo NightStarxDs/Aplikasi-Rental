@@ -13,36 +13,29 @@
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 flex gap-5">
 
-        {{-- Foto dengan Thumbnail --}}
-        <div class="flex-shrink-0 flex flex-col gap-2">
+         {{-- Foto dengan Thumbnail --}}
+                <div class="flex-shrink-0 flex flex-col gap-2">
 
-          {{-- Foto Utama --}}
-        <div class="w-50 h-40 rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center" id="mainPhoto">
-            <img 
-                id="mainImg" 
-                src="{{ asset('images/sonyA7.png') }}" 
-                alt="Foto Utama" 
-                class="w-full h-full object-cover rounded-xl"
-                onerror="this.style.display='none'"
-            />
-        </div>
-            {{-- 4 Thumbnail --}}
-            <div class="grid grid-cols-4 gap-1.5">
-                @foreach([0,1,2,3] as $i)
-                <div class="thumb aspect-square bg-white border border-gray-200 rounded-lg overflow-hidden flex items-center justify-center cursor-pointer relative"
-                    data-index="{{ $i }}" onclick="selectThumb({{ $i }})">
-                    <img class="w-full h-full object-cover rounded-lg w-[50px] h-[50px]"
-                        src="{{ asset('images/canon.png') }}" 
-                        onerror="this.style.display='none'"
-                        alt="Foto {{ $i + 1 }}" />
+                    {{-- Foto Utama --}}
+                    <div class="w-[295px] h-[250px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center">
+                        <div class="flex flex-col items-center gap-2 text-gray-400 w-full h-[210px] overflow-hidden bg-cover bg-center group-hover:scale-105 transition duration-300"
+                        style="background-image: url('{{ asset('images/sonyA7.png') }}');">
+                        </div>
+                    </div>
+
+                    {{-- 4 Thumbnail --}}
+                    <div class="grid grid-cols-4 gap-1.5">
+                        @foreach([0,1,2,3] as $i)
+                        <div class="aspect-square bg-white border border-gray-200 rounded-lg flex items-center justify-center cursor-pointer hover:border-emerald-400 transition" 
+                        style="background-image: url('{{ asset('images/sonyA7.png') }}'); background-size: cover; background-position: center;">
+                        </div>
+                        @endforeach
+                    </div>
+
                 </div>
-                @endforeach
-            </div>
-
-        </div>
 
             {{-- Info --}}
-            <div class="flex flex-col justify-center gap-3">
+            <div class="flex flex-col py-[65px] gap-3">
                 <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
                     Kamera
                 </span>
