@@ -141,48 +141,48 @@
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <article class="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-5 shadow-sm">
-                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 mx-auto">
                         <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M4 7h16M7 4v6m10-6v6M5 11h14v8H5z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <h3 class="text-base font-semibold text-gray-900">Pilih Alat</h3>
+                    <h3 class="text-center font-semibold text-gray-900">Pilih Alat</h3>
                     <p class="mt-2 text-sm leading-relaxed text-justify text-gray-600">
                         Jelajahi katalog lalu pilih alat camping, kamera, atau perlengkapan yang paling sesuai kebutuhan perjalananmu.
                     </p>
                 </article>
 
                 <article class="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-5 shadow-sm">
-                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 mx-auto">
                         <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M8 2v4m8-4v4M4 8h16M5 5h14a1 1 0 0 1 1 1v13H4V6a1 1 0 0 1 1-1z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <h3 class="text-base font-semibold text-gray-900">Atur Tanggal</h3>
-                    <p class="mt-2 text-sm leading-relaxed text-justify text-gray-600">
+                    <h3 class="text-center font-semibold text-gray-900">Atur Tanggal</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-justify text-gray-600"> 
                         Tentukan tanggal mulai sampai selesai penyewaan, lalu cek ketersediaan agar rencana perjalanan tetap aman.
                     </p>
                 </article>
 
                 <article class="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-5 shadow-sm">
-                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 mx-auto">
                         <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M4 7h16M6 7l1 13h10l1-13M9 10v6m6-6v6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <h3 class="text-base font-semibold text-gray-900">Lakukan Pembayaran</h3>
+                    <h3 class="text-center font-semibold text-gray-900">Lakukan Pembayaran</h3>
                     <p class="mt-2 text-sm leading-relaxed text-justify text-gray-600">
                         Selesaikan pembayaran melalui metode yang tersedia untuk mengamankan pesananmu secara instan.
                     </p>
                 </article>
 
                 <article class="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-5 shadow-sm">
-                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 mx-auto">
                         <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M3 7h13l3 3v7H3V7zm13 0v3h3M8 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <h3 class="text-base font-semibold text-gray-900">Ambil Barang</h3>
+                    <h3 class="text-center font-semibold text-gray-900">Ambil Barang</h3>
                     <p class="mt-2 text-sm leading-relaxed text-justify text-gray-600">
                         Ambil alat di toko sesuai jadwal, kemudian nikmati perjalananmu dengan perlengkapan yang sudah siap pakai.
                     </p>
@@ -292,8 +292,8 @@
         </div>
     </section>
 
-    <section class="w-full bg-gradient-to-b from-emerald-50/40 via-white to-white px-4 py-10 sm:py-12" id="section-5">
-        <div class="mx-auto w-full max-w-6xl">
+    <section class="w-full bg-gradient-to-b from-emerald-50/40 via-white to-white px-4 py-10 sm:py-12 overflow-hidden" id="section-5">
+        <div class="mx-auto w-full max-w-7xl">
             <div class="mb-7 text-center sm:mb-8">
                 <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-700/80">Ulasan Pelanggan</p>
                 <h2 class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl">Yang Mereka Katakan</h2>
@@ -302,87 +302,55 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <article class="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm">
-                    <div class="mb-4 flex items-center gap-3">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="12" cy="8" r="3.2" stroke-width="1.8" />
-                                <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-width="1.8" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-900">Hikaru Nakamura</h3>
-                            <div class="mt-1 flex items-center gap-0.5 text-amber-400">
-                                @for ($i = 0; $i < 5; $i++)
-                                    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                                        <path d="M10 1.5 12.6 6.8l5.9.9-4.3 4.2 1 5.9L10 15.5l-5.2 2.8 1-5.9L1.5 7.7l5.9-.9L10 1.5z" />
-                                    </svg>
-                                @endfor
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-sm leading-relaxed text-justify text-gray-600">
+            <div class="relative group">
+                <button type="button" id="reviewPrev"
+                    class="absolute -left-2 sm:-left-6 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-emerald-200 bg-white p-2 sm:p-3 text-emerald-700 shadow-lg transition hover:bg-emerald-600 hover:text-white lg:block opacity-0 group-hover:opacity-100"
+                    aria-label="Slide sebelumnya">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+
+                <div id="reviewTrack" class="flex gap-4 overflow-x-auto scroll-smooth py-4 px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
+                    <x-review-card name="Hikaru Nakamura" rating="5">
                         Adminnya ramah dan alat yang datang bersih. Saya booking H-1 dan prosesnya cepat sekali. Cocok untuk perjalanan dadakan.
-                    </p>
-                </article>
+                    </x-review-card>
 
-                <article class="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm">
-                    <div class="mb-4 flex items-center gap-3">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="12" cy="8" r="3.2" stroke-width="1.8" />
-                                <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-width="1.8" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-900">Magnus Carlsen</h3>
-                            <div class="mt-1 flex items-center gap-0.5 text-amber-400">
-                                @for ($i = 0; $i < 5; $i++)
-                                    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                                        <path d="M10 1.5 12.6 6.8l5.9.9-4.3 4.2 1 5.9L10 15.5l-5.2 2.8 1-5.9L1.5 7.7l5.9-.9L10 1.5z" />
-                                    </svg>
-                                @endfor
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-sm leading-relaxed text-justify text-gray-600">
+                    <x-review-card name="Magnus Carlsen" rating="4.5">
                         Sewa mirrorless untuk tugas kampus hasilnya memuaskan. Kondisi kamera bagus, baterai aman, dan harga masih masuk budget pelajar.
-                    </p>
-                </article>
+                    </x-review-card>
 
-                <article class="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm sm:col-span-2 lg:col-span-1">
-                    <div class="mb-4 flex items-center gap-3">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="12" cy="8" r="3.2" stroke-width="1.8" />
-                                <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-width="1.8" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-900">Gukesh</h3>
-                            <div class="mt-1 flex items-center gap-0.5 text-amber-400">
-                                @for ($i = 0; $i < 5; $i++)
-                                    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                                        <path d="M10 1.5 12.6 6.8l5.9.9-4.3 4.2 1 5.9L10 15.5l-5.2 2.8 1-5.9L1.5 7.7l5.9-.9L10 1.5z" />
-                                    </svg>
-                                @endfor
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-sm leading-relaxed text-justify text-gray-600">
+                    <x-review-card name="Gukesh D" rating="4.8">
                         Tendanya bersih, mudah dipasang, dan perlengkapan lengkap. Sangat membantu untuk pemula yang baru mulai camping.
-                    </p>
-                </article>
+                    </x-review-card>
+                    
+                    <x-review-card name="Ding Liren" rating="5">
+                        Pelayanan cepat tanggap, alatnya sangat terawat seperti baru. Sangat puas dengan pengalaman sewa di sini.
+                    </x-review-card>
+                    
+                    <x-review-card name="Ian Nepomniachtchi" rating="4.7">
+                        Sangat memudahkan! Peralatannya komplit dan kualitasnya terjamin. Harga sewa juga terjangkau dibanding beli sendiri.
+                    </x-review-card>
+                    
+                    <x-review-card name="Fabiano Caruana" rating="4.9">
+                        Baru pertama kali sewa kamera untuk liburan, dan sangat terbantu. Lensa bersih dan tidak ada masalah selama pemakaian.
+                    </x-review-card>
+                </div>
+
+                <button type="button" id="reviewNext"
+                    class="absolute -right-2 sm:-right-6 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-emerald-200 bg-white p-2 sm:p-3 text-emerald-700 shadow-lg transition hover:bg-emerald-600 hover:text-white lg:block opacity-0 group-hover:opacity-100"
+                    aria-label="Slide berikutnya">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M10 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
 
-    <footer id="section-6" class="w-full bg-gradient-to-b from-white to-emerald-50/60 pt-16 border-t border-emerald-50">
+    <footer id="section-6" class="w-full bg-gradient-to-b from-emerald-50/80 to-white pt-16 border-t border-emerald-50">
         <div class="mx-auto w-full max-w-7xl px-4">
-            <!-- Footer Content -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                <!-- Col 1: Logo & Maps -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[200px] mb-12">
                 <div>
                     <h2 class="text-3xl font-bold mb-4 text-gray-900"><span class="text-emerald-600">Out</span>Rent</h2>
                     <p class="text-sm text-gray-600 mb-6 leading-relaxed">
@@ -390,7 +358,7 @@
                     </p>
                 </div>
 
-                <!-- Col 2: Produk -->
+                <div id="NavSection" class="grid lg:grid-cols-3">
                 <div>
                     <h3 class="text-base font-bold text-gray-900 mb-4">Produk</h3>
                     <ul class="space-y-3 text-sm text-gray-600">
@@ -405,7 +373,6 @@
                     </ul>
                 </div>
 
-                <!-- Col 3: Informasi -->
                 <div>
                     <h3 class="text-base font-bold text-gray-900 mb-4">Informasi</h3>
                     <ul class="space-y-3 text-sm text-gray-600">
@@ -415,7 +382,6 @@
                     </ul>
                 </div>
 
-                <!-- Col 4: Bantuan -->
                 <div>
                     <h3 class="text-base font-bold text-gray-900 mb-4">Bantuan</h3>
                     <ul class="space-y-3 text-sm text-gray-600">
@@ -423,6 +389,7 @@
                         <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Hubungi Layanan Pelanggan</a></li>
                         <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Kebijakan Privasi</a></li>
                     </ul>
+                </div>
                 </div>
             </div>
         </div>
@@ -432,7 +399,6 @@
         </div>
     </footer>
 
-    <!-- Small Sticky Footer -->
     <div id="small-footer" class="fixed bottom-0 left-0 w-full bg-white border-t border-emerald-100 py-3 text-sm z-40 transition-transform duration-500 translate-y-0 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)]">
         <div class="flex justify-between items-center px-4 max-w-7xl mx-auto">
             <div class="flex items-center gap-3">
@@ -489,6 +455,36 @@
             next.addEventListener('click', function() {
                 track.scrollBy({ left: slideAmount(), behavior: 'smooth' });
             });
+
+            const reviewTrack = document.getElementById('reviewTrack');
+            const reviewPrev = document.getElementById('reviewPrev');
+            const reviewNext = document.getElementById('reviewNext');
+            let reviewScrollInterval;
+            let isHoveringReview = false;
+
+            if (reviewTrack && reviewPrev && reviewNext) {
+                const reviewSlideAmount = () => Math.round(reviewTrack.clientWidth / 1.5);
+                
+                const startReviewMarquee = () => {
+                    reviewScrollInterval = setInterval(() => {
+                        if (!isHoveringReview) {
+                            if (reviewTrack.scrollLeft + reviewTrack.clientWidth >= reviewTrack.scrollWidth - 1) {
+                                reviewTrack.scrollTo({ left: 0, behavior: 'smooth' });
+                            } else {
+                                reviewTrack.scrollBy({ left: 1, behavior: 'auto' });
+                            }
+                        }
+                    }, 30);
+                };
+
+                reviewPrev.addEventListener('click', function() {
+                    reviewTrack.scrollBy({ left: -reviewSlideAmount(), behavior: 'smooth' });
+                });
+
+                reviewNext.addEventListener('click', function() {
+                    reviewTrack.scrollBy({ left: reviewSlideAmount(), behavior: 'smooth' });
+                });
+            }
         });
     </script>
  

@@ -23,7 +23,48 @@
         </button>
     </a>
           
-        <div class="h-6 w-px bg-gray-300"></div> <x-secondary-button class="px-5 py-2.5 rounded-lg text-green-500">Masuk</x-secondary-button>
-        <x-primary-button class="px-5 py-2.5 rounded-lg ">Daftar</x-primary-button>
+        <div class="h-6 w-px bg-gray-300"></div>
+        @if (Route::has('login'))
+                <nav class="items-center justify-end">
+                    @auth
+                        <div class=" bg-gray-50/60"> 
+                            <button type="button" class="flex text-sm bg-neutral-primary rounded-full md:me-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                            <div class="flex items-center gap-3 rounded-xl bg-white border border-gray-100">
+                                <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 truncate">{{ Auth::user()->name }}</p>
+                                </div>
+                            </div>
+                            </button>
+                        </div>
+
+                        <div class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44" id="user-dropdown">
+                            <div class="px-4 py-3 text-sm border-b border-default">
+                                <span class="block text-heading font-medium">{{ Auth::user()->name }}</span>
+                                <span class="block text-body truncate">{{ Auth::user()->email }}</span>
+                            </div>
+                            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
+                            <li>
+                                <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Profil</a>
+                            </li>
+                            <li>
+                                <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</a>
+                            </li>
+                            <li>
+                                <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign out</a>
+                            </li>
+                            </ul>
+                        </div>
+                    @else
+                            <x-primary-button class="px-5 py-2.5 rounded-lg ">Daftar</x-primary-button>
+                            <x-secondary-button class="px-5 py-2.5 rounded-lg text-green-500">Masuk</x-secondary-button>
+
+                    @endauth
+                </nav>
+            @endif
     </div>
 </header>
