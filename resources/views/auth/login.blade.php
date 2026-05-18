@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        {{-- ══════════ FORM REGISTER (kiri) ══════════ --}}
+        <!-- FORM REGISTER -->
         <div id="panel-form-register" class="auth-panel left-0 right-auto z-[1] bg-white">
             <div id="auth-register-inner" class="pointer-events-none opacity-0">
                 <h1 class="mb-7 text-center text-xl font-bold uppercase tracking-widest text-emerald-900">Daftar</h1>
@@ -145,7 +145,7 @@
             </div>
         </div>
 
-        {{-- ══════════ PANEL INFO ══════════ --}}
+        <!-- PANEL INFO -->
         <div id="panel-info" class="auth-panel left-0 right-auto z-10 bg-primary">
 
             <div id="info-login">

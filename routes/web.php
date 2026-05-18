@@ -48,11 +48,11 @@ Route::get('/Admin_Kelola_User', function () {
 
 Route::get('/Admin_Riwayat_Pelanggan', function () {
     return view('Admin.Admin_Riwayat_Pelanggan');
-});
+})->name('Riwayat_Pelanggan');
 
 Route::get('/Admin_Tambah_User', function () {
     return view('Admin.Admin_Tambah_User');
-});
+})->name('Tambah_User');
 
 Route::get('/Admin_Transaksi_Penyewaan', function () {
     return view('Admin.Admin_Transaksi_Penyewaan');
