@@ -12,6 +12,7 @@ class Barang extends Model
         'gambar_barang',
         'nama_barang',
         'kategori_barang',
+        'subkategori_barang',
         'deskripsi_barang',
         'stok_barang',
         'harga_perhari',

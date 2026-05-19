@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('barang', function (Blueprint $table) {
             $table->id('kode_barang');
-            $table->string('gambar_barang');
+            $table->text('gambar_barang');
             $table->string('nama_barang', 100);
             $table->enum('kategori_barang', ['Kamera', 'Alat Camping']);
+            $table->enum('subkategori_barang', ['DSLR Cam','Mirrorless Cam','Video Cam','Action Cam','Lensa','Akesesoris Kamera','Lighting','Audio','Tenda','Peralatan Tidur','Peralatan Memasak','Penerangan','Power']);
             $table->text('deskripsi_barang')->nullable();
             $table->integer('stok');
             $table->decimal('harga_perhari', 15, 2);
