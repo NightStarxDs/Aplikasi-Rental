@@ -103,7 +103,7 @@
 
         @if ($barang->catatan_kondisi_barang)
             <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
-                <h2 class="text-sm font-semibold text-gray-700 mb-2">Catatan Kondisi</h2>
+                <h2 class="text-sm font-semibold text-gray-700 mb-2">Catatan Kondisi Barang</h2>
                 <p class="text-sm text-gray-500 leading-relaxed">{{ $barang->catatan_kondisi_barang }}</p>
             </div>
         @endif

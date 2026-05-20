@@ -21,6 +21,12 @@ class Barang extends Model
         'status_barang',
     ];
 
+    // Konstanta enum subkategori
+    const SUBKATEGORI = [
+        'Kamera' => ['DSLR Cam', 'Mirrorless Cam', 'Video Cam', 'Action Cam', 'Lensa', 'Aksesoris Kamera', 'Lighting', 'Audio'],
+        'Alat Camping' => ['Tenda', 'Peralatan Tidur', 'Peralatan Memasak', 'Penerangan', 'Power'],
+    ];
+
     protected $casts = [
         'gambar_barang' => 'array',
         'harga_perhari' => 'decimal:2',

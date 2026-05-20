@@ -12,8 +12,9 @@
     </x-slot>
 
     @php
-        $kategoriForm = old('kategori', $barang->kategori_barang === 'Alat Camping' ? 'camping' : 'kamera');
-        $fotosLama = collect($barang->gambar_barang ?? []);
+        $kategoriForm   = old('kategori', $barang->kategori_barang === 'Alat Camping' ? 'camping' : 'kamera');
+        $subkategoriForm = old('subkategori', $barang->subkategori_barang);
+        $fotosLama      = collect($barang->gambar_barang ?? []);
     @endphp
 
     <div class="py-6">
@@ -24,6 +25,8 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+
+                        {{-- Nama Barang --}}
                         <div class="md:col-span-2 flex flex-col gap-1">
                             <label class="text-sm font-medium text-gray-600">Nama Barang</label>
                             <input type="text" name="nama_barang" placeholder="Contoh: Canon EOS R50"
@@ -34,6 +37,7 @@
                             @enderror
                         </div>
 
+                        {{-- Deskripsi --}}
                         <div class="md:col-span-2 flex flex-col gap-1">
                             <label class="text-sm font-medium text-gray-600">Deskripsi Barang</label>
                             <textarea name="deskripsi" rows="3" placeholder="Deskripsi singkat barang..."
@@ -43,9 +47,10 @@
                             @enderror
                         </div>
 
+                        {{-- Kategori --}}
                         <div class="flex flex-col gap-1">
                             <label class="text-sm font-medium text-gray-600">Kategori</label>
-                            <select name="kategori"
+                            <select name="kategori" id="kategori"
                                 class="w-full cursor-pointer appearance-none rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
                                 <option value="">Pilih Kategori</option>
                                 <option value="kamera" {{ $kategoriForm === 'kamera' ? 'selected' : '' }}>Kamera</option>
@@ -56,6 +61,19 @@
                             @enderror
                         </div>
 
+                        {{-- Subkategori --}}
+                        <div class="flex flex-col gap-1">
+                            <label class="text-sm font-medium text-gray-600">Subkategori <span class="text-red-500">*</span></label>
+                            <select name="subkategori" id="subkategori"
+                                class="w-full cursor-pointer appearance-none rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+                                <option value="">-- Pilih Kategori Utama Dulu --</option>
+                            </select>
+                            @error('subkategori')
+                                <p class="mt-0.5 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Jumlah --}}
                         <div class="flex flex-col gap-1">
                             <label class="text-sm font-medium text-gray-600">Jumlah Barang</label>
                             <input type="number" name="jumlah" min="0" placeholder="0"
@@ -66,11 +84,12 @@
                             @enderror
                         </div>
 
+                        {{-- Harga Per Hari --}}
                         <div class="flex flex-col gap-1">
                             <label class="text-sm font-medium text-gray-600">Harga (Per Hari)</label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400">Rp</span>
-                                <input type="number" name="harga" min="0" placeholder="0"
+                                <input type="number" name="harga" id="harga" min="0" placeholder="0"
                                     value="{{ old('harga', $barang->harga_perhari) }}"
                                     class="w-full rounded-lg border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm text-gray-800 placeholder-gray-400 transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
                             </div>
@@ -79,14 +98,37 @@
                             @enderror
                         </div>
 
+                        {{-- Harga Per Jam (readonly) --}}
+                        <div class="flex flex-col gap-1">
+                            <label class="text-sm font-medium text-gray-600">Harga / Jam</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400">Rp</span>
+                                <input type="text" id="harga_perjam_display" readonly
+                                    placeholder="Otomatis dihitung"
+                                    class="w-full rounded-lg border border-gray-200 bg-gray-100 py-2 pl-9 pr-3 text-sm text-gray-500 cursor-not-allowed focus:outline-none">
+                            </div>
+                            <p class="mt-0.5 text-xs text-gray-400">Dihitung otomatis dari Harga/Hari ÷ 24</p>
+                        </div>
+
+                        {{-- Catatan Kondisi Barang --}}
+                        <div class="md:col-span-2 flex flex-col gap-1">
+                            <label class="text-sm font-medium text-gray-600">Catatan Kondisi Barang</label>
+                            <textarea name="catatan_kondisi_barang" rows="3"
+                                placeholder="Contoh: Kondisi baik, ada goresan kecil di body..."
+                                class="w-full resize-none rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 placeholder-gray-400 transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">{{ old('catatan_kondisi_barang', $barang->catatan_kondisi_barang) }}</textarea>
+                            @error('catatan_kondisi_barang')
+                                <p class="mt-0.5 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         {{-- Foto (5 gambar) --}}
                         <div class="md:col-span-2 flex flex-col gap-3">
                             <div>
                                 <label class="text-sm font-medium text-gray-600">Foto Barang</label>
-                                <p class="text-xs text-gray-400 mt-0.5">Kosongkan jika tidak ingin mengganti. Unggah file baru untuk mengganti foto yang ada.</p>
+                                <p class="mt-0.5 text-xs text-gray-400">Kosongkan jika tidak ingin mengganti. Unggah file baru untuk mengganti foto yang ada.</p>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                                 @for ($i = 1; $i <= 5; $i++)
                                     @php $fotoLama = $fotosLama->get($i - 1); @endphp
                                     <div class="flex flex-col gap-1">
@@ -94,31 +136,33 @@
                                             {{ $i === 1 ? 'Foto Utama' : 'Foto ' . $i }}
                                         </label>
                                         @if ($fotoLama)
-                                            <div class="h-24 rounded-lg border border-gray-200 overflow-hidden bg-white">
-                                                <img src="{{ asset('storage/' . $fotoLama) }}" alt="Foto {{ $i }}" class="w-full h-full object-cover">
+                                            <div class="h-24 overflow-hidden rounded-lg border border-gray-200 bg-white">
+                                                <img src="{{ asset('storage/' . $fotoLama) }}" alt="Foto {{ $i }}" class="h-full w-full object-cover">
                                             </div>
                                         @endif
-                                        <label class="flex flex-col items-center justify-center gap-1.5 w-full border border-dashed border-gray-300 rounded-lg py-3 bg-white cursor-pointer hover:border-emerald-500 transition group">
+                                        <label class="group flex w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-gray-300 bg-white py-3 transition hover:border-emerald-500">
                                             <svg class="h-5 w-5 text-gray-400 transition group-hover:text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                                 <polyline points="17 8 12 3 7 8"/>
                                                 <line x1="12" y1="3" x2="12" y2="15"/>
                                             </svg>
-                                            <span class="text-xs text-gray-400 group-hover:text-emerald-600 transition text-center px-2">
+                                            <span class="px-2 text-center text-xs text-gray-400 transition group-hover:text-emerald-600">
                                                 {{ $fotoLama ? 'Ganti foto' : 'Unggah foto' }}
                                             </span>
                                             <input type="file" name="foto_{{ $i }}" accept="image/*" class="hidden">
                                         </label>
                                         @error('foto_' . $i)
-                                            <p class="text-xs text-red-500 mt-0.5">{{ $message }}</p>
+                                            <p class="mt-0.5 text-xs text-red-500">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 @endfor
                             </div>
                         </div>
+
                     </div>
 
-                    <div class="flex items-center justify-between gap-2 border-t border-gray-200 mt-6 pt-5">
+                    {{-- Actions --}}
+                    <div class="mt-6 flex items-center justify-between gap-2 border-t border-gray-200 pt-5">
                         <a href="{{ route('Detail_Barang', $barang->kode_barang) }}"
                             class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-800">
                             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -143,8 +187,52 @@
                             </button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+    const subkategoriMap = {
+        kamera:  ['DSLR Cam','Mirrorless Cam','Video Cam','Action Cam','Lensa','Aksesoris Kamera','Lighting','Audio'],
+        camping: ['Tenda','Peralatan Tidur','Peralatan Memasak','Penerangan','Power'],
+    };
+
+    // Nilai lama dari PHP (untuk pre-select saat load / validasi gagal)
+    const oldSubkategori = '{{ $subkategoriForm }}';
+
+    const kategoriEl  = document.getElementById('kategori');
+    const subEl       = document.getElementById('subkategori');
+    const hargaEl     = document.getElementById('harga');
+    const hargaJamEl  = document.getElementById('harga_perjam_display');
+
+    function updateSubkategori() {
+        const val = kategoriEl.value;
+        subEl.innerHTML = '<option value="">-- Pilih Subkategori --</option>';
+        (subkategoriMap[val] || []).forEach(s => {
+            const opt = document.createElement('option');
+            opt.value       = s;
+            opt.textContent = s;
+            if (s === oldSubkategori) opt.selected = true; // pre-select nilai lama
+            subEl.appendChild(opt);
+        });
+    }
+
+    function hitungHargaJam() {
+        const harga  = parseFloat(hargaEl.value) || 0;
+        const perJam = Math.round(harga / 24);
+        hargaJamEl.value = perJam > 0
+            ? new Intl.NumberFormat('id-ID').format(perJam)
+            : '';
+    }
+
+    kategoriEl.addEventListener('change', updateSubkategori);
+    hargaEl.addEventListener('input', hitungHargaJam);
+
+    // Jalankan saat halaman load agar data existing langsung tampil
+    updateSubkategori();
+    hitungHargaJam();
+    </script>
+
 </x-app-layout>

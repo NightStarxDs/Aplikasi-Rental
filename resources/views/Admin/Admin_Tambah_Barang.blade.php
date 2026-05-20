@@ -23,7 +23,7 @@
                         <div class="md:col-span-2 flex flex-col gap-1">
                             <label class="text-xl font-medium text-gray-500">Nama Barang</label>
                             <input type="text" name="nama_barang"
-                                placeholder="Contoh: Canon EOS R50"
+                                placeholder="Masukkan Nama Barang"
                                 value="{{ old('nama_barang') }}"
                                 class="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition">
                             @error('nama_barang')
@@ -45,7 +45,8 @@
                         {{-- Kategori --}}
                         <div class="flex flex-col gap-1">
                             <label class="text-xl font-medium text-gray-500">Kategori</label>
-                            <select name="kategori"
+                            {{-- Kategori --}}
+                            <select name="kategori" id="kategori"   {{-- ← tambahkan id="kategori" --}}
                                 class="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition appearance-none cursor-pointer">
                                 <option value="">Pilih Kategori</option>
                                 <option value="kamera" {{ old('kategori') == 'kamera' ? 'selected' : '' }}>Kamera</option>
@@ -53,6 +54,17 @@
                             </select>
                             @error('kategori')
                                 <p class="text-xs text-red-500 mt-0.5">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Subkategori <span class="text-red-500">*</span></label>
+                            <select name="subkategori" id="subkategori" required
+                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500">
+                                <option value="">-- Pilih Kategori Utama Dulu --</option>
+                            </select>
+                            @error('subkategori')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -73,7 +85,7 @@
                             <label class="text-lg font-medium text-gray-500">Harga (Per Hari)</label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400">Rp</span>
-                                <input type="number" name="harga" min="0"
+                                <input type="number" name="harga" id="harga" min="0"
                                     placeholder="0"
                                     value="{{ old('harga') }}"
                                     class="w-full pl-9 pr-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition">
@@ -81,6 +93,24 @@
                             @error('harga')
                                 <p class="text-xs text-red-500 mt-0.5">{{ $message }}</p>
                             @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Harga / Jam</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400">Rp</span>
+                                <input type="text" id="harga_perjam_display" readonly
+                                    placeholder="Otomatis dihitung"
+                                    class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed focus:outline-none">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-400">Dihitung otomatis dari Harga/Hari ÷ 24</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Catatan Kondisi Barang</label>
+                            <textarea name="catatan_kondisi_barang" rows="3"
+                                placeholder="Contoh: Kondisi baik, ada goresan kecil di body..."
+                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 resize-none">{{ old('catatan_kondisi') }}</textarea>
                         </div>
 
                         {{-- Foto (5 gambar, input terpisah) --}}
@@ -140,4 +170,46 @@
             </div>
         </div>
     </div>
+
+    <script>
+    const subkategoriMap = {
+        kamera: ['DSLR Cam','Mirrorless Cam','Video Cam','Action Cam','Lensa','Aksesoris Kamera','Lighting','Audio'],
+        camping: ['Tenda','Peralatan Tidur','Peralatan Memasak','Penerangan','Power'],
+    };
+
+    const kategoriEl   = document.getElementById('kategori');
+    const subEl        = document.getElementById('subkategori');
+    const hargaEl      = document.getElementById('harga');        // input harga/hari
+    const hargaJamEl   = document.getElementById('harga_perjam_display');
+
+    // Populate subkategori
+    function updateSubkategori() {
+        const val = kategoriEl.value;
+        subEl.innerHTML = '<option value="">-- Pilih Subkategori --</option>';
+        (subkategoriMap[val] || []).forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s;
+            opt.textContent = s;
+            // Pertahankan nilai lama saat validasi gagal
+            if (s === '{{ old('subkategori') }}') opt.selected = true;
+            subEl.appendChild(opt);
+        });
+    }
+
+    // Hitung harga/jam
+    function hitungHargaJam() {
+        const harga = parseFloat(hargaEl.value) || 0;
+        const perjam = harga / 24;
+        hargaJamEl.value = perjam > 0
+            ? 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(perjam))
+            : '';
+    }
+
+    kategoriEl.addEventListener('change', updateSubkategori);
+    hargaEl.addEventListener('input', hitungHargaJam);
+
+    // Jalankan saat load (untuk kondisi old() saat validasi gagal)
+    if (kategoriEl.value) updateSubkategori();
+    if (hargaEl.value)    hitungHargaJam();
+    </script>
 </x-app-layout>
