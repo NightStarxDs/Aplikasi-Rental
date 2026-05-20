@@ -14,7 +14,7 @@
 
             <div class="bg-gray-50 border border-gray-200 rounded-xl p-6">
 
-                <form action="{{ route('Tambah_Barang') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('Tambah_Barang.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -83,21 +83,34 @@
                             @enderror
                         </div>
 
-                        {{-- Foto --}}
-                        <div class="flex flex-col gap-1">
-                            <label class="text-lg font-medium text-gray-500">Foto Barang</label>
-                            <label class="flex flex-col items-center justify-center gap-1.5 w-full border border-dashed border-gray-300 rounded-lg py-4 bg-white cursor-pointer hover:border-emerald-500 transition group">
-                                <svg class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="17 8 12 3 7 8"/>
-                                    <line x1="12" y1="3" x2="12" y2="15"/>
-                                </svg>
-                                <span class="text-xs text-gray-400 group-hover:text-emerald-600 transition">Klik untuk unggah foto</span>
-                                <input type="file" name="foto" accept="image/*" class="hidden">
-                            </label>
-                            @error('foto')
-                                <p class="text-xs text-red-500 mt-0.5">{{ $message }}</p>
-                            @enderror
+                        {{-- Foto (5 gambar, input terpisah) --}}
+                        <div class="md:col-span-2 flex flex-col gap-3">
+                            <div>
+                                <label class="text-lg font-medium text-gray-500">Foto Barang</label>
+                                <p class="text-xs text-gray-400 mt-0.5">Unggah hingga 5 foto. Foto 1 akan ditampilkan sebagai foto utama.</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <div class="flex flex-col gap-1">
+                                        <label class="text-sm font-medium text-gray-500">
+                                            {{ $i === 1 ? 'Foto Utama' : 'Foto ' . $i }}
+                                        </label>
+                                        <label class="flex flex-col items-center justify-center gap-1.5 w-full border border-dashed border-gray-300 rounded-lg py-3 bg-white cursor-pointer hover:border-emerald-500 transition group">
+                                            <svg class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                <polyline points="17 8 12 3 7 8"/>
+                                                <line x1="12" y1="3" x2="12" y2="15"/>
+                                            </svg>
+                                            <span class="text-xs text-gray-400 group-hover:text-emerald-600 transition text-center px-2">Klik untuk unggah</span>
+                                            <input type="file" name="foto_{{ $i }}" accept="image/*" class="hidden">
+                                        </label>
+                                        @error('foto_' . $i)
+                                            <p class="text-xs text-red-500 mt-0.5">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                @endfor
+                            </div>
                         </div>
 
                     </div>

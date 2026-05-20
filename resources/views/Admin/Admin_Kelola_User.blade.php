@@ -5,7 +5,17 @@
                 <h1 class="text-xl font-semibold text-gray-800">Kelola Pengguna</h1>
                 <p class="text-sm text-gray-500 mt-1">Kelola seluruh data akun pengguna sistem</p>
             </div>
+            
+            <a href="{{ route('Tambah_User')}}"
+                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-800 hover:bg-emerald-900 rounded-lg transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                Tambah Pengguna
+            </a>
         </div>
+
+        
     </x-slot>
 
     <div class="py-6 px-6">
