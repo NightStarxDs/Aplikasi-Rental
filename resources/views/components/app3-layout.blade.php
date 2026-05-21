@@ -15,7 +15,7 @@
 <body class="bg-gray-200 font-sans antialiased">
     @include('layouts.navigation3')
 
-    <main class="pt-20">
+    <main class="pt-[70px]">
         {{ $slot }}
     </main>
 </body>

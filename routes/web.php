@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataBarang;
 use App\Http\Controllers\admin\BarangController;
+use App\Http\Controllers\User\PenjualanController;
+
+Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
 
 Route::get('/', function () {
     return view('LandingPage');
@@ -63,9 +66,6 @@ Route::get('/Halaman_Checkout', function () {
     return view('User.Halaman_Checkout');
 })->name('Checkout');
 
-Route::get('/Halaman_Penjualan', function () {
-    return view('user.Halaman_Penjualan');
-});
 
 Route::get('/Profil_Pelanggan', function () {
     return view('User.Profil_Pelanggan');
@@ -95,10 +95,6 @@ Route::get('/Tambah_User', function () {
 Route::get('/Riwayat_Pelanggan', function () {
     return view('Admin.Admin_Riwayat_Pelanggan');
 })->name('Riwayat_Pelanggan');
-
-Route::get('/Penjualan', function () {
-    return view('User.Halaman_Penjualan');
-})->name('Penjualan');
 
 Route::get('/Detail_Barang_Pelanggan/{id}', function () {
     return view('User.Detail_Barang_Pelanggan');

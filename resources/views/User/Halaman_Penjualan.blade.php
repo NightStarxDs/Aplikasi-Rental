@@ -1,3 +1,4 @@
+use Dotenv\Util\Str;
 <x-app3-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -8,123 +9,140 @@
         </div>
     </x-slot>
 
-    <div class="pt-[30px] px-6 pb-6 space-y-10">
+    <div class="px-6 space-y-5">
 
-        {{-- Hero Banner --}}
+        <!-- Hero Banner -->
         <div class="grid grid-cols-3 gap-3 h-48">
             <div class="col-span-2 rounded-2xl overflow-hidden relative">
                 <img src="{{ asset('images/Test.jpg') }}" alt="Banner Utama"
-                     class="w-full h-full object-cover bg-no-repeat bg-center">
+                    class="w-full h-full object-cover bg-no-repeat bg-center">
             </div>
             <div class="flex flex-col gap-3">
                 <div class="flex-1 rounded-2xl overflow-hidden">
                     <img src="{{ asset('images/Test.jpg') }}" alt="Foto 1"
-                         class="w-full h-full object-cover bg-no-repeat bg-center">
+                        class="w-full h-full object-cover bg-no-repeat bg-center">
                 </div>
                 <div class="flex-1 rounded-2xl overflow-hidden">
                     <img src="{{ asset('images/Test.jpg') }}" alt="Foto 2"
-                         class="w-full h-full object-cover bg-no-repeat bg-center">
+                        class="w-full h-full object-cover bg-no-repeat bg-center">
                 </div>
             </div>
         </div>
 
-        {{-- Kategori --}}
         <div class="relative rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5 lg:p-6">
-            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
-                <div class="flex h-full flex-col gap-3 rounded-xl bg-white/70 p-3 sm:p-4">
-                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Alat Camping</p>
-                    <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                        @foreach (['Tenda', 'Sleeping Bag', 'Matras', 'Kompor'] as $item)
-                        <button class="group relative h-20 w-full overflow-hidden rounded-xl border border-gray-200 transition hover:border-emerald-500">
-                            <img
-                                src="{{ asset(match($item) {
-                                    'Tenda' => 'images/Tent.jpg',
-                                    'Sleeping Bag' => 'images/sleapingbag.jpg',
-                                    'Matras' => 'images/Matras.png',
-                                    'Kompor' => 'images/Kompor-Portable.jpg',
-                                    default => 'images/tendadome.jpg',
-                                }) }}"
-                                alt="{{ $item }}"
-                                class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-black/35 transition group-hover:bg-black/45"></div>
-                            <span class="absolute inset-x-1 bottom-1 text-center text-[11px] font-medium text-white leading-none">{{ $item }}</span>
-                        </button>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="flex h-full flex-col gap-3 rounded-xl bg-white/70 p-3 sm:p-4">
-                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Kamera</p>
-                    <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                        @foreach (['Canon', 'Sony', 'Nikon', 'GoPro'] as $item)
-                        <button class="group relative h-20 w-full overflow-hidden rounded-xl border border-gray-200 transition hover:border-emerald-500">
-                            <img
-                                src="{{ asset(match($item) {
-                                    'Canon' => 'images/canon.png',
-                                    'Sony' => 'images/sonyA7.png',
-                                    'Nikon' => 'images/Nikon-D500.jpg',
-                                    'GoPro' => 'images/Go-Pro.jpg',
-                                    default => 'images/dji-osmo.jpg',
-                                }) }}"
-                                alt="{{ $item }}"
-                                class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-black/35 transition group-hover:bg-black/45"></div>
-                            <span class="absolute inset-x-1 bottom-1 text-center text-[11px] font-medium text-white leading-none">{{ $item }}</span>
-                        </button>
-                        @endforeach
-                    </div>
-                </div>
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+        
+        {{-- Alat Camping --}}
+        <div class="flex h-full flex-col gap-3 rounded-xl bg-white/70 p-3 sm:p-4">
+            <a href="{{ route('penjualan.index', ['kategori' => 'Alat Camping']) }}" 
+            class="text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-emerald-600 transition">
+                Alat Camping →
+            </a>
+            
+            <div class="grid grid-cols-8 gap-2">
+                @foreach ([
+                    'Tenda'        => ['db' => 'Tenda',             'icon' => 'fa-house'],
+                    'Sleeping Bag' => ['db' => 'Peralatan Tidur',   'icon' => 'fa-bed'],
+                    'Cooking Set'  => ['db' => 'Peralatan Memasak', 'icon' => 'fa-fire-burner'],
+                    'Penerangan'   => ['db' => 'Penerangan',        'icon' => 'fa-lightbulb'],
+                    'Power & Gas'  => ['db' => 'Power',             'icon' => 'fa-gas-pump'],
+                ] as $label => $data)
+                <a href="{{ route('penjualan.index', ['kategori' => 'Alat Camping', 'subkategori' => $data['db']]) }}" 
+                class="group h-20 w-20 rounded-xl border flex flex-col items-center justify-center gap-2
+                    {{ request('subkategori') == $data['db'] 
+                        ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50 text-emerald-600' 
+                        : 'border-gray-200 bg-white text-gray-400' }} 
+                    transition hover:border-emerald-500 hover:text-emerald-600 hover:bg-emerald-50">
+                    <i class="fa-solid {{ $data['icon'] }} text-xl"></i>
+                    <span class="text-[10px] font-medium leading-tight text-center px-1">{{ $label }}</span>
+                </a>
+                @endforeach
+                @for ($i = 0; $i < (8 - count([
+                    'Tenda', 'Sleeping Bag', 'Cooking Set', 'Penerangan', 'Power & Gas'
+                ])); $i++)
+                    <div class="h-20 w-20"></div>
+                @endfor
             </div>
         </div>
 
-        {{-- Produk Kami --}}
+        {{-- Kamera --}}
+        <div class="flex h-full flex-col gap-3 rounded-xl bg-white/70 p-3 sm:p-4">
+            <a href="{{ route('penjualan.index', ['kategori' => 'Kamera']) }}" 
+            class="text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-emerald-600 transition">
+                Kamera →
+            </a>
+            
+            <div class="grid grid-cols-8 gap-2">
+                @foreach ([
+                    'DSLR'       => ['db' => 'DSLR Cam',         'icon' => 'fa-camera'],
+                    'Mirrorless' => ['db' => 'Mirrorless Cam',   'icon' => 'fa-camera-retro'],
+                    'Video'      => ['db' => 'Video Cam',        'icon' => 'fa-video'],
+                    'Action'     => ['db' => 'Action Cam',       'icon' => 'fa-person-running'],
+                    'Lensa'      => ['db' => 'Lensa',            'icon' => 'fa-circle-dot'],
+                    'Aksesoris'  => ['db' => 'Aksesoris Kamera', 'icon' => 'fa-toolbox'],
+                ] as $label => $data)
+                <a href="{{ route('penjualan.index', ['kategori' => 'Kamera', 'subkategori' => $data['db']]) }}" 
+                class="group h-20 w-20 rounded-xl border flex flex-col items-center justify-center gap-2
+                    {{ request('subkategori') == $data['db'] 
+                        ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50 text-emerald-600' 
+                        : 'border-gray-200 bg-white text-gray-400' }} 
+                    transition hover:border-emerald-500 hover:text-emerald-600 hover:bg-emerald-50">
+                    <i class="fa-solid {{ $data['icon'] }} text-xl"></i>
+                    <span class="text-[10px] font-medium leading-tight text-center px-1">{{ $label }}</span>
+                </a>
+                @endforeach
+                @for ($i = 0; $i < (8 - count([
+                    'DSLR', 'Mirrorless', 'Video', 'Action', 'Lensa', 'Aksesoris'
+                ])); $i++)
+                    <div class="h-20 w-20"></div>
+                @endfor
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Produk Kami -->
         <div>
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-sm font-semibold text-gray-700">Produk Kami</h2>
-                <a href="#" class="text-xs text-emerald-700 hover:underline font-medium">Lihat semua →</a>
+                <a href="{{ route('penjualan.index') }}" class="text-xs text-emerald-700 hover:underline font-medium">Lihat semua →</a>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            @forelse($barang as $item)
+                <a href="{{ route('Detail_Barang_Pelanggan', $item->kode_barang) }}"
+                class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-emerald-400 transition flex flex-col">
 
-                @foreach ([
-                    ['id' => 1, 'nama' => 'Canon EOS R50',   'harga' => 'Rp 25.000', 'kat' => 'Kamera',  'foto' => 'canon-eos-r50.jpg'],
-                    ['id' => 2, 'nama' => 'Tenda Dome 4P',   'harga' => 'Rp 50.000', 'kat' => 'Camping', 'foto' => 'tenda-dome.jpg'],
-                    ['id' => 3, 'nama' => 'Sony A7 III',     'harga' => 'Rp 40.000', 'kat' => 'Kamera',  'foto' => 'sony-a7iii.jpg'],
-                    ['id' => 4, 'nama' => 'Sleeping Bag',    'harga' => 'Rp 15.000', 'kat' => 'Camping', 'foto' => 'sleeping-bag.jpg'],
-                    ['id' => 5, 'nama' => 'DJI Osmo Pocket', 'harga' => 'Rp 20.000', 'kat' => 'Kamera',  'foto' => 'dji-osmo.jpg'],
-                    ['id' => 6, 'nama' => 'Matras Gunung',   'harga' => 'Rp 8.000',  'kat' => 'Camping', 'foto' => 'matras.jpg'],
-                    ['id' => 7, 'nama' => 'GoPro Hero 12',   'harga' => 'Rp 18.000', 'kat' => 'Kamera',  'foto' => 'gopro-hero12.jpg'],
-                    ['id' => 8, 'nama' => 'Carrier 60L',     'harga' => 'Rp 35.000', 'kat' => 'Camping', 'foto' => 'carrier-60l.jpg'],
-                ] as $produk)
-
-                <a href="{{ route('Detail_Barang_Pelanggan', $produk['id']) }}"
-                   class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-emerald-400 hover:shadow-sm transition group">
-                    {{-- Foto Produk --}}
-                    <div 
-                        class="w-full h-[210px] overflow-hidden bg-cover bg-center group-hover:scale-105 transition duration-300"
-                        style="background-image: url('{{ asset('images/sonyA7.png') }}');">
+                    {{-- Gambar Square --}}
+                    <div class="aspect-square w-full overflow-hidden bg-gray-100">
+                        <img src="{{ $item->fotoUtamaUrl() ?? asset('images/default-placeholder.jpg') }}"
+                            alt="{{ $item->nama_barang }}"
+                            class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
                     </div>
+
                     {{-- Info --}}
-                    <div class="p-3 space-y-1.5">
-                        <p class="text-sm font-medium text-gray-800 truncate">{{ $produk['nama'] }}</p>
-                        <p class="text-xs font-semibold text-emerald-700">
-                            {{ $produk['harga'] }}<span class="text-gray-400 font-normal">/Hari</span>
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <span class="inline-block px-2 py-0.5 text-xs bg-gray-100 text-gray-500 rounded-md">
-                                {{ $produk['kat'] }}
+                    <div class="p-2 flex flex-col gap-0.5">
+                        <span class="text-[9px] font-semibold text-emerald-600 uppercase tracking-wider truncate">
+                            {{ $item->labelKategori() }} · {{ $item->subkategori_barang }}
+                        </span>
+                        <h5 class="text-xs font-bold text-gray-800 line-clamp-1 group-hover:text-emerald-700 transition">
+                            {{ $item->nama_barang }}
+                        </h5>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                            <span class="text-xs font-bold text-gray-900">
+                                Rp {{ number_format($item->harga_perhari, 0, ',', '.') }}
                             </span>
-                            <span class="inline-flex items-center gap-1 text-xs text-emerald-600 font-medium">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                                Tersedia
-                            </span>
+                            <span class="text-[10px] text-gray-400">/ hari</span>
                         </div>
                     </div>
                 </a>
-
-                @endforeach
-
-            </div>
+            @empty
+                <div class="col-span-2 md:col-span-4 lg:col-span-6 text-center py-12 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                    <p class="text-sm text-gray-500">Tidak ada produk yang tersedia saat ini.</p>
+                </div>
+            @endforelse
         </div>
-
     </div>
+    </div>
+    <script src="https://kit.fontawesome.com/f19fb034db.js" crossorigin="anonymous"></script>
 </x-app3-layout>
