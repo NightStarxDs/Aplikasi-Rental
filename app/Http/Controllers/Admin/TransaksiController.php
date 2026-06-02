@@ -1,34 +1,97 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Detail_Rental;
+use App\Models\Rental;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
-    Public function index()
+    public function index()
     {
         return view('Admin.Admin_Transaksi');
     }
 
-    Public function Edit_Transaksi()
+    public function editTransaksi()
     {
         return view('Admin.Admin_Edit_Transaksi');
     }
 
-    Public function Hapus_Transaksi()
+    public function hapusTransaksi()
     {
         return view('Admin.Admin_Transaksi');
     }
 
-    Public function Pengambilan_Pengembalian()
+    public function pengambilanPengembalian($kode_rental)
     {
-        return view('Admin.Admin_Pengambilan_Pengembalian');
+        $rental = Rental::with(['user', 'detailRentals.barang'])
+            ->findOrFail($kode_rental);
+
+        $subtotal = $rental->detailRentals->sum(fn ($detail) => $detail->subtotal ?? 0);
+        $dendaKeterlambatan = $rental->detailRentals->sum(fn ($detail) => $detail->denda_keterlambatan ?? 0);
+        $dendaKerusakan = $rental->detailRentals->sum(fn ($detail) => $detail->denda_kerusakan ?? 0);
+        $baseTotal = $rental->total_harga ?? $subtotal;
+        $totalDenda = $rental->total_denda ?? ($dendaKeterlambatan + $dendaKerusakan);
+        $grandTotal = $baseTotal + $totalDenda;
+
+        return view('Admin.Admin_Pengambilan_dan_Pengembalian', compact(
+            'rental',
+            'subtotal',
+            'dendaKeterlambatan',
+            'dendaKerusakan',
+            'grandTotal'
+        ));
     }
 
-    Public function Transaksi_Penyewaan()
+    public function Transaksi_Penyewaan()
     {
-        return view('Admin.Admin_Transaksi_Penyewaan');
+        $details = Detail_Rental::with(['rental.user', 'barang'])
+            ->orderBy('kode_detail', 'desc')
+            ->paginate(10);
+
+        return view('Admin.Admin_Transaksi_Penyewaan', compact('details'));
+    }
+
+    public function updatePengembalian(Request $request, $kode_rental)
+    {
+        $rental = Rental::with('detailRentals')->findOrFail($kode_rental);
+        $action = $request->input('action');
+
+        if ($action === 'ambil') {
+            $rental->status = 'Disewa';
+            $rental->waktu_sewa = $rental->waktu_sewa ?? now();
+            $rental->save();
+
+            return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                ->with('success', 'Transaksi berhasil diperbarui menjadi Disewa.');
+        }
+
+        if ($action === 'kembali') {
+            $totalDenda = 0;
+
+            foreach ($rental->detailRentals as $detail) {
+                $detailId = $detail->kode_detail;
+                $detail->catatan_kondisi = $request->input("catatan_kondisi.$detailId") ?: $detail->catatan_kondisi;
+                $detail->denda_kerusakan = $request->input("denda_kerusakan.$detailId", 0);
+                $detail->denda_keterlambatan = $request->input("denda_keterlambatan.$detailId", 0);
+                $detail->status_detail = 'Lunas';
+                $detail->save();
+
+                $totalDenda += floatval($detail->denda_kerusakan ?? 0) + floatval($detail->denda_keterlambatan ?? 0);
+            }
+
+            $rental->status = 'Selesai';
+            $rental->waktu_kembali_aktual = now();
+            $rental->total_denda = $totalDenda;
+            $rental->save();
+
+            return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                ->with('success', 'Transaksi berhasil dikembalikan dan biaya telah diperbarui.');
+        }
+
+        return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+            ->with('error', 'Aksi tidak dikenali.');
     }
 }

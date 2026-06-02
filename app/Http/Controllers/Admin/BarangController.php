@@ -77,16 +77,17 @@ class BarangController extends Controller
             ->with('success', 'Barang berhasil ditambahkan.');
     }
 
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        $barang = Barang::findOrFail($id);
+        $kode_barang = $request->get('kode_barang');
+        $barang = Barang::findOrFail($kode_barang);
 
         return view('Admin.Admin_Edit_Barang', compact('barang'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        $barang = Barang::findOrFail($id);
+        $kode_barang = $request->get('kode_barang');
 
         $validated = $request->validate([
             'nama_barang'     => ['required', 'string', 'max:100'],
@@ -158,14 +159,11 @@ class BarangController extends Controller
             ->route('Detail_Barang', $barang->kode_barang)
             ->with('success', 'Barang berhasil diperbarui.');
     }
-    public function Hapus_Barang()
-    {
-        return view('Admin.Admin_Inventaris_Barang');
-    }
 
-    public function show(string $id)
+    public function show(request $request)
     {
-        $barang = Barang::findOrFail($id);
+        $kode_barang = $request->get('kode_barang');
+        $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
 
         return view('Admin.Admin_Detail_Barang', compact('barang'));
     }

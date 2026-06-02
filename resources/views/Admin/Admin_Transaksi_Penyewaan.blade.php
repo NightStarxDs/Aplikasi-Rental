@@ -44,117 +44,44 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-center">
-
-                    {{-- 1 --}}
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-3 py-3 text-gray-400 text-xs">1</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">TRX001</td>
-                        <td class="px-3 py-3 text-gray-700">Pelanggan 1</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-01</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-05</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">Rp 500.000</td>
-                        <td class="px-3 py-3">
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-yellow-50 text-yellow-800">
-                                <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 inline-block"></span>Diproses
-                            </span>
-                        </td>
-                        <td class="px-3 py-3">
-                            <a href="{{ route('Pengambilan_dan_Pengembalian') }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                Detail
-                            </a>
-                        </td>
-                    </tr>
-
-                    {{-- 2 --}}
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-3 py-3 text-gray-400 text-xs">2</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">TRX002</td>
-                        <td class="px-3 py-3 text-gray-700">Pelanggan 2</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-01</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-05</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">Rp 500.000</td>
-                        <td class="px-3 py-3">
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-blue-50 text-blue-800">
-                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 inline-block"></span>Disewa
-                            </span>
-                        </td>
-                        <td class="px-3 py-3">
-                            <a href="{{ route('Pengambilan_dan_Pengembalian') }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                Detail
-                            </a>
-                        </td>
-                    </tr>
-
-                    {{-- 3 --}}
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-3 py-3 text-gray-400 text-xs">3</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">TRX003</td>
-                        <td class="px-3 py-3 text-gray-700">Pelanggan 3</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-01</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-05</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">Rp 750.000</td>
-                        <td class="px-3 py-3">
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-50 text-emerald-800">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>Selesai
-                            </span>
-                        </td>
-                        <td class="px-3 py-3">
-                            <a href="{{ route('Pengambilan_dan_Pengembalian') }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                Detail
-                            </a>
-                        </td>
-                    </tr>
-
-                    {{-- 4 --}}
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-3 py-3 text-gray-400 text-xs">4</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">TRX004</td>
-                        <td class="px-3 py-3 text-gray-700">Pelanggan 4</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-02</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-06</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">Rp 300.000</td>
-                        <td class="px-3 py-3">
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-yellow-50 text-yellow-800">
-                                <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 inline-block"></span>Diproses
-                            </span>
-                        </td>
-                        <td class="px-3 py-3">
-                            <a href="{{ route('Pengambilan_dan_Pengembalian') }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                Detail
-                            </a>
-                        </td>
-                    </tr>
-
-                    {{-- 5 --}}
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-3 py-3 text-gray-400 text-xs">5</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">TRX005</td>
-                        <td class="px-3 py-3 text-gray-700">Pelanggan 5</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-02</td>
-                        <td class="px-3 py-3 text-gray-600 text-xs">2026-04-07</td>
-                        <td class="px-3 py-3 font-medium text-gray-800">Rp 450.000</td>
-                        <td class="px-3 py-3">
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-blue-50 text-blue-800">
-                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 inline-block"></span>Disewa
-                            </span>
-                        </td>
-                        <td class="px-3 py-3">
-                            <a href="{{ route('Pengambilan_dan_Pengembalian') }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                Detail
-                            </a>
-                        </td>
-                    </tr>
+                    @if(isset($details) && $details->count())
+                        @foreach($details as $detail)
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-3 py-3 text-gray-400 text-xs">{{ ($details->currentPage()-1) * $details->perPage() + $loop->iteration }}</td>
+                                <td class="px-3 py-3 text-gray-700">{{ $detail->kode_rental }}</td>
+                                <td class="px-3 py-3 text-gray-600">{{ optional($detail->rental->user)->name ?? '-' }}</td>
+                                <td class="px-3 py-3 text-gray-600 text-xs">{{ optional($detail->rental->waktu_sewa) ? \Carbon\Carbon::parse($detail->rental->waktu_sewa)->format('Y-m-d') : '-' }}</td>
+                                <td class="px-3 py-3 text-gray-600 text-xs">{{ optional($detail->rental->waktu_kembali) ? \Carbon\Carbon::parse($detail->rental->waktu_kembali)->format('Y-m-d') : '-' }}</td>
+                                <td class="px-3 py-3 text-gray-600">Rp {{ number_format(optional($detail->rental)->total_harga ?? 0,0,',','.') }}</td>
+                                <td class="px-3 py-3">
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-100 inline-block"></span>{{ trim(optional($detail->rental)->status ?? '-') }}
+                                    </span>
+                                </td>
+                                <td class="px-3 py-3">
+                                    <a href="{{ route('Pengambilan_dan_Pengembalian', ['kode_rental' => $detail->kode_rental]) }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="8" class="py-6 text-sm text-gray-500">Tidak ada transaksi.</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
             <div class="flex items-center justify-between px-4 py-3 border-t border-gray-100 bg-gray-50">
-                <p class="text-xs text-gray-500">Menampilkan 10 dari 10 transaksi</p>
-                <p class="text-xs text-gray-500">Halaman 1 dari 1</p>
+                <p class="text-xs text-gray-500">Menampilkan {{ isset($details) ? $details->count() : 0 }} dari {{ isset($details) ? $details->total() : 0 }} transaksi</p>
+                <p class="text-xs text-gray-500">Halaman {{ isset($details) ? $details->currentPage() : 1 }} dari {{ isset($details) ? $details->lastPage() : 1 }}</p>
+            </div>
+            <div class="px-4 py-3">
+                @if(isset($details))
+                    {{ $details->links() }}
+                @endif
             </div>
         </div>
 

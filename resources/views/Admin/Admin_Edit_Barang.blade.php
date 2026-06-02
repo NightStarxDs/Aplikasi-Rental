@@ -163,12 +163,16 @@
 
                     {{-- Actions --}}
                     <div class="mt-6 flex items-center justify-between gap-2 border-t border-gray-200 pt-5">
-                        <a href="{{ route('Detail_Barang', $barang->kode_barang) }}"
-                            class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-800">
-                            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <polyline points="15 18 9 12 15 6"/>
-                            </svg>
-                            Kembali
+                            <a href="{{ route('Inventaris') }}"
+                                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition">
+
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <polyline points="15 18 9 12 15 6"/>
+                                </svg>
+
+                                Kembali
+                            </a>
                         </a>
 
                         <div class="flex items-center gap-2">

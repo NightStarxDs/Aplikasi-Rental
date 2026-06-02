@@ -147,7 +147,10 @@
             </form>
 
             {{-- Tombol Edit --}}
-            <a href="{{ route('Edit_Barang', $barang->kode_barang) }}"
+            <form action="{{ route('Edit_Barang', $barang->kode_barang) }}" method="POST">
+                @csrf
+                <input type="hidden" name="kode_barang" value="{{ $barang->kode_barang }}">
+                <button type="submit"
                 class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-blue-50 text-blue-700 border border-blue-100 rounded-lg hover:bg-blue-100 transition">
 
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
@@ -157,8 +160,8 @@
                 </svg>
 
                 Edit
-            </a>
-
+                </button>
+            </form>
         </div>
 
 </div>

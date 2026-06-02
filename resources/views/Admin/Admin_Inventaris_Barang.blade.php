@@ -68,7 +68,9 @@
                                 default => ['bg' => 'bg-red-50', 'text' => 'text-red-800', 'dot' => 'bg-red-400'],
                             };
                         @endphp
-                        <tr class="hover:bg-gray-50 transition">
+                        
+                        
+                        <tr class="hover:bg-gray-50 transition">  
                             <td class="px-3 py-3 text-gray-400 text-xs">{{ $loop->iteration }}</td>
                             <td class="px-3 py-3">
                                 <div class="w-20 h-20 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center overflow-hidden mx-auto">
@@ -93,10 +95,25 @@
                                 </span>
                             </td>
                             <td class="px-3 py-3">
-                                <a href="{{ route('Detail_Barang', $barang->kode_barang) }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    Detail
-                                </a>
+                                <form action="{{ route('Detail_Barang') }}" method="POST">
+                                    @csrf
+
+                                    <input type="hidden" name="kode_barang" value="{{ $barang->kode_barang }}">
+
+                                    <button type="submit"
+                                        class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
+
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" viewBox="0 0 24 24">
+
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+
+                                        Detail
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @empty
