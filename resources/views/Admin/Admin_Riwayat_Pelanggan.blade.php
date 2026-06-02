@@ -187,7 +187,7 @@
                                 <td class="px-4 py-3">
 
                                     @php
-                                        $statusColor = match ($rental->status) {
+                                        $statusColor = match ($rental->status_rental) {
                                             'Selesai' => 'bg-emerald-100 text-emerald-700',
                                             'Disewa' => 'bg-blue-100 text-blue-700',
                                             default => 'bg-gray-100 text-gray-700',
@@ -195,7 +195,7 @@
                                     @endphp
 
                                     <span class="px-2 py-1 text-xs rounded-full {{ $statusColor }}">
-                                        {{ $rental->status }}
+                                        {{ $rental->status_rental }}
                                     </span>
 
                                 </td>

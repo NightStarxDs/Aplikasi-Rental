@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
         // 3. Barang yang sedang disewa saat ini
         $barangDisewa = Detail_Rental::whereHas('rental', function ($q) {
-            $q->where('status', 'Disewa');
+            $q->where('status_rental', 'Disewa');
         })->count();
 
         // 4. Total seluruh transaksi

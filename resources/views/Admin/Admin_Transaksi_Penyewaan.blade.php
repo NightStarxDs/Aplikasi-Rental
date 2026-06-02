@@ -55,7 +55,7 @@
                                 <td class="px-3 py-3 text-gray-600">Rp {{ number_format(optional($detail->rental)->total_harga ?? 0,0,',','.') }}</td>
                                 <td class="px-3 py-3">
                                     <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-100 inline-block"></span>{{ trim(optional($detail->rental)->status ?? '-') }}
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-100 inline-block"></span>{{ trim(optional($detail->rental)->status_rental ?? '-') }}
                                     </span>
                                 </td>
                                 <td class="px-3 py-3">

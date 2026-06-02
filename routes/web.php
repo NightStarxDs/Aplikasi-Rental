@@ -2,7 +2,6 @@
 require __DIR__ . '/auth.php';
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DataBarang;
 use App\Models\User;
 use App\Http\Controllers\Admin\BarangController;
 use App\Http\Controllers\User\PenjualanController;
@@ -45,13 +44,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
-
-
-Route::get('/DataBarang', [DataBarang::class, 'tampilkan']);
-
 Route::get('/Admin_Edit_User', function () {
     return view('Admin.Admin_Edit_User');
 });
@@ -91,14 +83,10 @@ Route::get('/Profil_Pelanggan', function () {
     return view('User.Profil_Pelanggan');
 });
 
-Route::get('/LandingPage', function () {
-    return view('LandingPage');
-});
-
 Route::get('/Tambah_Barang', [BarangController::class, 'create'])->name('Tambah_Barang');
 Route::post('/Tambah_Barang', [BarangController::class, 'store'])->name('Tambah_Barang.store');
 
-Route::post('/Detail_Barang', [BarangController::class, 'show'])->name('Detail_Barang');
+Route::match(['get', 'post'], '/Detail_Barang', [BarangController::class, 'show'])->name('Detail_Barang');
 
 Route::get('/Pengambilan_dan_Pengembalian/{kode_rental}', [TransaksiController::class, 'pengambilanPengembalian'])
     ->name('Pengambilan_dan_Pengembalian');
@@ -117,13 +105,9 @@ Route::get('/Tambah_User', function () {
 Route::get('/admin/users/{id}/history', [RiwayatPelangganController::class, 'riwayat'])
     ->name('admin.users.history');
 
-Route::get('/Detail_Barang_Pelanggan/{id}', function () {
-    return view('User.Detail_Barang_Pelanggan');
-})->name('Detail_Barang_Pelanggan');
 
 
-
-Route::post('/Edit_Barang', [BarangController::class, 'edit'])->name('Edit_Barang');
+Route::match(['get', 'post'], '/Edit_Barang', [BarangController::class, 'edit'])->name('Edit_Barang');
 Route::put('/Edit_Barang', [BarangController::class, 'update'])->name('Edit_Barang.update');
 
 Route::delete('/barang/{kode_barang}', [BarangController::class, 'destroy'])
@@ -134,17 +118,5 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Resource CRUD: index, create, store, show, edit, update, destroy
 Route::resource('users', PelangganController::class)->except(['show']);
 
-    // Rute tambahan: riwayat transaksi pelanggan
-Route::get('users/{user}/history', [PelangganController::class, 'history'])
-        ->name('users.history');
-});
-
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-
-    Route::get('/users/{user}/edit', [PelangganController::class, 'edit'])
-        ->name('users.edit');
-
-    Route::put('/users/{user}', [PelangganController::class, 'update'])
-        ->name('users.update');
 
 });

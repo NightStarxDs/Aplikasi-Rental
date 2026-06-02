@@ -126,14 +126,5 @@ class PelangganController extends Controller
             ->with('success', 'Pengguna berhasil dihapus.');
     }
 
-    // ═══════════════════════════════════════════════════
-    // HISTORY — Riwayat transaksi pelanggan
-    // GET /admin/users/{user}/history
-    // ═══════════════════════════════════════════════════
-    public function history(User $user)
-    {
-        $Rental = $user->Rental()->latest()->paginate(10);
 
-        return view('Admin.Admin_Riwayat_Pelanggan', compact('user', 'Rental'));
-    }
 }

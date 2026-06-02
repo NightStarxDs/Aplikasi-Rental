@@ -16,7 +16,9 @@ class Rental extends Model implements PerhitunganDenda
         'waktu_kembali_aktual',
         'total_harga',
         'total_denda',
-        'status',
+        'status_rental',
+        'metode_pembayaran',
+        'bukti_pembayaran',
     ];
 
     protected $casts = [

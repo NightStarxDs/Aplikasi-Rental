@@ -61,7 +61,7 @@ class BarangController extends Controller
             'kategori_barang' => $validated['kategori'] === 'kamera' ? 'Kamera' : 'Alat Camping',
             'subkategori_barang' => $validated['subkategori'],
             'catatan_kondisi_barang'    => $validated['catatan_kondisi_barang'] ?? null,
-            'deskripsi_barang' => $validated['deskripsi'],
+            'deskripsi_barang' => $validated['deskripsi'] ?? null,
             'stok' => $stok,
             'harga_perhari' => $hargaPerHari,
             'harga_perjam' => round($hargaPerHari / 24, 2),
@@ -88,6 +88,7 @@ class BarangController extends Controller
     public function update(Request $request)
     {
         $kode_barang = $request->get('kode_barang');
+        $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
 
         $validated = $request->validate([
             'nama_barang'     => ['required', 'string', 'max:100'],
@@ -147,7 +148,7 @@ class BarangController extends Controller
             'nama_barang'        => $validated['nama_barang'],
             'kategori_barang'    => $validated['kategori'] === 'kamera' ? 'Kamera' : 'Alat Camping',
             'subkategori_barang' => $validated['subkategori'],           // ← dari input user
-            'deskripsi_barang'   => $validated['deskripsi'],
+            'deskripsi_barang'   => $validated['deskripsi'] ?? null,
             'catatan_kondisi_barang'    => $validated['catatan_kondisi_barang'] ?? null, // ← tambah
             'stok'               => $stok,
             'harga_perhari'      => $hargaPerHari,

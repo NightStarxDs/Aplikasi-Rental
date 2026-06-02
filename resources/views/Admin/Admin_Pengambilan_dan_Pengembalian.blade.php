@@ -1,4 +1,4 @@
-﻿<x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Pengambilan & Pengembalian') }}
@@ -6,7 +6,7 @@
     </x-slot>
 
     @php
-        $status = trim($rental->status ?? '');
+        $status = trim($rental->status_rental ?? '');
         $statusLabel = 'Dikembalikan';
         $badgeClasses = 'bg-gray-50 text-gray-800';
 

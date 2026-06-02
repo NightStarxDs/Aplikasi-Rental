@@ -60,7 +60,7 @@ class TransaksiController extends Controller
         $action = $request->input('action');
 
         if ($action === 'ambil') {
-            $rental->status = 'Disewa';
+            $rental->status_rental = 'Disewa';
             $rental->waktu_sewa = $rental->waktu_sewa ?? now();
             $rental->save();
 
@@ -82,7 +82,7 @@ class TransaksiController extends Controller
                 $totalDenda += floatval($detail->denda_kerusakan ?? 0) + floatval($detail->denda_keterlambatan ?? 0);
             }
 
-            $rental->status = 'Selesai';
+            $rental->status_rental = 'Selesai';
             $rental->waktu_kembali_aktual = now();
             $rental->total_denda = $totalDenda;
             $rental->save();
