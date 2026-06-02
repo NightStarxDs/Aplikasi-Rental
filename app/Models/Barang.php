@@ -21,7 +21,6 @@ class Barang extends Model
         'status_barang',
     ];
 
-    // Konstanta enum subkategori
     const SUBKATEGORI = [
         'Kamera' => ['DSLR Cam', 'Mirrorless Cam', 'Video Cam', 'Action Cam', 'Lensa', 'Aksesoris Kamera', 'Lighting', 'Audio'],
         'Alat Camping' => ['Tenda', 'Peralatan Tidur', 'Peralatan Memasak', 'Penerangan', 'Power'],
@@ -38,23 +37,26 @@ class Barang extends Model
     public function fotoUtama(): ?string
     {
         $gambar = $this->gambar_barang;
-
-        if (! is_array($gambar) || empty($gambar)) {
-            return null;
-        }
-
+        if (! is_array($gambar) || empty($gambar)) { return null; }
         return $gambar[0];
     }
 
     public function fotoUtamaUrl(): ?string
     {
         $foto = $this->fotoUtama();
-
         return $foto ? asset('storage/' . $foto) : null;
     }
 
     public function labelKategori(): string
     {
         return $this->kategori_barang === 'Alat Camping' ? 'Camping' : $this->kategori_barang;
+    }
+
+    // =========================================================================
+    // SINKRONISASI METHOD CLASS DIAGRAM
+    // =========================================================================
+    public function cekKetersediaan(): bool
+    {
+        return $this->stok > 0 && $this->status_barang === 'Tersedia';
     }
 }

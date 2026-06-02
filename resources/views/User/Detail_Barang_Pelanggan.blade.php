@@ -8,45 +8,70 @@
         </div>
     </x-slot>
 
-    <div class="py-6 px-6 pt-15 space-y-4">
+    @php
+        $fotos = collect($barang->gambar_barang ?? [])->map(fn ($f) => asset('storage/' . $f))->values();
+        $fotoUtama = $fotos->first();
+        $thumbnailFotos = $fotos->slice(1);
+        $statusClass = match ($barang->status_barang) {
+            'Tersedia' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-800', 'dot' => 'bg-emerald-500'],
+            'Sedikit' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800', 'dot' => 'bg-amber-500'],
+            default => ['bg' => 'bg-red-50', 'text' => 'text-red-800', 'dot' => 'bg-red-400'],
+        };
+    @endphp
+    
+    <div class="py-6 px-6 pt-15 space-y-4"  x-data="{ activeFoto: @js($fotoUtama) }">
 
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
             <div class="flex gap-5">
 
-                {{-- Foto dengan Thumbnail --}}
-                <div class="flex-shrink-0 flex flex-col gap-2">
+            {{-- Foto dengan Thumbnail --}}
+            <div class="flex-shrink-0 flex flex-col gap-2">
+                <div class="w-[295px] h-[250px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center">
+                    <template x-if="activeFoto">
+                        <div class="w-full h-full bg-cover bg-center transition duration-300"
+                            :style="`background-image: url('${activeFoto}')`"></div>
+                    </template>
+                    <template x-if="!activeFoto">
+                        <span class="text-sm text-gray-400">Tidak ada foto</span>
+                    </template>
+                </div>
 
-                    {{-- Foto Utama --}}
-                    <div class="w-[295px] h-[250px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center">
-                        <div class="flex flex-col items-center gap-2 text-gray-400 w-full h-[210px] overflow-hidden bg-cover bg-center group-hover:scale-105 transition duration-300"
-                        style="background-image: url('{{ asset('images/sonyA7.png') }}');">
-                        </div>
-                    </div>
-
-                    {{-- 4 Thumbnail --}}
+                    @if ($thumbnailFotos->count() > 0)
                     <div class="grid grid-cols-4 gap-1.5">
-                        @foreach([0,1,2,3] as $i)
-                        <div class="aspect-square bg-white border border-gray-200 rounded-lg flex items-center justify-center cursor-pointer hover:border-emerald-400 transition" 
-                        style="background-image: url('{{ asset('images/sonyA7.png') }}'); background-size: cover; background-position: center;">
-                        </div>
+                        @foreach ($thumbnailFotos as $foto)
+                            <button type="button"
+                                @click="activeFoto = '{{ $foto }}'"
+                                :class="activeFoto === '{{ $foto }}' ? 'border-emerald-500 ring-1 ring-emerald-500' : 'border-gray-200'"
+                                class="aspect-square bg-white border rounded-lg cursor-pointer hover:border-emerald-400 transition bg-cover bg-center"
+                                style="background-image: url('{{ $foto }}');">
+                            </button>
                         @endforeach
                     </div>
-
-                </div>
+                @endif
+            </div>
 
                 {{-- Info + Kuantitas + Tombol --}}
                 <div class="flex flex-col justify-between flex-1 gap-3">
 
                     {{-- Info Barang --}}
                     <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-2">
                         <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
-                            Kamera
+                            {{ $barang->kategori_barang }} 
                         </span>
-                        <p class="text-5xl font-bold text-gray-800">Canon EOS R50</p>
+                        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
+                            {{ $barang->subkategori_barang }} 
+                        </span>
+                    </div>
+                        <p class="text-5xl font-bold text-gray-800">{{ $barang->nama_barang }}</p>
                         <p class="text-3xl font-semibold text-emerald-700">
-                            Rp 25.000
+                            Rp {{ number_format($barang->harga_perhari, 0, ',', '.') }}
                             <span class="text-base font-normal text-gray-400">/ Hari</span>
+                        </p>
+                        <p class="text-3xl font-semibold text-emerald-700">
+                            Rp {{ number_format($barang->harga_perjam, 0, ',', '.') }}
+                            <span class="text-base font-normal text-gray-400">/ Jam</span>
                         </p>
                     
 
@@ -69,7 +94,9 @@
                             </div>
                         </div>
                     </div>
-                        {{-- Tombol Aksi --}}
+                        <form action="{{ route('cart.add', $barang->kode_barang) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="qty" id="qty-input" value="1">
                         <div class="flex items-center gap-2">
                             <x-primary-button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg transition">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -80,7 +107,7 @@
                                 Tambah Keranjang
                             </x-primary-button>
                         </div>
-
+                        </form>
                     </div>
                 </div>
 
@@ -98,14 +125,14 @@
             </div>
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
                 <p class="text-xs text-gray-500 mb-1">Stok Tersedia</p>
-                <p class="text-base font-semibold text-gray-800">5 Unit</p>
+                <p class="text-base font-semibold text-gray-800">{{ $barang->stok }} Unit</p>
             </div>
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
-                <p class="text-xs text-gray-500 mb-1">Status Barang</p>
-                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-800">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                    Tersedia
-                </span>
+                <p class="text-xs text-gray-500 mb-1">Status Barang</p>    
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium {{ $statusClass['bg'] }} {{ $statusClass['text'] }}">
+                <span class="w-1.5 h-1.5 rounded-full {{ $statusClass['dot'] }}"></span>
+                {{ $barang->status_barang }}
+</span>
             </div>
         </div>
 
@@ -113,15 +140,13 @@
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
             <h2 class="text-sm font-semibold text-gray-700 mb-2">Deskripsi Barang</h2>
             <p class="text-sm text-gray-500 leading-relaxed">
-                Kamera mirrorless Canon EOS R50 dengan sensor APS-C 24.2 MP, cocok untuk pemula
-                maupun vlogger. Dilengkapi dengan fitur autofocus cepat, stabilisasi video, dan
-                layar putar. Ringan dan mudah dibawa ke mana saja. Tersedia dengan lensa kit 18-45mm.
+                {{ $barang->deskripsi_barang ?: 'Tidak ada deskripsi untuk barang ini.' }}
             </p>
         </div>
 
         {{-- Tombol Kembali --}}
         <div class="flex items-center justify-between pt-1">
-            <a href="{{ route('Penjualan') }}"
+            <a href="{{ route('penjualan.index') }}"
                 class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <polyline points="15 18 9 12 15 6"/>
@@ -137,7 +162,10 @@
         function ubahQty(n) {
             const el  = document.getElementById('qty');
             const val = parseInt(el.textContent) + n;
-            if (val >= 1 && val <= 5) el.textContent = val;
+            if (val >= 1 && val <= 5) {
+                el.textContent = val;
+                document.getElementById('qty-input').value = val;
+            }
         }
     </script>
 

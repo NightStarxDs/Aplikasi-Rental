@@ -1,14 +1,14 @@
 <nav class="fixed start-0 top-0 z-20 h-[60px] w-full border-b border-gray-200 bg-white text-gray-800">
     <div class="mx-[40px] flex h-full max-w-[1440px] flex-wrap items-center justify-between">
         <h1 class="font-extrabold text-xl">
-          <a href="/" class="text-gray-950 cursor-pointer block">
-              <span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
-          </a>
+        <a href="/" class="text-gray-950 cursor-pointer block">
+            <span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
+        </a>
         </h1>
 
         <button data-collapse-toggle="mega-menu-full" type="button" 
             class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden 
-                   hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" 
+                hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" 
             aria-controls="mega-menu-full" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -21,14 +21,14 @@
                 <li>
                     <a href="#" 
                         class="block py-2 px-3 text-primary font-semibold border-b-2 border-primary
-                               md:border-b-2 md:border-primary md:p-0 md:pb-1" 
+                            md:border-b-2 md:border-primary md:p-0 md:pb-1" 
                         aria-current="page">Home</a>
                 </li>
                 <li>
                     <button id="mega-menu-full-dropdown-button" data-collapse-toggle="mega-menu-full-dropdown" 
                         class="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-600 
-                               border-b border-gray-100 md:w-auto md:border-0 
-                               hover:text-primary md:p-0 transition-colors duration-150">
+                            border-b border-gray-100 md:w-auto md:border-0 
+                            hover:text-primary md:p-0 transition-colors duration-150">
                         Company
                         <svg class="w-4 h-4 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
@@ -38,12 +38,12 @@
                 <li>
                     <a href="#" 
                         class="block py-2 px-3 text-gray-600 border-b border-gray-100 
-                               hover:text-primary md:border-0 md:p-0 transition-colors duration-150">Marketplace</a>
+                            hover:text-primary md:border-0 md:p-0 transition-colors duration-150">Marketplace</a>
                 </li>
                 <li>
                     <a href="#" 
                         class="block py-2 px-3 text-gray-600 border-b border-gray-100 
-                               hover:text-primary md:border-0 md:p-0 transition-colors duration-150">Resources</a>
+                            hover:text-primary md:border-0 md:p-0 transition-colors duration-150">Resources</a>
                 </li>
                 <li>
                     <a href="{{ route('login') }}">

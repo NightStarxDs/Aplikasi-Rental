@@ -10,8 +10,17 @@ use App\Http\Controllers\Admin\PelangganController;
 use App\Http\Controllers\Admin\RiwayatPelangganController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransaksiController;
+use App\Http\Controllers\User\KeranjangController;
+
 
 Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
+Route::post('/Detail_Barang_Pelanggan', [PenjualanController::class, 'Detail_Barang'])->name('Detail_Barang_Pelanggan');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/Keranjang', [KeranjangController::class, 'index'])->name('Keranjang');
+    Route::post('/Keranjang/tambah/{kode_barang}', [PenjualanController::class, 'addToCart'])->name('cart.add');
+    Route::get('/checkout/sukses/{kode_rental}', [PenjualanController::class, 'checkoutSuccess'])->name('checkout.success');
+});
 
 Route::get('/', function () {
     return view('LandingPage');
@@ -112,9 +121,7 @@ Route::get('/Detail_Barang_Pelanggan/{id}', function () {
     return view('User.Detail_Barang_Pelanggan');
 })->name('Detail_Barang_Pelanggan');
 
-Route::get('/Keranjang', function () {
-    return view('user.Keranjang');
-})->name('Keranjang');
+
 
 Route::post('/Edit_Barang', [BarangController::class, 'edit'])->name('Edit_Barang');
 Route::put('/Edit_Barang', [BarangController::class, 'update'])->name('Edit_Barang.update');

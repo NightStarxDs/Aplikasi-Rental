@@ -1,4 +1,3 @@
-use Dotenv\Util\Str;
 <x-app3-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -110,8 +109,10 @@ use Dotenv\Util\Str;
 
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
             @forelse($barang as $item)
-                <a href="{{ route('Detail_Barang_Pelanggan', $item->kode_barang) }}"
-                class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-emerald-400 transition flex flex-col">
+                <form action="{{ route('Detail_Barang_Pelanggan') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $item->kode_barang }}">
+                <button type="submit" class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-emerald-400 transition flex flex-col">
 
                     {{-- Gambar Square --}}
                     <div class="aspect-square w-full overflow-hidden bg-gray-100">
@@ -121,7 +122,7 @@ use Dotenv\Util\Str;
                     </div>
 
                     {{-- Info --}}
-                    <div class="p-2 flex flex-col gap-0.5">
+                    <div class="p-2 flex flex-col gap-0.5 text-left">
                         <span class="text-[9px] font-semibold text-emerald-600 uppercase tracking-wider truncate">
                             {{ $item->labelKategori() }} · {{ $item->subkategori_barang }}
                         </span>
@@ -135,7 +136,8 @@ use Dotenv\Util\Str;
                             <span class="text-[10px] text-gray-400">/ hari</span>
                         </div>
                     </div>
-                </a>
+                </button>
+                </form>
             @empty
                 <div class="col-span-2 md:col-span-4 lg:col-span-6 text-center py-12 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
                     <p class="text-sm text-gray-500">Tidak ada produk yang tersedia saat ini.</p>

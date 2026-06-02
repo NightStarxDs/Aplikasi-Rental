@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Contracts\PerhitunganDenda;
 
-class Detail_Rental extends Model
+class Detail_Rental extends Model implements PerhitunganDenda
 {
     protected $table = 'detail_rental';
     protected $primaryKey = 'kode_detail';
@@ -29,5 +30,16 @@ class Detail_Rental extends Model
     public function barang()
     {
         return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
+    }
+
+
+    public function hitungDenda_Keterlambatan(): float
+    {
+        return 0.0;
+    }
+
+    public function hitungDenda_Kerusakan(): float
+    {
+        return 0.0;
     }
 }
