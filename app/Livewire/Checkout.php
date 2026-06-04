@@ -74,7 +74,7 @@ class Checkout extends Component
                     'denda_keterlambatan' => 0.0,
                     'denda_kerusakan'     => 0.0,
                     'subtotal'            => $subtotalItem,
-                    'status_detail'       => 'Diajukan',
+                    'status_detail'       => 'Menunggu',
                 ]);
                 
                 // Hapus barang yang berhasil dicheckout dari keranjang (session)
