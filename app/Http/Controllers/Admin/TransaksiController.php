@@ -45,13 +45,31 @@ class TransaksiController extends Controller
         ));
     }
 
-    public function Transaksi_Penyewaan()
+    public function Transaksi_Penyewaan(Request $request)
     {
-        $details = Detail_Rental::with(['rental.user', 'barang'])
-            ->orderBy('kode_detail', 'desc')
-            ->paginate(10);
+        $status = $request->input('status');
+        $search = $request->input('search');
 
-        return view('Admin.Admin_Transaksi_Penyewaan', compact('details'));
+        $query = Rental::with('user');
+
+        if ($status) {
+            $query->where('status_rental', $status);
+        }
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('kode_rental', 'like', "%{$search}%")
+                  ->orWhereHas('user', function ($uq) use ($search) {
+                      $uq->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $rentals = $query->orderBy('kode_rental', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('Admin.Admin_Transaksi_Penyewaan', compact('rentals'));
     }
 
     public function updatePengembalian(Request $request, $kode_rental)

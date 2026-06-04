@@ -1,3 +1,3 @@
 <x-app3-layout>
-    @livewire('cart') 
+    @livewire('cart')
 </x-app3-layout>
