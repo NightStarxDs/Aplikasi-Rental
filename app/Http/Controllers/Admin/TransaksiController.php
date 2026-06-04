@@ -59,9 +59,9 @@ class TransaksiController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('kode_rental', 'like', "%{$search}%")
-                  ->orWhereHas('user', function ($uq) use ($search) {
-                      $uq->where('name', 'like', "%{$search}%");
-                  });
+                    ->orWhereHas('user', function ($uq) use ($search) {
+                        $uq->where('name', 'like', "%{$search}%");
+                });
             });
         }
 

@@ -26,9 +26,22 @@
         $buttonDisabled = in_array($status, ['Dikembalikan', 'Selesai']);
         $showCondition = $status !== 'Diajukan';
         $duration = null;
+        $durationLabel = '-';
 
         if ($rental->waktu_sewa && $rental->waktu_kembali) {
-            $duration = $rental->waktu_sewa->diffInDays($rental->waktu_kembali);
+            $durationDays = (int) $rental->waktu_sewa->diffInDays($rental->waktu_kembali);
+            $durationHours = (int) $rental->waktu_sewa->diffInHours($rental->waktu_kembali);
+
+            $isDailyRental = $rental->waktu_sewa->format('H:i:s') === '00:00:00'
+                && $rental->waktu_kembali->format('H:i:s') === '23:59:59';
+
+            if ($isDailyRental) {
+                $duration = max($durationDays, 1);
+                $durationLabel = $duration . ' Hari';
+            } else {
+                $duration = max($durationHours, 1);
+                $durationLabel = $duration . ' Jam';
+            }
         }
 
         $returnDeadline = $rental->waktu_kembali ? $rental->waktu_kembali->format('Y-m-d H:i') : '-';
@@ -91,7 +104,9 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-400 mb-1">Durasi</p>
-                        <p class="text-sm font-medium text-gray-800">{{ $duration !== null ? $duration . ' Hari' : '-' }}</p>
+                        <p class="text-sm font-medium text-gray-800">
+                            {{ $durationLabel }}
+                        </p>
                     </div>
                 </div>
             </div>
