@@ -1,9 +1,9 @@
 <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white border-b shadow-sm">
     <div class="flex-shrink-0 inline-flex gap-2 items-center">
         <h1 class="font-extrabold text-xl">
-          <a href="/" class="text-gray-950 cursor-pointer block">
-              <span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
-          </a>
+            <a href="/" class="text-gray-950 cursor-pointer block">
+                <span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
+            </a>
         </h1>
     </div>
 
@@ -17,12 +17,12 @@
     <div class="flex items-center gap-4">
         <a href="{{ route('Keranjang') }}" class="flex items-center">
         <button class="border border-transparent hover:border-emerald-200 hover:bg-emerald-50 rounded-md p-1 transition-colors">
-          <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
-          </svg>
+            <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+            </svg>
         </button>
     </a>
-          
+
         <div class="h-6 w-px bg-gray-300"></div>
         @if (Route::has('login'))
                 <nav class="items-center justify-end">
@@ -51,11 +51,20 @@
                             <li>
                                 <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Profil</a>
                             </li>
+                            
                             <li>
-                                <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                        Logout
+                                    </button>
+                                </form>
                             </li>
                             <li>
-                                <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign out</a>
+                                <a href="{{ route('users.history') }}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                    History
+                                </a>
                             </li>
                             </ul>
                         </div>

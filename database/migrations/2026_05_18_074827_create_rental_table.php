@@ -19,8 +19,7 @@ return new class extends Migration
             $table->dateTime('waktu_kembali_aktual')->nullable();
             $table->decimal('total_harga', 15, 2)->nullable();
             $table->decimal('total_denda', 15, 2)->nullable();
-            $table->enum('status_rental', ['Disewa', 'Dikembalikan ', 'Selesai', 'Dibatalkan'])->default('Disewa');
-            
+            $table->enum('status_rental', ['Diajukan', 'Diambil', 'Disewa', 'Dikembalikan', 'Selesai', 'Dibatalkan'])->default('Diajukan');
         });
     }
 

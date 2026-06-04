@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BarangController;
 use App\Http\Controllers\User\PenjualanController;
 use App\Http\Controllers\Admin\PelangganController;
 use App\Http\Controllers\Admin\RiwayatPelangganController;
+use App\Http\Controllers\User\RiwayatPelangganController as UserRiwayatPelangganController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\User\KeranjangController;
@@ -105,7 +106,9 @@ Route::get('/Tambah_User', function () {
 Route::get('/admin/users/{id}/history', [RiwayatPelangganController::class, 'riwayat'])
     ->name('admin.users.history');
 
-
+Route::get('/riwayat', [UserRiwayatPelangganController::class, 'riwayat'])
+    ->name('users.history')
+    ->middleware('auth');
 
 Route::match(['get', 'post'], '/Edit_Barang', [BarangController::class, 'edit'])->name('Edit_Barang');
 Route::put('/Edit_Barang', [BarangController::class, 'update'])->name('Edit_Barang.update');

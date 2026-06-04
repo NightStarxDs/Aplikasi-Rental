@@ -57,7 +57,7 @@ class Checkout extends Component
                 'waktu_kembali_aktual' => $this->checkoutData['waktu_kembali'],
                 'total_harga' => $this->checkoutData['total_harga'],
                 'total_denda' => 0.0,
-                'status_rental' => 'Disewa', // default based on migration
+                'status_rental' => 'Diajukan',
                 'metode_pembayaran' => $this->paymentMethod,
                 'bukti_pembayaran' => $buktiPath,
             ]);
@@ -74,7 +74,7 @@ class Checkout extends Component
                     'denda_keterlambatan' => 0.0,
                     'denda_kerusakan'     => 0.0,
                     'subtotal'            => $subtotalItem,
-                    'status_detail'       => 'Menunggu',
+                    'status_detail'       => 'Diajukan',
                 ]);
                 
                 // Hapus barang yang berhasil dicheckout dari keranjang (session)
