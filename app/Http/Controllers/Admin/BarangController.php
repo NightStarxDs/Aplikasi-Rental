@@ -9,9 +9,34 @@ use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::orderByDesc('kode_barang')->paginate(10);
+        $query = Barang::orderByDesc('kode_barang');
+
+        if ($request->filled('search')) {
+            $query->where('nama_barang', 'like', '%'.$request->search.'%');
+        }
+
+        if ($request->filled('kategori')) {
+            $query->where('kategori_barang', $request->kategori);
+        }
+
+        if ($request->filled('subkategori')) {
+            $query->where('subkategori_barang', $request->subkategori);
+        }
+
+        if ($request->filled('status')) {
+            $statusMap = [
+                'tersedia' => 'Tersedia',
+                'sedikit' => 'Sedikit',
+                'tidak_tersedia' => 'Tidak Tersedia',
+            ];
+            if (isset($statusMap[$request->status])) {
+                $query->where('status_barang', $statusMap[$request->status]);
+            }
+        }
+
+        $barangs = $query->paginate(10)->withQueryString();
 
         return view('Admin.Admin_Inventaris_Barang', compact('barangs'));
     }
