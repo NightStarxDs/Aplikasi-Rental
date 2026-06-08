@@ -7,7 +7,7 @@
 
     @php
         $status = trim($rental->status_rental ?? '');
-        $statusLabel = 'Dikembalikan';
+        $statusLabel = 'Status Tidak Diketahui';
         $badgeClasses = 'bg-gray-50 text-gray-800';
 
         if ($status === 'Diajukan') {
@@ -16,14 +16,17 @@
         } elseif ($status === 'Disewa') {
             $statusLabel = 'Disewa';
             $badgeClasses = 'bg-blue-50 text-blue-700';
-        } elseif ($status === 'Selesai') {
-            $statusLabel = 'Selesai';
+        } elseif ($status === 'Dikembalikan') {
+            $statusLabel = 'Dikembalikan';
             $badgeClasses = 'bg-emerald-50 text-emerald-800';
+        } elseif ($status === 'Dibatalkan') {
+            $statusLabel = 'Dibatalkan';
+            $badgeClasses = 'bg-red-50 text-red-700';
         }
 
         $buttonAction = $status === 'Diajukan' ? 'ambil' : 'kembali';
         $buttonLabel = $status === 'Diajukan' ? 'Barang Diambil' : ($status === 'Disewa' ? 'Barang Dikembalikan' : 'Transaksi Selesai');
-        $buttonDisabled = in_array($status, ['Dikembalikan', 'Selesai']);
+        $buttonDisabled = in_array($status, ['Dikembalikan', 'Dibatalkan']);
         $showCondition = $status !== 'Diajukan';
         $duration = null;
         $durationLabel = '-';
@@ -209,7 +212,7 @@
                                         <p class="text-xs text-gray-500">{{ $detail->catatan_kondisi ?: 'Tidak ada catatan awal.' }}</p>
                                     </td>
                                     <td class="px-4 py-3">
-                                        @if($status === 'Selesai')
+                                        @if($status === 'Dikembalikan')
                                             <p class="text-xs text-gray-500">{{ $detail->catatan_kondisi ?: 'Tidak ada catatan akhir.' }}</p>
                                         @else
                                             <textarea name="catatan_kondisi[{{ $detail->kode_detail }}]" placeholder="Catatan kondisi akhir..."
@@ -217,7 +220,7 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-3 text-center">
-                                        @if($status === 'Selesai')
+                                        @if($status === 'Dikembalikan')
                                             <span class="text-xs text-gray-800">Rp {{ number_format($detail->denda_kerusakan ?? 0,0,',','.') }}</span>
                                         @else
                                             <div class="flex items-center gap-1 justify-center">
@@ -228,7 +231,7 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-3 text-center">
-                                        @if($status === 'Selesai')
+                                        @if($status === 'Dikembalikan')
                                             <span class="text-xs text-gray-800">Rp {{ number_format($detail->denda_keterlambatan ?? 0,0,',','.') }}</span>
                                         @else
                                             <div class="flex items-center gap-1 justify-center">

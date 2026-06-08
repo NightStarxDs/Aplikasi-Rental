@@ -100,7 +100,7 @@ class TransaksiController extends Controller
                 $totalDenda += floatval($detail->denda_kerusakan ?? 0) + floatval($detail->denda_keterlambatan ?? 0);
             }
 
-            $rental->status_rental = 'Selesai';
+            $rental->status_rental = 'Dikembalikan';
             $rental->waktu_kembali_aktual = now();
             $rental->total_denda = $totalDenda;
             $rental->save();

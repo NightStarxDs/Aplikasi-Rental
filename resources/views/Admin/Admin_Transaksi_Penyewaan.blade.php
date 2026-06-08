@@ -14,9 +14,9 @@
         <form action="{{ route('Transaksi') }}" method="GET" class="flex items-center mb-4">
             <select name="status" onchange="this.form.submit()" class="px-3 py-2 text-sm text-white bg-emerald-800 hover:bg-emerald-900 rounded-l-lg outline-none cursor-pointer">
                 <option value="">Semua Status</option>
+                <option value="Diajukan" {{ request('status') === 'Diajukan' ? 'selected' : '' }}>Diajukan</option>
                 <option value="Disewa" {{ request('status') === 'Disewa' ? 'selected' : '' }}>Disewa</option>
-                <option value="Selesai" {{ request('status') === 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                <option value="Dikembalikan " {{ request('status') === 'Dikembalikan ' ? 'selected' : '' }}>Dikembalikan</option>
+                <option value="Dikembalikan" {{ request('status') === 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
                 <option value="Dibatalkan" {{ request('status') === 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
             </select>
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kode transaksi atau nama pelanggan..."
@@ -59,15 +59,19 @@
 
                                     <span @class([
                                         'inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full',
+                                        'bg-orange-100 text-orange-700' => $status === 'Diajukan',
                                         'bg-blue-100 text-blue-700' => $status === 'Disewa',
-                                        'bg-emerald-100 text-emerald-700' => $status === 'Selesai',
-                                        'bg-gray-100 text-gray-700' => !in_array($status, ['Disewa', 'Selesai']),
+                                        'bg-emerald-100 text-emerald-700' => $status === 'Dikembalikan',
+                                        'bg-red-100 text-red-700' => $status === 'Dibatalkan',
+                                        'bg-gray-100 text-gray-700' => !in_array($status, ['Diajukan', 'Disewa', 'Dikembalikan', 'Dibatalkan']),
                                     ])>
                                         <span @class([
                                             'w-1.5 h-1.5 rounded-full inline-block',
+                                            'bg-orange-500' => $status === 'Diajukan',
                                             'bg-blue-500' => $status === 'Disewa',
-                                            'bg-emerald-500' => $status === 'Selesai',
-                                            'bg-gray-500' => !in_array($status, ['Disewa', 'Selesai']),
+                                            'bg-emerald-500' => $status === 'Dikembalikan',
+                                            'bg-red-500' => $status === 'Dibatalkan',
+                                            'bg-gray-500' => !in_array($status, ['Diajukan', 'Disewa', 'Dikembalikan', 'Dibatalkan']),
                                         ])></span>
 
                                         {{ $status }}

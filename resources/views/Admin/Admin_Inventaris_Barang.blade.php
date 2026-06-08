@@ -71,7 +71,7 @@
                         
                         
                         <tr class="hover:bg-gray-50 transition">  
-                            <td class="px-3 py-3 text-gray-400 text-xs">{{ $loop->iteration }}</td>
+                            <td class="px-3 py-3 text-gray-400 text-xs">{{ $barangs->firstItem() + $loop->index }}</td>
                             <td class="px-3 py-3">
                                 <div class="w-20 h-20 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center overflow-hidden mx-auto">
                                     @if ($fotoUtama)
@@ -127,8 +127,15 @@
                 </tbody>
             </table>
 
-            <div class="flex items-center justify-between px-4 py-3 border-t border-gray-100 bg-gray-50">
-                <p class="text-xs text-gray-500">Menampilkan {{ $barangs->count() }} barang</p>
+            <div class="flex flex-col gap-3 px-4 py-3 border-t border-gray-100 bg-gray-50 sm:flex-row sm:items-center sm:justify-between">
+                <p class="text-xs text-gray-500">
+                    @if ($barangs->total() > 0)
+                        Menampilkan {{ $barangs->firstItem() }}–{{ $barangs->lastItem() }} dari {{ $barangs->total() }} barang
+                    @else
+                        Tidak ada barang
+                    @endif
+                </p>
+                {{ $barangs->links() }}
             </div>
         </div>
 

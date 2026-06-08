@@ -11,7 +11,7 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barangs = Barang::orderByDesc('kode_barang')->get();
+        $barangs = Barang::orderByDesc('kode_barang')->paginate(10);
 
         return view('Admin.Admin_Inventaris_Barang', compact('barangs'));
     }
