@@ -33,7 +33,7 @@
                             <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
                             </svg>
-                            <input type="email" name="email" value="{{ old('email') }}" placeholder="Nama Pengguna / Email"
+                            <input type="text" name="email" value="{{ old('email') }}" placeholder="Email atau Nama Pengguna"
                                 required autofocus autocomplete="username"
                                 class="flex-1 border-none bg-transparent text-sm font-medium text-emerald-900 outline-none placeholder-emerald-300 focus:ring-0" />
                         </div>

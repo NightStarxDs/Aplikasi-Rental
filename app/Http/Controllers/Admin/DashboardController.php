@@ -14,6 +14,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        if (! auth()->check() || ! auth()->user()->isAdmin()) {
+            return redirect()->route('penjualan.index')->with('error', 'Anda tidak memiliki akses ke dashboard admin.');
+        }
+
         // 1. Total semua barang
         $totalBarang = Barang::count();
 

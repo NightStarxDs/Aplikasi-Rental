@@ -44,27 +44,41 @@
 
                         <div class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44" id="user-dropdown">
                             <div class="px-4 py-3 text-sm border-b border-default">
-                                <span class="block text-heading font-medium">{{ Auth::user()->name }}</span>
+                                <span class="block text-heading font-bold">{{ Auth::user()->name }}</span>
                                 <span class="block text-body truncate">{{ Auth::user()->email }}</span>
                             </div>
                             <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
                             <li>
-                                <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Profil</a>
+                                <a href="#" class="inline-flex items-center w-full p-2 rounded text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-150">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    Profil
+                                </a>
                             </li>
-                            
+
                             <li>
+                                <a href="{{ route('users.history') }}" class="inline-flex items-center w-full p-2 rounded text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-150">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12 6 12 12 16 14"/>
+                                    </svg>
+                                    History
+                                </a>
+                            </li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
-                                        class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                                        class="inline-flex items-center w-full p-2 rounded text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-150">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                            <polyline points="16 17 21 12 16 7"/>
+                                            <line x1="21" y1="12" x2="9" y2="12"/>
+                                        </svg>
                                         Logout
                                     </button>
                                 </form>
-                            </li>
-                            <li>
-                                <a href="{{ route('users.history') }}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
-                                    History
-                                </a>
                             </li>
                             </ul>
                         </div>

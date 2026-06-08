@@ -13,7 +13,9 @@ use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\User\KeranjangController;
 
 
-Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
+Route::get('/penjualan', [PenjualanController::class, 'index'])
+    ->middleware('auth')
+    ->name('penjualan.index');
 Route::post('/Detail_Barang_Pelanggan', [PenjualanController::class, 'Detail_Barang'])->name('Detail_Barang_Pelanggan');
 
 Route::middleware(['auth'])->group(function () {
@@ -80,9 +82,9 @@ Route::get('/Halaman_Checkout', function () {
 })->name('Checkout');
 
 
-Route::get('/Profil_Pelanggan', function () {
-    return view('User.Profil_Pelanggan');
-});
+Route::get('/Profil_Pelanggan', [ProfileController::class, 'pelanggan'])
+    ->middleware('auth')
+    ->name('user.profile');
 
 Route::get('/Tambah_Barang', [BarangController::class, 'create'])->name('Tambah_Barang');
 Route::post('/Tambah_Barang', [BarangController::class, 'store'])->name('Tambah_Barang.store');

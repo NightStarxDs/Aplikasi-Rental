@@ -28,7 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false))
+        $user = $request->user();
+        $defaultRedirect = $user && $user->role === 'admin'
+            ? route('dashboard', absolute: false)
+            : route('penjualan.index', absolute: false);
+
+        return redirect()->intended($defaultRedirect)
                     ->with('success', 'You have successfully logged in!');
     }
     /**
