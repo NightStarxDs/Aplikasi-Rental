@@ -10,7 +10,6 @@ class CartPage extends Component
     public $cartItems = [];
     public $total = 0;
 
-    // Properti global sesuai form atas UI
     public $rent_type = 'perjam'; 
     public $waktu_sewa;
     public $jam_mulai;
@@ -66,7 +65,7 @@ class CartPage extends Component
                 ? $product->Harga_Perjam 
                 : $product->Harga_Perhari;
 
-            // Menggunakan Jumlah_Barang sesuai ERD Gambar 2
+            
             $jumlahBarang = $itemSession['Jumlah_Barang'] ?? 1;
 
             // Total per item = Harga Satuan * Jumlah Barang * Durasi Global
@@ -79,9 +78,9 @@ class CartPage extends Component
                 'nama_barang'   => $product->Nama_Barang,
                 'gambar_barang' => $product->Gambar_Barang,
                 'kategori'      => $product->Kategori_Barang,
-                'stok'          => $product->Stok, // Menggunakan Stok sesuai database kamu
+                'stok'          => $product->Stok, 
                 'harga_satuan'  => $hargaSatuan,
-                'Jumlah_Barang' => $jumlahBarang, // Menggunakan Jumlah_Barang
+                'Jumlah_Barang' => $jumlahBarang, 
                 'subtotal'      => $subtotal
             ];
         }

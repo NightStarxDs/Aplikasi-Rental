@@ -71,7 +71,7 @@
                             </svg>
                         </summary>
                         <div class="flex flex-col ml-4 space-y-2 mt-1 mb-4 text-sm text-gray-500">
-                            <a href="#" class="hover:text-primary transition-colors duration-150">DSLR</a>
+                            <a href="http://127.0.0.1:8000/penjualan?kategori=Kamera&subkategori=DSLR%20Cam" class="hover:text-primary transition-colors duration-150">DSLR</a>
                             <a href="#" class="hover:text-primary transition-colors duration-150">Mirrorless</a>
                             <a href="#" class="hover:text-primary transition-colors duration-150">Action Cam</a>
                         </div>

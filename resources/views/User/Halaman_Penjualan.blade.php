@@ -130,10 +130,10 @@
                             {{ $item->nama_barang }}
                         </h5>
                         <div class="flex items-baseline gap-1 mt-0.5">
-                            <span class="text-xs font-bold text-gray-900">
+                            <span class="text-xm font-bold text-orange-400">
                                 Rp {{ number_format($item->harga_perhari, 0, ',', '.') }}
                             </span>
-                            <span class="text-[10px] text-gray-400">/ hari</span>
+                            <span class="text-[15px] text-gray-400">/ hari</span>
                         </div>
                     </div>
                 </button>

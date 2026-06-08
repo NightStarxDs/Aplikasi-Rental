@@ -12,16 +12,16 @@
     <body class="font-sans antialiased bg-emerald-50/40 text-gray-800">
 
         <div id="sidebar-overlay"
-             class="fixed inset-0 z-20 bg-black/40 backdrop-blur-sm hidden lg:hidden"
-             onclick="toggleSidebar()">
+            class="fixed inset-0 z-20 bg-black/40 backdrop-blur-sm hidden lg:hidden"
+            onclick="toggleSidebar()">
         </div>
 
         <div class="min-h-screen flex">
 
             <aside id="sidebar"
-                   class="fixed top-0 left-0 h-screen w-72 z-30 border-r border-emerald-100 bg-white
-                          -translate-x-full transition-transform duration-300 ease-in-out
-                          lg:translate-x-0 lg:static lg:z-auto lg:shrink-0">
+                class="fixed top-0 left-0 h-screen w-72 z-30 border-r border-emerald-100 bg-white
+                        -translate-x-full transition-transform duration-300 ease-in-out
+                        lg:translate-x-0 lg:static lg:z-auto lg:shrink-0">
                 @include('layouts.navigation')
             </aside>
 
@@ -32,7 +32,7 @@
 
                         <button onclick="toggleSidebar()"
                                 class="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg
-                                       text-gray-500 hover:bg-gray-100 transition-colors"
+                                    text-gray-500 hover:bg-gray-100 transition-colors"
                                 aria-label="Toggle sidebar">
                             <svg id="icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>

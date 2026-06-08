@@ -56,7 +56,7 @@ class PenjualanController extends Controller
 
         session()->put('cart', $cart);
 
-        return redirect()->route('Keranjang')->with('success', 'Barang berhasil ditambahkan ke keranjang!');
+        return redirect()->route('Detail_Barang_Pelanggan', ['id' => $kode_barang])->with('success', 'Barang berhasil ditambahkan ke keranjang!');
     }
 
     public function Profil_Pelanggan()

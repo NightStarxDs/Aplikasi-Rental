@@ -15,12 +15,12 @@
                     </p>
 
                     <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-5">
-                        <x-primary-button href="" class="w-full px-6 py-2 text-sm sm:w-auto sm:text-base rounded-lg">
+                        <a href="{{ route('penjualan.index') }}" class="w-full px-6 py-2 text-sm sm:w-auto sm:text-base rounded-lg bg-emerald-800 font-semibold text-white transition-all hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 active:scale-95">
                             Belanja Sekarang
-                        </x-primary-button>
-                        <x-secondary-button class="w-full px-6 py-2 text-sm sm:w-auto sm:text-base rounded-lg">
+                        </a>
+                        <a href="#section-2" class="w-full px-6 py-2 text-sm sm:w-auto sm:text-base rounded-lg border border-emerald-600 text-emerald-600 hover:bg-emerald-100 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 active:scale-95">
                             Lihat Katalog
-                        </x-secondary-button>
+                        </a>
                     </div>
                 </div>
             </div>

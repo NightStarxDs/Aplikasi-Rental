@@ -77,6 +77,13 @@ class Checkout extends Component
                     'status_detail'       => 'Menunggu',
                 ]);
                 
+                // Kurangi stok barang
+                $barangModel = \App\Models\Barang::find($kodeBarang);
+                if ($barangModel) {
+                    $barangModel->stok -= $item['qty'];
+                    $barangModel->save();
+                }
+                
                 // Hapus barang yang berhasil dicheckout dari keranjang (session)
                 $cart = session()->get('cart', []);
                 if(isset($cart[$kodeBarang])) {

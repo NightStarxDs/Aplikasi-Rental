@@ -14,7 +14,6 @@ use App\Http\Controllers\User\KeranjangController;
 
 
 Route::get('/penjualan', [PenjualanController::class, 'index'])
-    ->middleware('auth')
     ->name('penjualan.index');
 Route::post('/Detail_Barang_Pelanggan', [PenjualanController::class, 'Detail_Barang'])->name('Detail_Barang_Pelanggan');
 
@@ -39,7 +38,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::get('/landingpage', function () {
     return view('LandingPage');
 })->name('landing');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -120,7 +118,6 @@ Route::delete('/barang/{kode_barang}', [BarangController::class, 'destroy'])
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
-    // Resource CRUD: index, create, store, show, edit, update, destroy
 Route::resource('users', PelangganController::class)->except(['show']);
 
 
