@@ -215,9 +215,9 @@
                 </tbody>
             </table>
 
-            {{-- ── Pagination Info ── --}}
-            <div class="flex items-center justify-between px-4 py-3 border-t border-gray-100 bg-gray-50">
-                <p class="text-xs text-gray-500">
+            {{-- Pagination --}}
+            <div class="flex flex-col items-center gap-3 border-t border-gray-100 bg-gray-50 px-4 py-3">
+                <p class="text-xs text-gray-500 text-center">
                     @if($users->total() > 0)
                         Menampilkan {{ $users->firstItem() }}–{{ $users->lastItem() }}
                         dari {{ $users->total() }} pengguna
@@ -225,9 +225,7 @@
                         Tidak ada pengguna
                     @endif
                 </p>
-                <div class="text-xs text-gray-500">
-                    {{ $users->links() }}
-                </div>
+                {{ $users->links() }}
             </div>
         </div>
 

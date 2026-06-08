@@ -127,8 +127,8 @@
                 </tbody>
             </table>
 
-            <div class="flex flex-col gap-3 px-4 py-3 border-t border-gray-100 bg-gray-50 sm:flex-row sm:items-center sm:justify-between">
-                <p class="text-xs text-gray-500">
+            <div class="flex flex-col items-center gap-3 border-t border-gray-100 bg-gray-50 px-4 py-3">
+                <p class="text-xs text-gray-500 text-center">
                     @if ($barangs->total() > 0)
                         Menampilkan {{ $barangs->firstItem() }}–{{ $barangs->lastItem() }} dari {{ $barangs->total() }} barang
                     @else
