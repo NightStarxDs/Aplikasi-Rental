@@ -11,22 +11,37 @@
     <div class="py-6 px-6">
 
         {{-- Search & Filter --}}
-        <form action="{{ route('Transaksi') }}" method="GET" class="flex items-center mb-4">
-            <select name="status" onchange="this.form.submit()" class="px-3 py-2 text-sm text-white bg-emerald-800 hover:bg-emerald-900 rounded-l-lg outline-none cursor-pointer">
-                <option value="">Semua Status</option>
-                <option value="Diajukan" {{ request('status') === 'Diajukan' ? 'selected' : '' }}>Diajukan</option>
-                <option value="Disewa" {{ request('status') === 'Disewa' ? 'selected' : '' }}>Disewa</option>
-                <option value="Dikembalikan" {{ request('status') === 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
-                <option value="Dibatalkan" {{ request('status') === 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
-            </select>
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kode transaksi atau nama pelanggan..."
-                class="flex-1 px-3 py-2 text-sm bg-white border border-gray-200 border-l-0 border-r-0 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-emerald-500">
-            <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-800 hover:bg-emerald-900 rounded-r-lg transition">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                Cari
-            </button>
+        <form action="{{ route('Transaksi') }}" method="GET" class="mb-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+            <div class="flex flex-wrap gap-2 items-end">
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-semibold text-gray-500">Status</label>
+                    <select name="status" class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100" autocomplete="off">
+                        <option value="">Semua Status</option>
+                        <option value="Diajukan" {{ request('status') === 'Diajukan' ? 'selected' : '' }}>Diajukan</option>
+                        <option value="Disewa" {{ request('status') === 'Disewa' ? 'selected' : '' }}>Disewa</option>
+                        <option value="Dikembalikan" {{ request('status') === 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+                        <option value="Dibatalkan" {{ request('status') === 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1 flex-1 min-w-[220px]">
+                    <label class="text-xs font-semibold text-gray-500">Cari transaksi</label>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kode transaksi atau nama pelanggan..."
+                        class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100" autocomplete="off">
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-semibold text-transparent select-none">_</label>
+                    <button type="submit" class="rounded-lg bg-emerald-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-900">Filter</button>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-semibold text-transparent select-none">_</label>
+                    <a href="{{ route('Transaksi') }}" class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50">Reset</a>
+                </div>
+
+            </div>
         </form>
 
         {{-- Tabel --}}

@@ -41,17 +41,33 @@ class DashboardController extends Controller
             ->orderByDesc('jumlah')
             ->get();
 
+        $barangPerSubkategoriRaw = Barang::select(
+                'kategori_barang',
+                'subkategori_barang',
+                DB::raw('COUNT(*) as jumlah')
+            )
+            ->groupBy('kategori_barang', 'subkategori_barang')
+            ->orderBy('kategori_barang')
+            ->orderBy('subkategori_barang')
+            ->get();
+
         // Ubah ke associative array
         $barangPerKategori = $barangPerKategoriRaw
             ->pluck('jumlah', 'kategori_barang')
             ->toArray();
 
+        $barangPerSubkategori = [];
+        foreach ($barangPerSubkategoriRaw as $item) {
+            $barangPerSubkategori[$item->kategori_barang][$item->subkategori_barang] = $item->jumlah;
+        }
+
         $stats = [
-            'total_barang'        => $totalBarang,
-            'penyewa_aktif'       => $penyewaAktif,
-            'barang_disewa'       => $barangDisewa,
-            'jumlah_transaksi'    => $jumlahTransaksi,
-            'barang_per_kategori' => $barangPerKategori,
+            'total_barang'          => $totalBarang,
+            'penyewa_aktif'         => $penyewaAktif,
+            'barang_disewa'         => $barangDisewa,
+            'jumlah_transaksi'      => $jumlahTransaksi,
+            'barang_per_kategori'   => $barangPerKategori,
+            'barang_per_subkategori'=> $barangPerSubkategori,
         ];
 
         return view('Admin.dashboard', compact('stats'));

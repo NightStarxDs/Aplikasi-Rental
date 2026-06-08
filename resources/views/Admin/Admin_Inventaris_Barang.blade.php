@@ -128,6 +128,11 @@
                         @php
                             $fotoUtama = collect($barang->gambar_barang)->first();
                             $labelKategori = $barang->kategori_barang === 'Alat Camping' ? 'Camping' : $barang->kategori_barang;
+                            $kategoriClass = match ($barang->kategori_barang) {
+                                'Kamera' => ['bg' => 'bg-sky-50', 'text' => 'text-sky-700'],
+                                'Alat Camping' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800'],
+                                default => ['bg' => 'bg-gray-100', 'text' => 'text-gray-600'],
+                            };
                             $statusClass = match ($barang->status_barang) {
                                 'Tersedia' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-800', 'dot' => 'bg-emerald-500'],
                                 'Sedikit' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800', 'dot' => 'bg-amber-500'],
@@ -150,7 +155,7 @@
                             <td class="px-3 py-3 font-medium text-gray-800 truncate" title="{{ $barang->nama_barang }}">{{ $barang->nama_barang }}</td>
                             <td class="px-3 py-3 text-gray-500 truncate" title="{{ $barang->deskripsi_barang }}">{{ $barang->deskripsi_barang ?: '-' }}</td>
                             <td class="px-3 py-3">
-                                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">{{ $labelKategori }}</span>
+                                <span class="inline-block px-2 py-0.5 text-xs font-medium {{ $kategoriClass['bg'] }} {{ $kategoriClass['text'] }} rounded">{{ $labelKategori }}</span>
                             </td>
                             <td class="px-3 py-3 text-gray-700 text-xs">Rp {{ number_format($barang->harga_perhari, 0, ',', '.') }}</td>
                             <td class="px-3 py-3 text-center font-medium text-gray-800">{{ $barang->stok }}</td>
