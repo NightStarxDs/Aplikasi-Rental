@@ -15,7 +15,7 @@ use App\Http\Controllers\User\KeranjangController;
 
 Route::get('/penjualan', [PenjualanController::class, 'index'])
     ->name('penjualan.index');
-Route::post('/Detail_Barang_Pelanggan', [PenjualanController::class, 'Detail_Barang'])->name('Detail_Barang_Pelanggan');
+Route::match(['get', 'post'], '/Detail_Barang_Pelanggan', [PenjualanController::class, 'Detail_Barang'])->name('Detail_Barang_Pelanggan');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/Keranjang', [KeranjangController::class, 'index'])->name('Keranjang');
