@@ -112,6 +112,26 @@
                         </p>
                     </div>
                 </div>
+
+                @if(in_array($rental->metode_pembayaran, ['QRIS', 'Transfer Bank']) && $rental->bukti_pembayaran)
+                    <div class="mt-5">
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Bukti Pembayaran</p>
+                        <div class="bg-white border border-gray-200 rounded-xl p-4">
+                            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                                <div class="grow">
+                                    <p class="text-sm font-medium text-gray-800">Metode Pembayaran: {{ $rental->metode_pembayaran }}</p>
+                                    <p class="text-xs text-gray-500">Foto bukti pembayaran tampak di bawah.</p>
+                                </div>
+                                <a href="{{ asset('storage/' . ltrim($rental->bukti_pembayaran, '/')) }}" target="_blank" class="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition">
+                                    Lihat Bukti Pembayaran
+                                </a>
+                            </div>
+                            <div class="mt-4 overflow-hidden rounded-xl border border-gray-200 bg-gray-50" style="width: 360px; height: 360px;">
+                                <img src="{{ asset('storage/' . ltrim($rental->bukti_pembayaran, '/')) }}" alt="Bukti Pembayaran {{ $rental->metode_pembayaran }}" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -194,11 +214,12 @@
                     <table class="w-full text-sm text-left">
                         <thead class="bg-gray-50 border-b border-gray-200">
                             <tr>
-                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-1/5">Nama Barang</th>
-                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-1/3">Catatan Kondisi Awal</th>
-                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-1/3">Catatan Kondisi Akhir</th>
-                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 text-center">Denda Kerusakan</th>
-                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 text-center">Denda Keterlambatan</th>
+                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-1/6">Nama Barang</th>
+                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-1/4">Catatan Kondisi Awal</th>
+                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-1/4">Catatan Kondisi Akhir</th>
+                                
+                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 text-center w-1/6">Denda Kerusakan</th>
+                                <th class="px-4 py-3 text-xs font-semibold text-gray-500 text-center w-1/6">Denda Keterlambatan</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -253,20 +274,27 @@
                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-4">Ringkasan Biaya</p>
                 <div class="bg-white border border-gray-200 rounded-xl p-5 space-y-3">
                     <div class="flex justify-between text-sm text-gray-600">
-                        <span>Subtotal Sewa</span>
-                        <span class="font-medium text-gray-800">Rp {{ number_format($subtotal,0,',','.') }}</span>
+                        <span>Biaya Checkout Terbayar</span>
+                        <span class="font-medium text-gray-800">Rp {{ number_format($checkoutPaid,0,',','.') }}</span>
                     </div>
-                    <div class="flex justify-between text-sm text-gray-600 pb-3 border-b border-dashed border-gray-200">
+                    <div class="text-xs text-gray-500">Hanya menampilkan biaya yang sudah dibayarkan saat checkout.</div>
+                </div>
+            </div>
+
+            <div class="{{ $status === 'Diajukan' ? 'hidden' : '' }}">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-4">Ringkasan Biaya Denda</p>
+                <div class="bg-white border border-gray-200 rounded-xl p-5 space-y-3">
+                    <div class="flex justify-between text-sm text-gray-600">
                         <span>Denda Keterlambatan</span>
                         <span id="denda-keterlambatan-display" class="{{ $dendaKeterlambatan > 0 ? 'text-gray-800' : 'text-gray-400' }}">{{ $dendaKeterlambatan > 0 ? 'Rp ' . number_format($dendaKeterlambatan,0,',','.') : 'Rp —' }}</span>
                     </div>
-                    <div class="flex justify-between text-sm text-gray-600 pb-3 border-b border-dashed border-gray-200">
+                    <div class="flex justify-between text-sm text-gray-600">
                         <span>Denda Kerusakan</span>
                         <span id="denda-kerusakan-total" class="{{ $dendaKerusakan > 0 ? 'text-gray-800' : 'text-gray-400' }}">{{ $dendaKerusakan > 0 ? 'Rp ' . number_format($dendaKerusakan,0,',','.') : 'Rp —' }}</span>
                     </div>
-                    <div class="flex justify-between text-sm font-bold text-gray-800 pt-1">
-                        <span>Total Harga</span>
-                        <span id="grand-total" class="text-emerald-700 text-base">Rp {{ number_format($grandTotal,0,',','.') }}</span>
+                    <div class="flex justify-between text-sm font-semibold text-gray-800 pt-3 border-t border-dashed border-gray-200">
+                        <span>Total Denda</span>
+                        <span id="denda-total" class="text-emerald-700 text-base">Rp {{ number_format($totalDenda,0,',','.') }}</span>
                     </div>
                 </div>
             </div>
@@ -293,7 +321,7 @@
     </div>
 
     <script>
-        const SUBTOTAL = {{ $subtotal }};
+        const CHECKOUT_PAID = {{ $checkoutPaid }};
 
         function formatRupiah(angka) {
             return 'Rp ' + angka.toLocaleString('id-ID');
@@ -314,7 +342,9 @@
 
             const dendaKerusakanDisplay = document.getElementById('denda-kerusakan-total');
             const dendaKeterlambatanDisplay = document.getElementById('denda-keterlambatan-display');
-            const grandTotal = document.getElementById('grand-total');
+            const dendaTotal = document.getElementById('denda-total');
+
+            const totalDenda = Math.round(totalKerusakan + totalKeterlambatan);
 
             dendaKerusakanDisplay.textContent = totalKerusakan > 0 ? formatRupiah(totalKerusakan) : 'Rp —';
             dendaKerusakanDisplay.classList.toggle('text-gray-800', totalKerusakan > 0);
@@ -324,7 +354,9 @@
             dendaKeterlambatanDisplay.classList.toggle('text-gray-800', totalKeterlambatan > 0);
             dendaKeterlambatanDisplay.classList.toggle('text-gray-400', totalKeterlambatan === 0);
 
-            grandTotal.textContent = formatRupiah(SUBTOTAL + totalKerusakan + totalKeterlambatan);
+            if (dendaTotal) {
+                dendaTotal.textContent = formatRupiah(totalDenda);
+            }
         }
 
         document.addEventListener('DOMContentLoaded', function () {

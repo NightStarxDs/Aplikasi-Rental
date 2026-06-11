@@ -126,15 +126,21 @@
                                         <label class="text-sm font-medium text-gray-500">
                                             {{ $i === 1 ? 'Foto Utama' : 'Foto ' . $i }}
                                         </label>
-                                        <label class="flex flex-col items-center justify-center gap-1.5 w-full border border-dashed border-gray-300 rounded-lg py-3 bg-white cursor-pointer hover:border-emerald-500 transition group">
-                                            <svg class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                                <polyline points="17 8 12 3 7 8"/>
-                                                <line x1="12" y1="3" x2="12" y2="15"/>
-                                            </svg>
-                                            <span class="text-xs text-gray-400 group-hover:text-emerald-600 transition text-center px-2">Klik untuk unggah</span>
-                                            <input type="file" name="foto_{{ $i }}" accept="image/*" class="hidden">
+                                        <label class="relative flex flex-col items-center justify-center gap-1.5 w-full min-h-[140px] border border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-emerald-500 transition overflow-hidden"
+                                            style="background-size: cover; background-position: center; background-repeat: no-repeat;">
+                                            <div class="upload-placeholder flex flex-col items-center justify-center gap-1 text-center px-3">
+                                                <svg class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                    <polyline points="17 8 12 3 7 8"/>
+                                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                                </svg>
+                                                <span class="text-xs text-gray-400 group-hover:text-emerald-600 transition text-center px-2">Klik untuk unggah</span>
+                                            </div>
+                                            <input type="file" name="foto_{{ $i }}" accept="image/*" class="hidden foto-input" data-preview-target="foto-preview-{{ $i }}">
                                         </label>
+                                        <div id="foto-preview-{{ $i }}" class="min-h-[48px] px-3 py-2 text-xs text-gray-500 border border-dashed border-gray-200 rounded-lg bg-slate-50 truncate">
+                                            Belum ada file dipilih.
+                                        </div>
                                         @error('foto_' . $i)
                                             <p class="text-xs text-red-500 mt-0.5">{{ $message }}</p>
                                         @enderror
@@ -207,6 +213,43 @@
 
     kategoriEl.addEventListener('change', updateSubkategori);
     hargaEl.addEventListener('input', hitungHargaJam);
+
+    document.querySelectorAll('.foto-input').forEach(input => {
+        const previewId = input.dataset.previewTarget;
+        const previewEl = document.getElementById(previewId);
+        const uploadLabel = input.closest('label');
+        const placeholder = uploadLabel?.querySelector('.upload-placeholder');
+
+        input.addEventListener('change', () => {
+            if (!previewEl || !uploadLabel) return;
+
+            const file = input.files?.[0];
+            if (!file) {
+                previewEl.textContent = 'Belum ada file dipilih.';
+                uploadLabel.style.backgroundImage = 'none';
+                if (placeholder) placeholder.style.opacity = '1';
+                return;
+            }
+
+            previewEl.textContent = file.name;
+
+            if (file.type.startsWith('image/')) {
+                const imageUrl = URL.createObjectURL(file);
+                uploadLabel.style.backgroundImage = `url('${imageUrl}')`;
+                if (placeholder) placeholder.style.opacity = '0';
+                uploadLabel.style.backgroundColor = 'transparent';
+                uploadLabel.style.backgroundBlendMode = 'normal';
+
+                // clean up object URL after load
+                const img = new Image();
+                img.onload = () => URL.revokeObjectURL(imageUrl);
+                img.src = imageUrl;
+            } else {
+                uploadLabel.style.backgroundImage = 'none';
+                if (placeholder) placeholder.style.opacity = '1';
+            }
+        });
+    });
 
     // Jalankan saat load (untuk kondisi old() saat validasi gagal)
     if (kategoriEl.value) updateSubkategori();

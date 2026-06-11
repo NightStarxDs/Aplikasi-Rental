@@ -32,15 +32,17 @@ class TransaksiController extends Controller
         $subtotal = $rental->detailRentals->sum(fn ($detail) => $detail->subtotal ?? 0);
         $dendaKeterlambatan = $rental->detailRentals->sum(fn ($detail) => $detail->denda_keterlambatan ?? 0);
         $dendaKerusakan = $rental->detailRentals->sum(fn ($detail) => $detail->denda_kerusakan ?? 0);
-        $baseTotal = $rental->total_harga ?? $subtotal;
-        $totalDenda = $rental->total_denda ?? ($dendaKeterlambatan + $dendaKerusakan);
-        $grandTotal = $baseTotal + $totalDenda;
+        $checkoutPaid = (int) round($rental->total_harga ?? $subtotal);
+        $totalDenda = (int) round($dendaKeterlambatan + $dendaKerusakan);
+        $grandTotal = $checkoutPaid + $totalDenda;
 
         return view('Admin.Admin_Pengambilan_dan_Pengembalian', compact(
             'rental',
             'subtotal',
             'dendaKeterlambatan',
             'dendaKerusakan',
+            'checkoutPaid',
+            'totalDenda',
             'grandTotal'
         ));
     }
