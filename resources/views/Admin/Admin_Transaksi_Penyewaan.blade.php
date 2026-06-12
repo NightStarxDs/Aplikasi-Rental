@@ -21,6 +21,7 @@
                         <option value="Diajukan" {{ request('status') === 'Diajukan' ? 'selected' : '' }}>Diajukan</option>
                         <option value="Disewa" {{ request('status') === 'Disewa' ? 'selected' : '' }}>Disewa</option>
                         <option value="Dikembalikan" {{ request('status') === 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+                        <option value="Selesai" {{ request('status') === 'Selesai' ? 'selected' : '' }}>Selesai</option>
                         <option value="Dibatalkan" {{ request('status') === 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
                     </select>
                 </div>
@@ -77,16 +78,18 @@
                                         'bg-orange-100 text-orange-700' => $status === 'Diajukan',
                                         'bg-blue-100 text-blue-700' => $status === 'Disewa',
                                         'bg-emerald-100 text-emerald-700' => $status === 'Dikembalikan',
+                                        'bg-gray-100 text-gray-700 border border-gray-200 shadow-sm' => $status === 'Selesai',
                                         'bg-red-100 text-red-700' => $status === 'Dibatalkan',
-                                        'bg-gray-100 text-gray-700' => !in_array($status, ['Diajukan', 'Disewa', 'Dikembalikan', 'Dibatalkan']),
+                                        'bg-gray-100 text-gray-700' => !in_array($status, ['Diajukan', 'Disewa', 'Dikembalikan', 'Selesai', 'Dibatalkan']),
                                     ])>
                                         <span @class([
                                             'w-1.5 h-1.5 rounded-full inline-block',
                                             'bg-orange-500' => $status === 'Diajukan',
                                             'bg-blue-500' => $status === 'Disewa',
                                             'bg-emerald-500' => $status === 'Dikembalikan',
+                                            'bg-black' => $status === 'Selesai',
                                             'bg-red-500' => $status === 'Dibatalkan',
-                                            'bg-gray-500' => !in_array($status, ['Diajukan', 'Disewa', 'Dikembalikan', 'Dibatalkan']),
+                                            'bg-gray-500' => !in_array($status, ['Diajukan', 'Disewa', 'Dikembalikan', 'Selesai', 'Dibatalkan']),
                                         ])></span>
 
                                         {{ $status }}

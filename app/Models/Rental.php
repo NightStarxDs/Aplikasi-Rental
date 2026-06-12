@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\PerhitunganDenda;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Rental extends Model implements PerhitunganDenda
@@ -50,14 +51,31 @@ class Rental extends Model implements PerhitunganDenda
         return $this->hasMany(Detail_Rental::class, 'kode_rental', 'kode_rental');
     }
 
+    public function isDailyRental(): bool
+    {
+        return $this->waktu_sewa
+            && $this->waktu_kembali
+            && $this->waktu_sewa->format('H:i:s') === '00:00:00'
+            && $this->waktu_kembali->format('H:i:s') === '23:59:59';
+    }
+
+    protected function calculateLateFee(int $lateUnits, float $basePrice): float
+    {
+        return round($lateUnits * $basePrice * 1.5, 2);
+    }
+
     public function hitungDenda_Keterlambatan(): float
     {
-        return 0.0;
+        if (! $this->waktu_kembali_aktual) {
+            return 0.0;
+        }
+
+        return $this->detailRentals->sum(fn (Detail_Rental $detail) => $detail->hitungDendaKeterlambatan($this->waktu_kembali_aktual));
     }
 
     public function hitungDenda_Kerusakan(): float
     {
-        return 0.0;
+        return $this->detailRentals->sum(fn (Detail_Rental $detail) => $detail->hitungDenda_Kerusakan());
     }
 
 }

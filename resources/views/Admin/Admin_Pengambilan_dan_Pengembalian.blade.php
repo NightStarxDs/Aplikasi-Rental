@@ -12,22 +12,25 @@
 
         if ($status === 'Diajukan') {
             $statusLabel = 'Belum Diambil';
-            $badgeClasses = 'bg-amber-50 text-amber-700';
+            $badgeClasses = 'bg-gray-50 text-gray-800';
         } elseif ($status === 'Disewa') {
             $statusLabel = 'Disewa';
             $badgeClasses = 'bg-blue-50 text-blue-700';
         } elseif ($status === 'Dikembalikan') {
             $statusLabel = 'Dikembalikan';
             $badgeClasses = 'bg-emerald-50 text-emerald-800';
+        } elseif ($status === 'Selesai') {
+            $statusLabel = 'Selesai';
+            $badgeClasses = 'bg-gray-50 text-gray-800';
         } elseif ($status === 'Dibatalkan') {
             $statusLabel = 'Dibatalkan';
             $badgeClasses = 'bg-red-50 text-red-700';
         }
 
-        $buttonAction = $status === 'Diajukan' ? 'ambil' : 'kembali';
+        $buttonAction = $status === 'Diajukan' ? 'ambil' : ($status === 'Disewa' ? 'kembali' : 'selesai');
         $buttonLabel = $status === 'Diajukan' ? 'Barang Diambil' : ($status === 'Disewa' ? 'Barang Dikembalikan' : 'Transaksi Selesai');
-        $buttonDisabled = in_array($status, ['Dikembalikan', 'Dibatalkan']);
-        $showCondition = $status !== 'Diajukan';
+        $buttonDisabled = in_array($status, ['Dikembalikan', 'Selesai', 'Dibatalkan']);
+        $showCondition = in_array($status, ['Disewa', 'Dikembalikan', 'Selesai']);
         $duration = null;
         $durationLabel = '-';
 
@@ -152,11 +155,25 @@
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             @foreach($rental->detailRentals as $detail)
-                                @php
+                                    @php
                                     $barang = $detail->barang;
                                     $harga = $barang->harga_perjam ?: $barang->harga_perhari ?: 0;
-                                    $itemStatus = $status === 'Diajukan' ? 'Belum Diambil' : ($status === 'Disewa' ? 'Disewa' : 'Dikembalikan');
-                                    $itemLabelClass = $status === 'Diajukan' ? 'bg-amber-50 text-amber-700' : ($status === 'Disewa' ? 'bg-blue-50 text-blue-700' : 'bg-emerald-50 text-emerald-700');
+                                    if ($status === 'Diajukan') {
+                                        $itemStatus = 'Belum Diambil';
+                                        $itemLabelClass = 'bg-amber-50 text-amber-700';
+                                    } elseif ($status === 'Disewa') {
+                                        $itemStatus = 'Disewa';
+                                        $itemLabelClass = 'bg-blue-50 text-blue-700';
+                                    } elseif ($status === 'Dikembalikan') {
+                                        $itemStatus = 'Dikembalikan';
+                                        $itemLabelClass = 'bg-emerald-50 text-emerald-700';
+                                    } elseif ($status === 'Selesai') {
+                                        $itemStatus = 'Selesai';
+                                        $itemLabelClass = 'bg-gray-50 text-gray-800';
+                                    } else {
+                                        $itemStatus = 'Tidak Diketahui';
+                                        $itemLabelClass = 'bg-gray-50 text-gray-800';
+                                    }
                                 @endphp
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-4 py-3">
@@ -175,7 +192,7 @@
                                     <td class="px-4 py-3 text-center font-medium text-gray-800">Rp {{ number_format($detail->subtotal ?? 0,0,',','.') }}</td>
                                     <td class="px-4 py-3 text-center">
                                         <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full {{ $itemLabelClass }}">
-                                            <span class="w-1.5 h-1.5 rounded-full {{ $status === 'Diajukan' ? 'bg-amber-400' : ($status === 'Disewa' ? 'bg-blue-400' : 'bg-emerald-500') }} inline-block"></span>
+                                            <span class="w-1.5 h-1.5 rounded-full {{ $status === 'Diajukan' ? 'bg-amber-400' : ($status === 'Disewa' ? 'bg-blue-400' : ($status === 'Dikembalikan' ? 'bg-emerald-500' : ($status === 'Selesai' ? 'bg-gray-400' : 'bg-red-400'))) }} inline-block"></span>
                                             {{ $itemStatus }}
                                         </span>
                                     </td>
@@ -197,10 +214,22 @@
                                     Konfirmasi pengembalian. Batas kembali: <strong>{{ $returnDeadline }}</strong>. Isi kondisi dan denda sebelum menutup transaksi.
                                 </p>
                             </div>
+                        @elseif($status === 'Dikembalikan')
+                            <div class="flex items-center justify-between gap-3 bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-3">
+                                <p class="text-xs text-yellow-800 flex-1">
+                                    Pengembalian dicatat. Lengkapi catatan kondisi dan biarkan sistem menghitung denda keterlambatan otomatis sebelum transaksi selesai.
+                                </p>
+                            </div>
+                        @elseif($status === 'Selesai')
+                            <div class="flex items-center justify-between gap-3 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3">
+                                <p class="text-xs text-emerald-800 flex-1">
+                                    Transaksi telah selesai. Semua biaya dan denda sudah tercatat.
+                                </p>
+                            </div>
                         @else
                             <div class="flex items-center justify-between gap-3 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
                                 <p class="text-xs text-gray-500 flex-1">
-                                    Semua barang telah dikembalikan. Transaksi diselesaikan.
+                                    Status transaksi tidak dikenali.
                                 </p>
                             </div>
                         @endif
@@ -233,7 +262,7 @@
                                         <p class="text-xs text-gray-500">{{ $detail->catatan_kondisi ?: 'Tidak ada catatan awal.' }}</p>
                                     </td>
                                     <td class="px-4 py-3">
-                                        @if($status === 'Dikembalikan')
+                                        @if($status === 'Selesai')
                                             <p class="text-xs text-gray-500">{{ $detail->catatan_kondisi ?: 'Tidak ada catatan akhir.' }}</p>
                                         @else
                                             <textarea name="catatan_kondisi[{{ $detail->kode_detail }}]" placeholder="Catatan kondisi akhir..."
@@ -241,7 +270,7 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-3 text-center">
-                                        @if($status === 'Dikembalikan')
+                                        @if($status === 'Selesai')
                                             <span class="text-xs text-gray-800">Rp {{ number_format($detail->denda_kerusakan ?? 0,0,',','.') }}</span>
                                         @else
                                             <div class="flex items-center gap-1 justify-center">
@@ -252,12 +281,16 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-3 text-center">
-                                        @if($status === 'Dikembalikan')
-                                            <span class="text-xs text-gray-800">Rp {{ number_format($detail->denda_keterlambatan ?? 0,0,',','.') }}</span>
+                                        @php
+                                            $calculatedLate = $detail->calculated_denda_keterlambatan ?? ($detail->denda_keterlambatan ?? 0);
+                                        @endphp
+                                        @if(in_array($status, ['Dikembalikan', 'Selesai']) || $rental->waktu_kembali_aktual)
+                                            <span class="text-xs text-gray-800">Rp {{ number_format($calculatedLate,0,',','.') }}</span>
+                                            <input type="hidden" name="denda_keterlambatan[{{ $detail->kode_detail }}]" value="{{ $calculatedLate }}">
                                         @else
                                             <div class="flex items-center gap-1 justify-center">
                                                 <span class="text-xs text-gray-500">Rp</span>
-                                                <input name="denda_keterlambatan[{{ $detail->kode_detail }}]" type="number" min="0" value="{{ old('denda_keterlambatan.' . $detail->kode_detail, $detail->denda_keterlambatan ?? 0) }}" oninput="hitungTotal()"
+                                                <input name="denda_keterlambatan[{{ $detail->kode_detail }}]" type="number" min="0" value="{{ old('denda_keterlambatan.' . $detail->kode_detail, $detail->denda_keterlambatan ?? $calculatedLate) }}" oninput="hitungTotal()"
                                                     class="w-28 text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-gray-700">
                                             </div>
                                         @endif
@@ -309,11 +342,37 @@
                 </a>
 
                 <div class="flex items-center gap-2">
-                    <button type="submit" name="action" value="{{ $buttonAction }}" {{ $buttonDisabled ? 'disabled' : '' }}
-                        class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                        {{ $buttonLabel }}
-                    </button>
+                    @if($status === 'Diajukan')
+                        <button type="submit" name="action" value="ambil"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-700 transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Barang Diambil
+                        </button>
+                    @elseif($status === 'Disewa')
+                        <button type="submit" name="action" value="kembali"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-amber-600 border border-amber-600 rounded-lg hover:bg-amber-700 transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Barang Dikembalikan
+                        </button>
+                    @elseif($status === 'Dikembalikan')
+                        <button type="submit" name="action" value="selesai"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-700 transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Transaksi Selesai
+                        </button>
+                    @elseif($status === 'Selesai')
+                        <button type="button" disabled
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-gray-400 border border-gray-400 rounded-lg">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Transaksi Selesai
+                        </button>
+                    @else
+                        <button type="button" disabled
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-gray-400 border border-gray-400 rounded-lg">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            {{ $buttonLabel }}
+                        </button>
+                    @endif
                 </div>
             </div>
         </form>

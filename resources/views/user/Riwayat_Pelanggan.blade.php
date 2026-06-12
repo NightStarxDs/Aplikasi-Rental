@@ -191,6 +191,7 @@
                                             'Diajukan' => 'bg-orange-100 text-orange-700',
                                             'Disewa' => 'bg-blue-100 text-blue-700',
                                             'Dikembalikan' => 'bg-emerald-100 text-emerald-700',
+                                            'Selesai' => 'bg-emerald-100 text-emerald-700',
                                             'Dibatalkan' => 'bg-red-100 text-red-700',
                                             default => 'bg-gray-100 text-gray-700',
                                         };
