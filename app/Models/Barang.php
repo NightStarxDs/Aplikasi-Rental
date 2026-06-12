@@ -52,9 +52,6 @@ class Barang extends Model
         return $this->kategori_barang === 'Alat Camping' ? 'Camping' : $this->kategori_barang;
     }
 
-    // =========================================================================
-    // SINKRONISASI METHOD CLASS DIAGRAM
-    // =========================================================================
     public function cekKetersediaan(): bool
     {
         return $this->stok > 0 && $this->status_barang === 'Tersedia';
