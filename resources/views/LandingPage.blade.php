@@ -48,12 +48,11 @@
 
                 <div id="section2Track"
                     class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                    <article class="group relative min-w-[96%] snap-start overflow-hidden rounded-2xl border border-emerald-100 shadow-lg sm:min-w-[90%] lg:min-w-[86%]">
-                        <img src="{{ asset('images/Gambar-Gunung.jpg') }}" alt="Alat Camping"
+                   <article class="group relative min-w-[96%] snap-start overflow-hidden rounded-2xl border border-emerald-100 shadow-lg sm:min-w-[90%] lg:min-w-[86%]">
+                        <img src="{{ asset('images/Alat-Camping.jpg') }}" alt="Alat Camping"
                             class="h-[380px] w-full object-cover sm:h-[450px] lg:h-[500px]">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10"></div>
-                        <div class="absolute inset-0 flex flex-col justify-between p-5 text-white sm:p-7">
-                            <p class="text-sm font-semibold text-white/90 sm:text-base">Kategori</p>
+                        <div class="absolute inset-0 flex flex-col justify-end p-5 text-white sm:p-7">
                             <div>
                                 <h3 class="text-4xl font-bold leading-tight sm:text-5xl">Alat Camping</h3>
                                 <p class="mt-1 text-lg text-white/90 sm:text-2xl">Mulai dari Rp99rb/hari</p>
@@ -72,11 +71,10 @@
                     </article>
 
                     <article class="group relative min-w-[96%] snap-start overflow-hidden rounded-2xl border border-emerald-100 shadow-lg sm:min-w-[90%] lg:min-w-[86%]">
-                        <img src="{{ asset('images/Gambar-Gunung.jpg') }}" alt="Kamera"
+                        <img src="{{ asset('images/Preview-Kamera.jpg') }}" alt="Kamera"
                             class="h-[380px] w-full object-cover sm:h-[450px] lg:h-[500px]">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10"></div>
-                        <div class="absolute inset-0 flex flex-col justify-between p-5 text-white sm:p-7">
-                            <p class="text-sm font-semibold text-white/90 sm:text-base">Kategori</p>
+                        <div class="absolute inset-0 flex flex-col justify-end p-5 text-white sm:p-7">
                             <div>
                                 <h3 class="text-4xl font-bold leading-tight sm:text-5xl">Kamera</h3>
                                 <p class="mt-1 text-lg text-white/90 sm:text-2xl">Mulai dari Rp129rb/hari</p>
@@ -95,11 +93,10 @@
                     </article>
 
                     <article class="group relative min-w-[96%] snap-start overflow-hidden rounded-2xl border border-emerald-100 shadow-lg sm:min-w-[90%] lg:min-w-[86%]">
-                        <img src="{{ asset('images/Gambar-Gunung.jpg') }}" alt="Perlengkapan"
+                        <img src="{{ asset('images/Preview-Perlengkapan.jpg') }}" alt="Perlengkapan"
                             class="h-[380px] w-full object-cover sm:h-[450px] lg:h-[500px]">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10"></div>
-                        <div class="absolute inset-0 flex flex-col justify-between p-5 text-white sm:p-7">
-                            <p class="text-sm font-semibold text-white/90 sm:text-base">Kategori</p>
+                        <div class="absolute inset-0 flex flex-col justify-end p-5 text-white sm:p-7">
                             <div>
                                 <h3 class="text-4xl font-bold leading-tight sm:text-5xl">Perlengkapan</h3>
                                 <p class="mt-1 text-lg text-white/90 sm:text-2xl">Mulai dari Rp79rb/hari</p>
@@ -116,7 +113,6 @@
                             </div>
                         </div>
                     </article>
-                </div>
 
                 <button type="button" id="section2Next"
                     class="absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-lg border border-emerald-200 bg-transparent p-2.5 text-emerald-700 shadow-md transition hover:bg-emerald-600 lg:block"
@@ -273,7 +269,7 @@
                     </div>
 
                     <div class="relative min-h-[240px] sm:min-h-[280px] lg:min-h-[360px]">
-                        <img src="{{ asset('images/Gambar-Gunung.jpg') }}" alt="Keunggulan OutRent"
+                        <img src="{{ asset('images/View-Gunung.jpg') }}" alt="Keunggulan OutRent"
                             class="h-full w-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-black/15 to-transparent"></div>
                         <div class="pointer-events-none absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/50 bg-white/25 text-white backdrop-blur-sm sm:right-5 sm:top-5">

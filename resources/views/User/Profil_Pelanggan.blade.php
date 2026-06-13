@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-10">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-8">   
 
             
             <div class="bg-white rounded-2xl border border-emerald-100 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.05)] overflow-hidden relative">

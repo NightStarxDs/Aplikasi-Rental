@@ -220,7 +220,7 @@
                                     </span>
 
                                 </td>
-
+                            
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2">
                                         <a href="{{ route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental]) }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition shrink-0">
