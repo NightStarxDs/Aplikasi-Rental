@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller; 
 use App\Models\Barang;
+use App\Models\Rental;
 use Illuminate\Http\Request;
 
 class PenjualanController extends Controller

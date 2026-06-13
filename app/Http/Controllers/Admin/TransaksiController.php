@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Detail_Rental;
 use App\Models\Rental;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
@@ -88,6 +89,40 @@ class TransaksiController extends Controller
     {
         $rental = Rental::with(['detailRentals.barang'])->findOrFail($kode_rental);
         $action = $request->input('action');
+
+        if ($action === 'batalkan') {
+            DB::beginTransaction();
+            try {
+                $rental->status_rental = 'Dibatalkan';
+                $rental->notifikasi_pembatalan = true;
+                $rental->save();
+
+                // Kembalikan stok barang
+                foreach ($rental->detailRentals as $detail) {
+                    $barang = $detail->barang;
+                    if ($barang) {
+                        $barang->stok += $detail->jumlah_barang;
+                        $barang->save();
+                    }
+                }
+
+                // Simpan notifikasi pembatalan ke session untuk ditampilkan saat user login
+                session()->flash('cancellation_notification', [
+                    'kode_rental' => $rental->kode_rental,
+                    'tanggal_pembatalan' => now()->format('d M Y H:i'),
+                    'user_id' => $rental->id_user
+                ]);
+
+                DB::commit();
+
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('success', 'Transaksi berhasil dibatalkan. Pelanggan akan menerima notifikasi saat login.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('error', 'Gagal membatalkan transaksi: ' . $e->getMessage());
+            }
+        }
 
         if ($action === 'ambil') {
             $rental->status_rental = 'Disewa';

@@ -126,7 +126,7 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('Pengambilan_dan_Pengembalian.update', ['kode_rental' => $rental->kode_rental]) }}">
+        <form id="rental-update-form" method="POST" action="{{ route('Pengambilan_dan_Pengembalian.update', ['kode_rental' => $rental->kode_rental]) }}">
             @csrf
             <div>
                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Detail Produk</p>
@@ -298,6 +298,13 @@
                 </a>
 
                 <div class="flex items-center gap-2">
+                    @if(!in_array($status, ['Selesai', 'Dibatalkan']))
+                        <button type="button" onclick="showCancelConfirmation()"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 rounded-lg hover:bg-red-700 transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                            Batalkan Transaksi
+                        </button>
+                    @endif
                     @if($status === 'Diajukan')
                         <button type="submit" name="action" value="ambil"
                             class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-700 transition">
@@ -322,6 +329,12 @@
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                             Transaksi Selesai
                         </button>
+                    @elseif($status === 'Dibatalkan')
+                        <button type="button" disabled
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-red-400 border border-red-400 rounded-lg">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                            Transaksi Dibatalkan
+                        </button>
                     @else
                         <button type="button" disabled
                             class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-gray-400 border border-gray-400 rounded-lg">
@@ -331,15 +344,67 @@
                     @endif
                 </div>
             </div>
+
+            <!-- Modal Konfirmasi Pembatalan -->
+            <div id="cancelConfirmationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                <div class="bg-white rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4v2m0-12a9 9 0 110 18 9 9 0 010-18z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">Batalkan Transaksi</h3>
+                            <p class="text-sm text-gray-500">Tindakan ini tidak dapat dibatalkan</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p class="text-sm text-red-800">
+                            <strong>Perhatian:</strong> Jika Anda membatalkan transaksi ini, pelanggan akan menerima notifikasi tentang pembatalan tersebut setelah mereka login. Pastikan ini adalah keputusan yang tepat.
+                        </p>
+                    </div>
+
+                    <div class="flex gap-2 justify-end pt-2">
+                        <button type="button" onclick="hideCancelConfirmation()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition">
+                            Batal
+                        </button>
+                        <button type="button" onclick="confirmCancel()"
+                            class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 rounded-lg hover:bg-red-700 transition">
+                            Ya, Batalkan
+                        </button>
+                    </div>
+                </div>
+            </div>
         </form>
 
     </div>
 
     <script>
         const CHECKOUT_PAID = {{ $checkoutPaid }};
+        const formElement = document.getElementById('rental-update-form');
 
         function formatRupiah(angka) {
             return 'Rp ' + angka.toLocaleString('id-ID');
+        }
+
+        function showCancelConfirmation() {
+            document.getElementById('cancelConfirmationModal').classList.remove('hidden');
+        }
+
+        function hideCancelConfirmation() {
+            document.getElementById('cancelConfirmationModal').classList.add('hidden');
+        }
+
+        function confirmCancel() {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'action';
+            input.value = 'batalkan';
+            formElement.appendChild(input);
+            formElement.submit();
         }
 
         function hitungTotal() {
@@ -373,6 +438,13 @@
                 dendaTotal.textContent = formatRupiah(totalDenda);
             }
         }
+
+        // Close modal when clicking outside
+        document.getElementById('cancelConfirmationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCancelConfirmation();
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', function () {
             if (document.querySelector('input[name^="denda_kerusakan"]')) {

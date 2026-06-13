@@ -20,6 +20,7 @@ class Rental extends Model implements PerhitunganDenda
         'status_rental',
         'metode_pembayaran',
         'bukti_pembayaran',
+        'notifikasi_pembatalan',
     ];
 
     protected $casts = [
@@ -28,6 +29,7 @@ class Rental extends Model implements PerhitunganDenda
         'waktu_kembali_aktual' => 'datetime',
         'total_harga'          => 'decimal:2',
         'total_denda'          => 'decimal:2',
+        'notifikasi_pembatalan' => 'boolean',
     ];
     
     public $timestamps = false;
