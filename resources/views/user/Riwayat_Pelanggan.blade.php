@@ -12,6 +12,24 @@
 
     <div class="py-6 px-6 space-y-5">
 
+        @if (session('success'))
+            <div class="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 text-sm flex items-center gap-2 shadow-sm">
+                <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="rounded-xl bg-red-50 border border-red-200 text-red-800 p-4 text-sm flex items-center gap-2 shadow-sm">
+                <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
+
         {{-- Identitas Pelanggan --}}
         <div>
             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
@@ -204,10 +222,24 @@
                                 </td>
 
                                 <td class="px-4 py-3">
-                                    <a href="{{ route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental]) }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                        Detail
-                                    </a>
+                                    <div class="flex items-center gap-2">
+                                        <a href="{{ route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental]) }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition shrink-0">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                            Detail
+                                        </a>
+
+                                        @if($rental->status_rental === 'Diajukan')
+                                            <button type="button" 
+                                                    onclick="confirmCancel('{{ $rental->kode_rental }}')"
+                                                    class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-red-50 text-red-700 hover:bg-red-100 rounded-lg transition shrink-0">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                                Batalkan
+                                            </button>
+                                        @endif
+                                    </div>
                                 </td>
 
                             </tr>
@@ -231,8 +263,58 @@
                     </div>
                 @endif
 
+    </div>
+
+    {{-- Form Pembatalan (Hidden) --}}
+    <form id="cancel-rental-form" action="" method="POST" class="hidden">
+        @csrf
+    </form>
+
+    {{-- Modal Konfirmasi Pembatalan --}}
+    <div id="cancel-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden animate-fade-in" onclick="closeCancelModal(event)">
+        <div class="bg-white rounded-2xl border border-gray-250 shadow-2xl max-w-sm w-full mx-4 overflow-hidden transform transition-all scale-100" onclick="event.stopPropagation()">
+            <div class="p-6 text-center">
+                <div class="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+                <h3 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Apakah anda yakin ingin membatalkan transaksi ini?</h3>
+                <p class="text-xs text-gray-500 mb-6 leading-relaxed">Proses pengembalian dana akan dilakukan paling lama 3x24 Jam.</p>
+                <div class="flex gap-3 justify-center">
+                    <button type="button" onclick="closeCancelModal()" class="flex-1 px-4 py-2 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition">
+                        Kembali
+                    </button>
+                    <button type="button" onclick="submitCancellation()" class="flex-1 px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl transition shadow-sm">
+                        Batalkan Sewa
+                    </button>
+                </div>
             </div>
         </div>
-
     </div>
+
+    <script>
+        let activeCancelCode = null;
+
+        function confirmCancel(code) {
+            activeCancelCode = code;
+            const modal = document.getElementById('cancel-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCancelModal(event) {
+            const modal = document.getElementById('cancel-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            activeCancelCode = null;
+        }
+
+        function submitCancellation() {
+            if (!activeCancelCode) return;
+            const form = document.getElementById('cancel-rental-form');
+            form.action = `/riwayat/${activeCancelCode}/cancel`;
+            form.submit();
+        }
+    </script>
 </x-app3-layout>

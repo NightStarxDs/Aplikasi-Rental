@@ -110,6 +110,10 @@ Route::get('/riwayat', [UserRiwayatPelangganController::class, 'riwayat'])
     ->name('users.history')
     ->middleware('auth');
 
+Route::post('/riwayat/{kode_rental}/cancel', [UserRiwayatPelangganController::class, 'cancel'])
+    ->name('users.history.cancel')
+    ->middleware('auth');
+
 Route::match(['get', 'post'], '/Edit_Barang', [BarangController::class, 'edit'])->name('Edit_Barang');
 Route::put('/Edit_Barang', [BarangController::class, 'update'])->name('Edit_Barang.update');
 

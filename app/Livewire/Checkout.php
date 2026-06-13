@@ -18,6 +18,7 @@ class Checkout extends Component
     public $paymentMethod = 'COD';
     public $buktiPembayaran;
     public $isLoading = false;
+    public $showDataIncompleteModal = false;
 
     public function mount()
     {
@@ -30,6 +31,13 @@ class Checkout extends Component
 
     public function processCheckout()
     {
+        // Cek kelengkapan data user
+        $user = Auth::user();
+        if (empty($user->telepon) || empty($user->alamat)) {
+            $this->showDataIncompleteModal = true;
+            return;
+        }
+
         // Validation
         if ($this->paymentMethod === 'QRIS' || $this->paymentMethod === 'Transfer Bank') {
             $this->validate([

@@ -184,4 +184,31 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if($showDataIncompleteModal)
+    <!-- Modal Incomplete Data -->
+    <div class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-900/60 backdrop-blur-sm p-4">
+        <div class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all text-center">
+            
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-600 text-red-500 mb-4 shadow-sm">
+                <svg class="w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+
+            </div>
+            
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Data Belum Lengkap</h3>
+            <p class="text-sm text-gray-500 mb-6">Anda harus melengkapi data profil (alamat dan nomor telepon) sebelum dapat melanjutkan proses penyewaan barang.</p>
+
+            <div class="flex flex-col gap-3">
+                <a href="{{ route('user.profile') }}" class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-xl shadow-md hover:bg-emerald-700 transition">
+                    Lengkapi Data Sekarang
+                </a>
+                <button wire:click="$set('showDataIncompleteModal', false)" class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>

@@ -20,30 +20,6 @@
 
     <div class="py-6 px-6">
 
-        {{-- ── Flash Alert ── --}}
-        @if(session('success'))
-            <div class="mb-4 flex items-center gap-2 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm rounded-lg">
-                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                    <polyline points="22 4 12 14.01 9 11.01"/>
-                </svg>
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="mb-4 flex items-center gap-2 px-4 py-3 bg-red-50 border border-red-200 text-red-800 text-sm rounded-lg">
-                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                {{ session('error') }}
-            </div>
-        @endif
-
         {{-- ── Search & Filter ── --}}
         <form method="GET" action="{{ route('admin.users.index') }}"
             class="flex items-center gap-2 mb-4">
@@ -88,7 +64,8 @@
 
         {{-- ── Tabel ── --}}
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <table class="w-full text-sm text-left" style="table-layout:fixed">
+            <div class="overflow-x-auto w-full">
+                <table class="w-full text-sm text-left whitespace-nowrap">
                 <thead class="bg-gray-50 border-b border-gray-200 text-center">
                     <tr>
                         <th class="px-2 py-3 text-xs font-medium text-gray-500 w-10">No</th>
@@ -214,6 +191,7 @@
 
                 </tbody>
             </table>
+            </div>
 
             {{-- Pagination --}}
             <div class="flex flex-col items-center gap-3 border-t border-gray-100 bg-gray-50 px-4 py-3">

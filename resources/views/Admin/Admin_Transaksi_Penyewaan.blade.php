@@ -47,7 +47,8 @@
 
         {{-- Tabel --}}
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <table class="w-full text-sm text-left" style="table-layout:fixed">
+            <div class="overflow-x-auto w-full">
+                <table class="w-full text-sm text-left whitespace-nowrap">
                 <thead class="bg-gray-50 border-b border-gray-200 text-center">
                     <tr>
                         <th class="px-3 py-3 text-xs font-medium text-gray-500 w-10">No</th>
@@ -110,6 +111,7 @@
                     @endif
                 </tbody>
             </table>
+            </div>
 
             <div class="flex items-center justify-between px-4 py-3 border-t border-gray-100 bg-gray-50">
                 <p class="text-xs text-gray-500">Menampilkan {{ isset($rentals) ? $rentals->count() : 0 }} dari {{ isset($rentals) ? $rentals->total() : 0 }} transaksi</p>

@@ -9,14 +9,14 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-emerald-50/40 text-gray-800">
+    <body class="font-sans antialiased bg-emerald-50/40 text-gray-800 overflow-hidden">
 
         <div id="sidebar-overlay"
             class="fixed inset-0 z-20 bg-black/40 backdrop-blur-sm hidden lg:hidden"
             onclick="toggleSidebar()">
         </div>
 
-        <div class="min-h-screen flex">
+        <div class="h-screen flex w-full">
 
             <aside id="sidebar"
                 class="fixed top-0 left-0 h-screen w-72 z-30 border-r border-emerald-100 bg-white
@@ -50,6 +50,19 @@
 
                 {{-- PAGE CONTENT --}}
                 <main class="flex-1 overflow-y-auto p-5 md:p-8">
+                    @if(session('success'))
+                        <div class="mb-4 flex items-center gap-2 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-base rounded-lg">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="mb-4 flex items-center gap-2 px-4 py-3 bg-red-50 border border-red-200 text-red-800 text-base rounded-lg">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     {{ $slot }}
                 </main>
 

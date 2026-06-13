@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Rental;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RiwayatPelangganController extends Controller
 {
@@ -36,4 +37,38 @@ class RiwayatPelangganController extends Controller
         ]);
     }
 
+    public function cancel($kode_rental)
+    {
+        $id = Auth::user()->id_user;
+        $rental = Rental::with(['detailRentals.barang'])
+            ->where('kode_rental', $kode_rental)
+            ->where('id_user', $id)
+            ->firstOrFail();
+
+        if ($rental->status_rental !== 'Diajukan') {
+            return redirect()->back()->with('error', 'Transaksi ini tidak dapat dibatalkan.');
+        }
+
+        DB::beginTransaction();
+        try {
+            // Update status rental
+            $rental->status_rental = 'Dibatalkan';
+            $rental->save();
+
+            // Kembalikan stok barang
+            foreach ($rental->detailRentals as $detail) {
+                $barang = $detail->barang;
+                if ($barang) {
+                    $barang->stok += $detail->jumlah_barang;
+                    $barang->save();
+                }
+            }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Transaksi berhasil dibatalkan. Pengajuan refund akan diproses paling lama 3x24 Jam.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal membatalkan transaksi: ' . $e->getMessage());
+        }
+    }
 }

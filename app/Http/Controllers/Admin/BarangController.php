@@ -104,15 +104,22 @@ class BarangController extends Controller
 
     public function edit(Request $request)
     {
-        $kode_barang = $request->get('kode_barang');
+        $kode_barang = $request->get('kode_barang') ?? $request->session()->get('editing_kode_barang');
+
+        if (!$kode_barang) {
+            return redirect()->route('Inventaris')->with('error', 'Pilih barang untuk diedit.');
+        }
+
         $barang = Barang::findOrFail($kode_barang);
+        
+        $request->session()->put('editing_kode_barang', $kode_barang);
 
         return view('Admin.Admin_Edit_Barang', compact('barang'));
     }
 
     public function update(Request $request)
     {
-        $kode_barang = $request->get('kode_barang');
+        $kode_barang = $request->get('kode_barang') ?? $request->session()->get('editing_kode_barang');
         $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
 
         $validated = $request->validate([
@@ -181,14 +188,21 @@ class BarangController extends Controller
             'status_barang'      => $this->resolveStatus($stok),
         ]);
 
+        $request->session()->forget('editing_kode_barang');
+
         return redirect()
-            ->route('Detail_Barang', $barang->kode_barang)
+            ->route('Detail_Barang', ['kode_barang' => $barang->kode_barang])
             ->with('success', 'Barang berhasil diperbarui.');
     }
 
     public function show(request $request)
     {
         $kode_barang = $request->get('kode_barang');
+        
+        if (!$kode_barang) {
+            return redirect()->route('Inventaris')->with('error', 'Barang tidak ditemukan.');
+        }
+
         $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
 
         return view('Admin.Admin_Detail_Barang', compact('barang'));

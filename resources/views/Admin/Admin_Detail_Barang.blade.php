@@ -20,12 +20,6 @@
 
     <div class="py-6 px-6 space-y-4" x-data="{ activeFoto: @js($fotoUtama) }">
 
-        @if (session('success'))
-            <div class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-                {{ session('success') }}
-            </div>
-        @endif
-
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 flex gap-5">
 
@@ -147,7 +141,7 @@
             </form>
 
             {{-- Tombol Edit --}}
-            <form action="{{ route('Edit_Barang', $barang->kode_barang) }}" method="POST">
+            <form action="{{ route('Edit_Barang') }}" method="POST">
                 @csrf
                 <input type="hidden" name="kode_barang" value="{{ $barang->kode_barang }}">
                 <button type="submit"

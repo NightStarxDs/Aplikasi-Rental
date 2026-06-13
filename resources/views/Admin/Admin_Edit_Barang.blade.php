@@ -20,9 +20,10 @@
     <div class="py-6">
         <div class="mx-auto px-4">
             <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 sm:p-6">
-                <form action="{{ route('Edit_Barang.update', $barang->kode_barang) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('Edit_Barang.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="kode_barang" value="{{ $barang->kode_barang }}">
 
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 
@@ -176,7 +177,7 @@
                         </a>
 
                         <div class="flex items-center gap-2">
-                            <a href="{{ route('Detail_Barang', $barang->kode_barang) }}"
+                            <a href="{{ route('Detail_Barang', ['kode_barang' => $barang->kode_barang]) }}"
                                 class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-700 transition hover:bg-amber-100">
                                 Batal
                             </a>

@@ -57,18 +57,6 @@
 
     <div class="mx-10 space-y-5">
 
-        @if(session('success'))
-            <div class="rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3">
-                {{ session('error') }}
-            </div>
-        @endif
-
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-xl font-semibold text-gray-800">Detail Transaksi</h1>
@@ -201,39 +189,7 @@
                         </tbody>
                     </table>
 
-                    <div class="px-4 pb-4 pt-2">
-                        @if($status === 'Diajukan')
-                            <div class="flex items-center justify-between gap-3 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
-                                <p class="text-xs text-amber-800 flex-1">
-                                    Klik saat semua barang diserahkan ke pelanggan. Jam sewa &amp; batas kembali tercatat otomatis.
-                                </p>
-                            </div>
-                        @elseif($status === 'Disewa')
-                            <div class="flex items-center justify-between gap-3 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
-                                <p class="text-xs text-green-800 flex-1">
-                                    Konfirmasi pengembalian. Batas kembali: <strong>{{ $returnDeadline }}</strong>. Isi kondisi dan denda sebelum menutup transaksi.
-                                </p>
-                            </div>
-                        @elseif($status === 'Dikembalikan')
-                            <div class="flex items-center justify-between gap-3 bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-3">
-                                <p class="text-xs text-yellow-800 flex-1">
-                                    Pengembalian dicatat. Lengkapi catatan kondisi dan biarkan sistem menghitung denda keterlambatan otomatis sebelum transaksi selesai.
-                                </p>
-                            </div>
-                        @elseif($status === 'Selesai')
-                            <div class="flex items-center justify-between gap-3 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3">
-                                <p class="text-xs text-emerald-800 flex-1">
-                                    Transaksi telah selesai. Semua biaya dan denda sudah tercatat.
-                                </p>
-                            </div>
-                        @else
-                            <div class="flex items-center justify-between gap-3 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
-                                <p class="text-xs text-gray-500 flex-1">
-                                    Status transaksi tidak dikenali.
-                                </p>
-                            </div>
-                        @endif
-                    </div>
+                    
                 </div>
             </div>
 

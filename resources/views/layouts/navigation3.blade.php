@@ -8,7 +8,6 @@
     </div>
 
     <div class="flex items-center flex-grow mx-8 gap-4">
-        <button class="font-bold text-emerald-400 hover:text-emerald-600">Kategori</button>
         <div class="relative flex-grow">
             <x-text-input type="text" placeholder="Cari di OutRent" />
         </div>
@@ -75,6 +74,20 @@
                                     History
                                 </a>
                             </li>
+
+                            @if(Auth::user()->isAdmin())
+                            <li>
+                                <a href="{{ route('dashboard') }}" class="inline-flex items-center w-full p-2 rounded text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-150 font-semibold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="7" height="9"/>
+                                        <rect x="14" y="3" width="7" height="5"/>
+                                        <rect x="14" y="12" width="7" height="9"/>
+                                        <rect x="3" y="16" width="7" height="5"/>
+                                    </svg>
+                                    Dashboard Admin
+                                </a>
+                            </li>
+                            @endif
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
@@ -91,8 +104,8 @@
                             </ul>
                         </div>
                     @else
-                            <x-primary-button class="px-5 py-2.5 rounded-lg ">Daftar</x-primary-button>
-                            <x-secondary-button class="px-5 py-2.5 rounded-lg text-green-500">Masuk</x-secondary-button>
+                            <a href="{{ route('login') }}" class="bg-emerald-800 font-semibold text-white transition-all hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 active:scale-95 px-5 py-2.5 rounded-lg ">Daftar</a>
+                            <a href="{{ route('login') }}" class="border border-emerald-400 font-medium text-green bg-transparent transition-all hover:bg-emerald/10 hover:border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 active:scale-95 px-5 py-2.5 rounded-lg text-green-500">Masuk</a>
 
                     @endauth
                 </nav>

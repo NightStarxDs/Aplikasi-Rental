@@ -23,8 +23,15 @@ class PenjualanController extends Controller
         }
 
         $barang = $query->get();
+        
+        $checkoutRental = null;
+        if (session('checkout_success_kode')) {
+            $checkoutRental = \App\Models\Rental::with('detailRentals.barang', 'user')
+                ->where('kode_rental', session('checkout_success_kode'))
+                ->first();
+        }
 
-        return view('User.Halaman_Penjualan', compact('barang'));
+        return view('User.Halaman_Penjualan', compact('barang', 'checkoutRental'));
     }
 
     public function Detail_Barang(Request $request)
@@ -76,6 +83,6 @@ class PenjualanController extends Controller
 
     public function checkoutSuccess($kode_rental)
     {
-        return redirect()->route('penjualan.index')->with('success', 'Checkout berhasil! Kode Rental: ' . $kode_rental);
+        return redirect()->route('penjualan.index')->with('checkout_success_kode', $kode_rental);
     }
 }

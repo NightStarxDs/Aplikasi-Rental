@@ -24,6 +24,13 @@
             'active' => request()->routeIs('Kelola_User'),
             'icon' => '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/>',
         ],
+        [
+            'label' => 'Halaman Rental',
+            'url' => route('penjualan.index'),
+            'active' => false,
+            'class' => 'mt-4 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 hover:text-emerald-800 font-semibold shadow-sm border border-emerald-200/50',
+            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />',
+        ],
     ];
 @endphp
 
@@ -47,7 +54,7 @@
             @foreach ($menuItems as $item)
                 <li>
                     <a href="{{ $item['url'] }}"
-                        class="{{ $item['active'] ? 'bg-primary/10 text-primary font-semibold shadow-sm' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }} group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150">
+                        class="{{ $item['class'] ?? ($item['active'] ? 'bg-primary/10 text-primary font-semibold shadow-sm' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900') }} group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150">
                         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             {!! $item['icon'] !!}
                         </svg>

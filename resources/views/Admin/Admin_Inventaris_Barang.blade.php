@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout> 
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -17,12 +17,6 @@
     </x-slot>
 
     <div class="py-6 px-6">
-
-        @if (session('success'))
-            <div class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-                {{ session('success') }}
-            </div>
-        @endif
 
         {{-- Search & Filter --}}
         <form method="GET" action="{{ route('Inventaris') }}" class="flex flex-wrap gap-2 items-end mb-4">
@@ -109,13 +103,13 @@
 
         {{-- Tabel --}}
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <table class="w-full text-sm text-left" style="table-layout:fixed">
+            <div class="overflow-x-auto w-full">
+                <table class="w-full text-sm text-left whitespace-nowrap">
                 <thead class="bg-gray-50 border-b border-gray-200">
                     <tr class=" text-center">
                         <th class="px-3 py-3 text-xs font-medium text-gray-500 w-10">No</th>
                         <th class="px-3 py-3 text-xs font-medium text-gray-500 w-14">Foto</th>
                         <th class="px-3 py-3 text-xs font-medium text-gray-500 w-36">Nama Barang</th>
-                        <th class="px-3 py-3 text-xs font-medium text-gray-500 w-36">Deskripsi</th>
                         <th class="px-3 py-3 text-xs font-medium text-gray-500 w-24">Kategori</th>
                         <th class="px-3 py-3 text-xs font-medium text-gray-500 w-24">Harga/Hari</th>
                         <th class="px-3 py-3 text-xs font-medium text-gray-500 w-14 text-center">Stok</th>
@@ -153,7 +147,6 @@
                                 </div>
                             </td>
                             <td class="px-3 py-3 font-medium text-gray-800 truncate" title="{{ $barang->nama_barang }}">{{ $barang->nama_barang }}</td>
-                            <td class="px-3 py-3 text-gray-500 truncate" title="{{ $barang->deskripsi_barang }}">{{ $barang->deskripsi_barang ?: '-' }}</td>
                             <td class="px-3 py-3">
                                 <span class="inline-block px-2 py-0.5 text-xs font-medium {{ $kategoriClass['bg'] }} {{ $kategoriClass['text'] }} rounded">{{ $labelKategori }}</span>
                             </td>
@@ -197,11 +190,12 @@
                     @endforelse
                 </tbody>
             </table>
+            </div>
 
             <div class="flex flex-col items-center gap-3 border-t border-gray-100 bg-gray-50 px-4 py-3">
                 <p class="text-xs text-gray-500 text-center">
                     @if ($barangs->total() > 0)
-                        Menampilkan {{ $barangs->firstItem() }}–{{ $barangs->lastItem() }} dari {{ $barangs->total() }} barang
+                        Menampilkan {{ $barangs->firstItem() }}-{{ $barangs->lastItem() }} dari {{ $barangs->total() }} barang
                     @else
                         Tidak ada barang
                     @endif
