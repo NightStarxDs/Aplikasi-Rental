@@ -21,10 +21,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Keranjang', [KeranjangController::class, 'index'])->name('Keranjang');
     Route::post('/Keranjang/tambah/{kode_barang}', [PenjualanController::class, 'addToCart'])->name('cart.add');
     Route::get('/checkout/sukses/{kode_rental}', [PenjualanController::class, 'checkoutSuccess'])->name('checkout.success');
+    Route::post('/ulasan', [PenjualanController::class, 'storeUlasan'])->name('ulasan.store');
 });
 
 Route::get('/', function () {
-    return view('LandingPage');
+    $reviews = \App\Models\Ulasan::with('user')->orderBy('kode_ulasan', 'desc')->get();
+    return view('LandingPage', compact('reviews'));
 });
 
 Route::get('/login2', function () {
@@ -36,7 +38,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 Route::get('/landingpage', function () {
-    return view('LandingPage');
+    $reviews = \App\Models\Ulasan::with('user')->orderBy('kode_ulasan', 'desc')->get();
+    return view('LandingPage', compact('reviews'));
 })->name('landing');
 
 Route::middleware('auth')->group(function () {

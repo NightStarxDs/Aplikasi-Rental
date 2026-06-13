@@ -86,4 +86,20 @@ class PenjualanController extends Controller
     {
         return redirect()->route('penjualan.index')->with('checkout_success_kode', $kode_rental);
     }
+
+    public function storeUlasan(Request $request)
+    {
+        $request->validate([
+            'bintang' => 'required|integer|min:1|max:5',
+            'komentar' => 'required|string|max:1000',
+        ]);
+
+        \App\Models\Ulasan::create([
+            'id_user' => auth()->id(),
+            'bintang' => $request->bintang,
+            'komentar' => $request->komentar,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Ulasan berhasil dikirim!']);
+    }
 }

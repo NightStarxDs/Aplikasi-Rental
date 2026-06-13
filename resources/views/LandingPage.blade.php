@@ -298,48 +298,70 @@
                 </p>
             </div>
 
-            <div class="relative group">
-                <button type="button" id="reviewPrev"
-                    class="absolute -left-2 sm:-left-6 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-emerald-200 bg-white p-2 sm:p-3 text-emerald-700 shadow-lg transition hover:bg-emerald-600 hover:text-white lg:block opacity-0 group-hover:opacity-100"
-                    aria-label="Slide sebelumnya">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
-
-                <div id="reviewTrack" class="flex gap-4 overflow-x-auto scroll-smooth py-4 px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
-                    <x-review-card name="Hikaru Nakamura" rating="5">
-                        Adminnya ramah dan alat yang datang bersih. Saya booking H-1 dan prosesnya cepat sekali. Cocok untuk perjalanan dadakan.
-                    </x-review-card>
-
-                    <x-review-card name="Magnus Carlsen" rating="4.5">
-                        Sewa mirrorless untuk tugas kampus hasilnya memuaskan. Kondisi kamera bagus, baterai aman, dan harga masih masuk budget pelajar.
-                    </x-review-card>
-
-                    <x-review-card name="Gukesh D" rating="4.8">
-                        Tendanya bersih, mudah dipasang, dan perlengkapan lengkap. Sangat membantu untuk pemula yang baru mulai camping.
-                    </x-review-card>
-                    
-                    <x-review-card name="Ding Liren" rating="5">
-                        Pelayanan cepat tanggap, alatnya sangat terawat seperti baru. Sangat puas dengan pengalaman sewa di sini.
-                    </x-review-card>
-                    
-                    <x-review-card name="Ian Nepomniachtchi" rating="4.7">
-                        Sangat memudahkan! Peralatannya komplit dan kualitasnya terjamin. Harga sewa juga terjangkau dibanding beli sendiri.
-                    </x-review-card>
-                    
-                    <x-review-card name="Fabiano Caruana" rating="4.9">
-                        Baru pertama kali sewa kamera untuk liburan, dan sangat terbantu. Lensa bersih dan tidak ada masalah selama pemakaian.
-                    </x-review-card>
+            <div x-data="{ selectedRating: 'all' }">
+                <!-- Filter Rating Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8">
+                    <button @click="selectedRating = 'all'" :class="selectedRating === 'all' ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 scale-105' : 'bg-white border border-gray-200 text-gray-700 hover:bg-emerald-50'" class="px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 transform">
+                        Semua Rating
+                    </button>
+                    @foreach([5, 4, 3, 2, 1] as $star)
+                    <button @click="selectedRating = '{{ $star }}'" :class="selectedRating === '{{ $star }}' ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 scale-105' : 'bg-white border border-gray-200 text-gray-700 hover:bg-emerald-50'" class="px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 transform flex items-center gap-1.5">
+                        {{ $star }}
+                        <svg class="w-3.5 h-3.5 fill-current text-amber-400" viewBox="0 0 20 20"><path d="M10 1.5 12.6 6.8l5.9.9-4.3 4.2 1 5.9L10 15.5l-5.2 2.8 1-5.9L1.5 7.7l5.9-.9L10 1.5z"/></svg>
+                    </button>
+                    @endforeach
                 </div>
 
-                <button type="button" id="reviewNext"
-                    class="absolute -right-2 sm:-right-6 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-emerald-200 bg-white p-2 sm:p-3 text-emerald-700 shadow-lg transition hover:bg-emerald-600 hover:text-white lg:block opacity-0 group-hover:opacity-100"
-                    aria-label="Slide berikutnya">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M10 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
+                <div class="relative group">
+                    <button type="button" id="reviewPrev"
+                        class="absolute -left-2 sm:-left-6 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-emerald-200 bg-white p-2 sm:p-3 text-emerald-700 shadow-lg transition hover:bg-emerald-600 hover:text-white lg:block opacity-0 group-hover:opacity-100"
+                        aria-label="Slide sebelumnya">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                    <div id="reviewTrack" class="flex gap-4 overflow-x-auto scroll-smooth py-4 px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
+                        @php
+                            $fallbackReviews = [
+                                ['name' => 'Hikaru Nakamura', 'rating' => 5, 'comment' => 'Adminnya ramah dan alat yang datang bersih. Saya booking H-1 dan prosesnya cepat sekali. Cocok untuk perjalanan dadakan.'],
+                                ['name' => 'Magnus Carlsen', 'rating' => 4, 'comment' => 'Sewa mirrorless untuk tugas kampus hasilnya memuaskan. Kondisi kamera bagus, baterai aman, dan harga masih masuk budget pelajar.'],
+                                ['name' => 'Gukesh D', 'rating' => 4.8, 'comment' => 'Tendanya bersih, mudah dipasang, dan perlengkapan lengkap. Sangat membantu untuk pemula yang baru mulai camping.'],
+                                ['name' => 'Ding Liren', 'rating' => 5, 'comment' => 'Pelayanan cepat tanggap, alatnya sangat terawat seperti baru. Sangat puas dengan pengalaman sewa di sini.'],
+                                ['name' => 'Ian Nepomniachtchi', 'rating' => 4.7, 'comment' => 'Sangat memudahkan! Peralatannya komplit dan kualitasnya terjamin. Harga sewa juga terjangkau dibanding beli sendiri.'],
+                                ['name' => 'Fabiano Caruana', 'rating' => 4.9, 'comment' => 'Baru pertama kali sewa kamera untuk liburan, dan sangat terbantu. Lensa bersih dan tidak ada masalah selama pemakaian.']
+                            ];
+                        @endphp
+
+                        @forelse($reviews as $review)
+                            <x-review-card 
+                                name="{{ $review->user->name ?? 'Pelanggan OutRent' }}" 
+                                rating="{{ $review->bintang }}"
+                                x-show="selectedRating === 'all' || Math.floor({{ $review->bintang }}) == selectedRating"
+                            >
+                                {{ $review->komentar }}
+                            </x-review-card>
+                        @empty
+                            @foreach($fallbackReviews as $r)
+                                <x-review-card 
+                                    name="{{ $r['name'] }}" 
+                                    rating="{{ $r['rating'] }}"
+                                    x-show="selectedRating === 'all' || Math.floor({{ $r['rating'] }}) == selectedRating"
+                                >
+                                    {{ $r['comment'] }}
+                                </x-review-card>
+                            @endforeach
+                        @endforelse
+                    </div>
+
+                    <button type="button" id="reviewNext"
+                        class="absolute -right-2 sm:-right-6 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-emerald-200 bg-white p-2 sm:p-3 text-emerald-700 shadow-lg transition hover:bg-emerald-600 hover:text-white lg:block opacity-0 group-hover:opacity-100"
+                        aria-label="Slide berikutnya">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M10 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </section>

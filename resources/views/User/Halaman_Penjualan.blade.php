@@ -125,12 +125,63 @@
     <script src="https://kit.fontawesome.com/f19fb034db.js" crossorigin="anonymous"></script>
 
     @if(isset($checkoutRental))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <div x-data="{
+        showModal: true,
+        ulasanModal: false,
+        rating: 5,
+        komentar: '',
+        submitting: false,
+        closeRentalModal() {
+            this.showModal = false;
+            setTimeout(() => {
+                this.ulasanModal = true;
+            }, 3000);
+        },
+        submitUlasan() {
+            if (this.rating < 1 || this.rating > 5) return;
+            this.submitting = true;
+            fetch('{{ route('ulasan.store') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSR-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    bintang: this.rating,
+                    komentar: this.komentar
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.ulasanModal = false;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Terima Kasih!',
+                        text: 'Ulasan Anda sangat berarti bagi kami.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    alert('Gagal mengirim ulasan.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Terjadi kesalahan saat mengirim ulasan.');
+            })
+            .finally(() => {
+                this.submitting = false;
+            });
+        }
+    }">
     <!-- Popup Modal -->
-    <div x-data="{ showModal: true }" x-show="showModal" class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-900/60 backdrop-blur-sm p-4" x-transition.opacity>
-        <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all" @click.away="showModal = false">
+    <div x-show="showModal" class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-900/60 backdrop-blur-sm p-4" x-transition.opacity>
+        <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all" @click.away="closeRentalModal()">
             
             <!-- Close Button -->
-            <button @click="showModal = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition">
+            <button @click="closeRentalModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
@@ -295,5 +346,50 @@
             }, 100);
         });
     </script>
+
+    <!-- Review Modal -->
+    <div x-show="ulasanModal" class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-900/60 backdrop-blur-sm p-4" x-transition.opacity style="display: none;">
+        <div class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all text-center" @click.away="ulasanModal = false">
+            
+            <!-- Close Button -->
+            <button @click="ulasanModal = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 mb-3 shadow-sm">
+                <i class="fa-solid fa-star text-2xl text-amber-500"></i>
+            </div>
+            
+            <h2 class="text-xl font-bold text-gray-900">Bagaimana Pengalaman Anda?</h2>
+            <p class="text-sm text-gray-500 mt-1 mb-6">Berikan ulasan dan rating untuk pesanan Anda agar kami dapat terus meningkatkan layanan.</p>
+
+            <!-- Rating Stars -->
+            <div class="flex items-center justify-center gap-2 mb-6">
+                <template x-for="i in [1, 2, 3, 4, 5]">
+                    <button type="button" @click="rating = i" class="text-3xl focus:outline-none transition-transform hover:scale-110">
+                        <i class="fa-star" :class="i <= rating ? 'fa-solid text-amber-400' : 'fa-regular text-gray-300'"></i>
+                    </button>
+                </template>
+            </div>
+
+            <!-- Comment Input -->
+            <div class="mb-6">
+                <textarea x-model="komentar" rows="4" placeholder="Tulis komentar Anda di sini..." class="w-full text-sm border border-gray-300 rounded-xl focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 p-3 shadow-sm" required></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col gap-2">
+                <button type="button" @click="submitUlasan()" :disabled="submitting || !komentar.trim()" class="w-full flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl font-bold transition shadow-md text-sm">
+                    <span x-show="!submitting">Kirim Ulasan</span>
+                    <span x-show="submitting"><i class="fa-solid fa-spinner fa-spin"></i> Mengirim...</span>
+                </button>
+                <button type="button" @click="ulasanModal = false" class="w-full flex items-center justify-center px-5 py-2 text-xs font-semibold text-gray-500 hover:text-gray-700 transition">
+                    Nanti Saja
+                </button>
+            </div>
+
+        </div>
+    </div>
+    </div>
     @endif
 </x-app3-layout>
