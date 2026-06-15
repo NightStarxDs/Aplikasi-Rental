@@ -10,6 +10,15 @@
         </div>
     </x-slot>
 
+    {{-- ─── Floating Back Button ─── --}}
+    <a href="{{ route('penjualan.index') }}"
+        class="fixed top-[82px] left-4 z-30 inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-600 bg-white border border-gray-200 rounded-xl shadow-md hover:bg-gray-50 hover:text-emerald-700 hover:border-emerald-200 transition-all duration-200 group">
+        <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Kembali
+    </a>
+
     <div class="py-6 px-6 space-y-5">
 
         @if (session('success'))
