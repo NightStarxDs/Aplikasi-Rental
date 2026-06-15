@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'alamat' => 'Jl. Pelanggan No. 1',
             'email' => 'pelanggan@gmail.com',
             'password' => Hash::make('pelanggan123'),
-            'role' => 'pelanggan',
+            'role' => 'user',
         ]);
 
         $this->call([

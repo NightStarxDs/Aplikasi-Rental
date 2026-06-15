@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('gambar_barang');
             $table->string('nama_barang', 100);
             $table->enum('kategori_barang', ['Kamera', 'Alat Camping']);
-            $table->enum('subkategori_barang', ['DSLR Cam','Mirrorless Cam','Video Cam','Action Cam','Lensa','Akesesoris Kamera','Lighting','Audio','Tenda','Peralatan Tidur','Peralatan Memasak','Penerangan','Power']);
+            $table->enum('subkategori_barang', ['DSLR Cam','Mirrorless Cam','Video Cam','Action Cam','Lensa','Aksesoris Kamera','Lighting','Audio','Tenda','Peralatan Tidur','Peralatan Memasak','Penerangan','Power']);
             $table->text('deskripsi_barang')->nullable();
             $table->integer('stok');
             $table->decimal('harga_perhari', 15, 2);
