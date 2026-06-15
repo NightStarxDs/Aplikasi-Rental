@@ -10,7 +10,7 @@ class BarangSeeder extends Seeder
     public function run(): void
     {
         $barangs = [
-            // ==================== KATEGORI: KAMERA (15 Barang) ====================
+            // KATEGORI: KAMERA (15 Barang)
             [
                 'gambar_barang' => ['images/camera.jpg'],
                 'nama_barang' => 'Canon EOS 90D Kit 18-135mm',
@@ -192,7 +192,7 @@ class BarangSeeder extends Seeder
                 'status_barang' => 'Tersedia',
             ],
 
-            // ==================== KATEGORI: ALAT CAMPING (15 Barang) ====================
+            // KATEGORI: ALAT CAMPING (15 Barang)
             [
                 'gambar_barang' => ['images/tent.jpg'],
                 'nama_barang' => 'Tenda Eiger Shadow 4P',
