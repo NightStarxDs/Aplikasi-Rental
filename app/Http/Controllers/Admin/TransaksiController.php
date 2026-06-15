@@ -134,48 +134,87 @@ class TransaksiController extends Controller
         }
 
         if ($action === 'kembali') {
-            // Langkah 1: catat waktu kembali aktual dan ubah status utama menjadi Dikembalikan.
-            $rental->waktu_kembali_aktual = now();
-            $rental->status_rental = 'Dikembalikan';
+            DB::beginTransaction();
+            try {
+                // Langkah 1: catat waktu kembali aktual dan ubah status utama menjadi Dikembalikan.
+                $rental->waktu_kembali_aktual = now();
+                $rental->status_rental = 'Dikembalikan';
 
-            foreach ($rental->detailRentals as $detail) {
-                $detailId = $detail->kode_detail;
-                $detail->catatan_kondisi = $request->input("catatan_kondisi.$detailId") ?: $detail->catatan_kondisi;
-                $detail->denda_kerusakan = $request->input("denda_kerusakan.$detailId", 0);
-                $detail->save();
+                foreach ($rental->detailRentals as $detail) {
+                    $detailId = $detail->kode_detail;
+                    $detail->catatan_kondisi = $request->input("catatan_kondisi.$detailId") ?: $detail->catatan_kondisi;
+                    $detail->denda_kerusakan = $request->input("denda_kerusakan.$detailId", 0);
+                    $detail->save();
+
+                    // Kembalikan stok barang sesuai jumlah yang dipinjam
+                    $barang = $detail->barang;
+                    if ($barang) {
+                        $barang->stok += $detail->jumlah_barang;
+                        $barang->status_barang = $barang->stok > 0 ? 'Tersedia' : 'Tidak Tersedia';
+                        $barang->save();
+                    }
+                }
+
+                $rental->save();
+                DB::commit();
+
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('success', 'Pengembalian dicatat dan stok barang telah dikembalikan. Silakan selesaikan transaksi untuk mengubah status menjadi Selesai.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('error', 'Gagal mencatat pengembalian: ' . $e->getMessage());
             }
-
-            $rental->save();
-
-            return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
-                ->with('success', 'Pengembalian dicatat. Silakan selesaikan transaksi untuk mengubah status menjadi Selesai.');
         }
 
         if ($action === 'selesai') {
-            // Langkah 2: finalisasi, hitung denda keterlambatan otomatis dan simpan denda kerusakan dari input
-            if (! $rental->waktu_kembali_aktual) {
-                $rental->waktu_kembali_aktual = now();
+            DB::beginTransaction();
+            try {
+                // Langkah 2: finalisasi, hitung denda keterlambatan otomatis dan simpan denda kerusakan dari input
+                if (! $rental->waktu_kembali_aktual) {
+                    // Jika belum pernah dicatat (langsung selesai tanpa 'kembali'), kembalikan stok sekarang
+                    $rental->waktu_kembali_aktual = now();
+                    $stokBelumDikembalikan = true;
+                } else {
+                    $stokBelumDikembalikan = false;
+                }
+
+                $totalDenda = 0;
+                foreach ($rental->detailRentals as $detail) {
+                    $detailId = $detail->kode_detail;
+                    $detail->catatan_kondisi = $request->input("catatan_kondisi.$detailId") ?: $detail->catatan_kondisi;
+                    $detail->denda_kerusakan = $request->input("denda_kerusakan.$detailId", 0);
+                    // Hitung keterlambatan otomatis berdasarkan waktu_kembali_aktual
+                    $detail->denda_keterlambatan = $detail->hitungDendaKeterlambatan($rental->waktu_kembali_aktual);
+                    $detail->status_detail = 'Lunas';
+                    $detail->save();
+
+                    $totalDenda += floatval($detail->denda_kerusakan ?? 0) + floatval($detail->denda_keterlambatan ?? 0);
+
+                    // Kembalikan stok hanya jika belum dikembalikan saat step 'kembali'
+                    if ($stokBelumDikembalikan) {
+                        $barang = $detail->barang;
+                        if ($barang) {
+                            $barang->stok += $detail->jumlah_barang;
+                            $barang->status_barang = $barang->stok > 0 ? 'Tersedia' : 'Tidak Tersedia';
+                            $barang->save();
+                        }
+                    }
+                }
+
+                $rental->status_rental = 'Selesai';
+                $rental->total_denda = $totalDenda;
+                $rental->save();
+
+                DB::commit();
+
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('success', 'Transaksi berhasil diselesaikan dan biaya telah diperbarui.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('error', 'Gagal menyelesaikan transaksi: ' . $e->getMessage());
             }
-
-            $totalDenda = 0;
-            foreach ($rental->detailRentals as $detail) {
-                $detailId = $detail->kode_detail;
-                $detail->catatan_kondisi = $request->input("catatan_kondisi.$detailId") ?: $detail->catatan_kondisi;
-                $detail->denda_kerusakan = $request->input("denda_kerusakan.$detailId", 0);
-                // Hitung keterlambatan otomatis berdasarkan waktu_kembali_aktual
-                $detail->denda_keterlambatan = $detail->hitungDendaKeterlambatan($rental->waktu_kembali_aktual);
-                $detail->status_detail = 'Lunas';
-                $detail->save();
-
-                $totalDenda += floatval($detail->denda_kerusakan ?? 0) + floatval($detail->denda_keterlambatan ?? 0);
-            }
-
-            $rental->status_rental = 'Selesai';
-            $rental->total_denda = $totalDenda;
-            $rental->save();
-
-            return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
-                ->with('success', 'Transaksi berhasil diselesaikan dan biaya telah diperbarui.');
         }
 
         return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
