@@ -37,6 +37,32 @@ class RiwayatPelangganController extends Controller
         ]);
     }
 
+    public function detail($kode_rental)
+    {
+        $id = Auth::user()->id_user;
+
+        $rental = Rental::with(['detailRentals.barang', 'user'])
+            ->where('kode_rental', $kode_rental)
+            ->where('id_user', $id)
+            ->firstOrFail();
+
+        // Hitung total biaya checkout yang sudah dibayar
+        $checkoutPaid = (float) ($rental->total_harga ?? 0);
+
+        // Hitung total denda kerusakan & keterlambatan
+        $dendaKerusakan      = $rental->detailRentals->sum(fn($d) => (float) ($d->denda_kerusakan ?? 0));
+        $dendaKeterlambatan  = $rental->detailRentals->sum(fn($d) => (float) ($d->denda_keterlambatan ?? 0));
+        $totalDenda          = $dendaKerusakan + $dendaKeterlambatan;
+
+        return view('User.Detail_Transaksi', compact(
+            'rental',
+            'checkoutPaid',
+            'dendaKerusakan',
+            'dendaKeterlambatan',
+            'totalDenda'
+        ));
+    }
+
     public function cancel($kode_rental)
     {
         $id = Auth::user()->id_user;
@@ -55,12 +81,12 @@ class RiwayatPelangganController extends Controller
             $rental->status_rental = 'Dibatalkan';
             $rental->save();
 
-            // Kembalikan stok barang
+            // Kembalikan stok barang & sinkronkan status otomatis
             foreach ($rental->detailRentals as $detail) {
                 $barang = $detail->barang;
                 if ($barang) {
                     $barang->stok += $detail->jumlah_barang;
-                    $barang->save();
+                    $barang->syncStatus();
                 }
             }
 

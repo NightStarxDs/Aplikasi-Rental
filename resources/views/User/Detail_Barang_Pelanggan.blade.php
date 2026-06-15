@@ -19,7 +19,7 @@
         };
     @endphp
     
-    <div class="py-6 px-6 pt-15 space-y-4"  x-data="{ activeFoto: @js($fotoUtama), showSuccess: true }">
+    <div class="py-6 px-6 pt-15 space-y-4"  x-data="{ activeFoto: @js($fotoUtama), showSuccess: true, showError: true }">
         @if (session('success'))
             <div x-show="showSuccess" class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2">
@@ -29,6 +29,22 @@
                     <span class="text-sm font-medium">{{ session('success') }}</span>
                 </div>
                 <button @click="showSuccess = false" class="text-emerald-500 hover:text-emerald-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div x-show="showError" class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                    </svg>
+                    <span class="text-sm font-medium">{{ session('error') }}</span>
+                </div>
+                <button @click="showError = false" class="text-red-500 hover:text-red-700">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
@@ -94,19 +110,28 @@
                     <div class="flex flex-col gap-3">
 
                         {{-- Kuantitas --}}
-                        <div class="flex items-center gap-3">
-                            <span class="text-sm font-medium text-gray-600">Kuantitas:</span>
-                            <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
-                                <button onclick="ubahQty(-1)"
-                                    class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition text-base font-semibold">
-                                    -
-                                </button>
-                                <span id="qty" class="w-8 text-center text-sm font-medium text-gray-800">1</span>
-                                <button onclick="ubahQty(1)"
-                                    class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition text-base font-semibold">
-                                    +
-                                </button>
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-3">
+                                <span class="text-sm font-medium text-gray-600">Kuantitas:</span>
+                                <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
+                                    <button onclick="ubahQty(-1)"
+                                        class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition text-base font-semibold">
+                                        -
+                                    </button>
+                                    <span id="qty" class="w-8 text-center text-sm font-medium text-gray-800">1</span>
+                                    <button onclick="ubahQty(1)"
+                                        class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition text-base font-semibold">
+                                        +
+                                    </button>
+                                </div>
                             </div>
+                            @php $maxQty = min(3, $barang->stok); @endphp
+                            <p class="text-xs text-gray-400">
+                                Maks. <span class="font-semibold text-gray-500">{{ $maxQty }}</span> unit per pelanggan
+                                @if($barang->stok < 3)
+                                    <span class="text-amber-500">(stok tersisa {{ $barang->stok }})</span>
+                                @endif
+                            </p>
                         </div>
                     </div>
                         <form action="{{ route('cart.add', $barang->kode_barang) }}" method="POST">
@@ -174,10 +199,12 @@
 
     {{-- Script Kuantitas --}}
     <script>
+        const maxQty = {{ min(3, $barang->stok) }};
+
         function ubahQty(n) {
             const el  = document.getElementById('qty');
             const val = parseInt(el.textContent) + n;
-            if (val >= 1 && val <= 5) {
+            if (val >= 1 && val <= maxQty) {
                 el.textContent = val;
                 document.getElementById('qty-input').value = val;
             }

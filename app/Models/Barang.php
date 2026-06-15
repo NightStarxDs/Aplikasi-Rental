@@ -57,6 +57,26 @@ class Barang extends Model
 
     public function cekKetersediaan(): bool
     {
-        return $this->stok > 0 && $this->status_barang === 'Tersedia';
+        return $this->stok > 0;
+    }
+
+    /**
+     * Sinkronkan status_barang berdasarkan stok saat ini, lalu simpan ke DB.
+     * Gunakan method ini setiap kali stok berubah.
+     */
+    public function syncStatus(): void
+    {
+        $stok = (int) $this->stok;
+
+        if ($stok <= 0) {
+            $this->stok = 0; // pastikan tidak negatif
+            $this->status_barang = 'Tidak Tersedia';
+        } elseif ($stok <= 5) {
+            $this->status_barang = 'Sedikit';
+        } else {
+            $this->status_barang = 'Tersedia';
+        }
+
+        $this->save();
     }
 }

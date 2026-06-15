@@ -74,6 +74,16 @@ class Checkout extends Component
                 $hargaSatuan = $this->checkoutData['kategori'] === 'jam' ? $item['harga_perjam'] : $item['harga_perhari'];
                 $subtotalItem = $hargaSatuan * $item['qty'] * $this->checkoutData['durasi'];
 
+                // Validasi stok sebelum proses
+                $barangModel = \App\Models\Barang::find($kodeBarang);
+                if (!$barangModel || $barangModel->stok < $item['qty']) {
+                    DB::rollBack();
+                    $namaBarang = $barangModel->nama_barang ?? 'Barang';
+                    session()->flash('error', "Stok {$namaBarang} tidak mencukupi. Stok tersisa: " . ($barangModel->stok ?? 0));
+                    $this->isLoading = false;
+                    return;
+                }
+
                 Detail_Rental::create([
                     'kode_rental'         => $rental->kode_rental,
                     'kode_barang'         => $kodeBarang,
@@ -85,12 +95,9 @@ class Checkout extends Component
                     'status_detail'       => 'Menunggu',
                 ]);
                 
-                // Kurangi stok barang
-                $barangModel = \App\Models\Barang::find($kodeBarang);
-                if ($barangModel) {
-                    $barangModel->stok -= $item['qty'];
-                    $barangModel->save();
-                }
+                // Kurangi stok & sinkronkan status otomatis
+                $barangModel->stok -= $item['qty'];
+                $barangModel->syncStatus();
                 
                 // Hapus barang yang berhasil dicheckout dari keranjang (session)
                 $cart = session()->get('cart', []);

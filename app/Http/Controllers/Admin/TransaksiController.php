@@ -102,7 +102,7 @@ class TransaksiController extends Controller
                     $barang = $detail->barang;
                     if ($barang) {
                         $barang->stok += $detail->jumlah_barang;
-                        $barang->save();
+                        $barang->syncStatus();
                     }
                 }
 

@@ -12,7 +12,8 @@ class PenjualanController extends Controller
     public function index(Request $request)
     {
         
-        $query = Barang::where('status_barang', '!=', 'Tidak Tersedia');
+        $query = Barang::where('status_barang', '!=', 'Tidak Tersedia')
+                       ->where('stok', '>', 0);
 
         
         if ($request->has('kategori') && $request->kategori != '') {
@@ -44,21 +45,46 @@ class PenjualanController extends Controller
     
     public function addToCart(Request $request, $kode_barang) {
         $barang = Barang::findOrFail($kode_barang);
-        $qty = max(1, (int) $request->input('qty', 1));
-        
+        $qty    = max(1, (int) $request->input('qty', 1));
+
+        // Tolak jika stok habis
+        if ($barang->stok <= 0) {
+            return redirect()->route('Detail_Barang_Pelanggan', ['id' => $kode_barang])
+                ->with('error', 'Stok barang ini sudah habis.');
+        }
+
+        // Batas maksimal per pelanggan per barang: min(3, stok)
+        $maxPerPelanggan = min(3, $barang->stok);
+
         $cart = session()->get('cart', []);
 
-        if(isset($cart[$kode_barang])) {
-            $cart[$kode_barang]['qty'] = min($cart[$kode_barang]['qty'] + $qty, 10);
+        $currentQty = isset($cart[$kode_barang]) ? $cart[$kode_barang]['qty'] : 0;
+        $newQty     = $currentQty + $qty;
+
+        // Tidak boleh melebihi batas max (3 atau stok jika < 3)
+        if ($newQty > $maxPerPelanggan) {
+            $sisa = $maxPerPelanggan - $currentQty;
+            if ($sisa <= 0) {
+                return redirect()->route('Detail_Barang_Pelanggan', ['id' => $kode_barang])
+                    ->with('error', "Anda sudah mencapai batas maksimal penyewaan ({$maxPerPelanggan} unit) untuk barang ini.");
+            }
+            $newQty = $maxPerPelanggan;
+        }
+
+        // Tidak boleh melebihi stok yang tersedia
+        $newQty = min($newQty, $barang->stok);
+
+        if (isset($cart[$kode_barang])) {
+            $cart[$kode_barang]['qty'] = $newQty;
         } else {
             $cart[$kode_barang] = [
-                "kode_barang" => $barang->kode_barang,
-                "nama_barang" => $barang->nama_barang,
-                "kategori_barang" => $barang->kategori_barang,
-                "harga_perjam" => $barang->harga_perjam,
-                "harga_perhari" => $barang->harga_perhari,
-                "gambar_barang" => $barang->gambar_barang,
-                "qty" => min($qty, 10)
+                "kode_barang"    => $barang->kode_barang,
+                "nama_barang"    => $barang->nama_barang,
+                "kategori_barang"=> $barang->kategori_barang,
+                "harga_perjam"   => $barang->harga_perjam,
+                "harga_perhari"  => $barang->harga_perhari,
+                "gambar_barang"  => $barang->gambar_barang,
+                "qty"            => $newQty,
             ];
         }
 

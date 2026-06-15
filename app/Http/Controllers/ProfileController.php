@@ -39,7 +39,10 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Redirect ke halaman profil sesuai role
+        $redirectRoute = ($user->role === 'admin') ? 'profile.edit' : 'user.profile';
+
+        return Redirect::route($redirectRoute)->with('status', 'profile-updated');
     }
 
     /**

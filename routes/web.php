@@ -113,6 +113,10 @@ Route::get('/riwayat', [UserRiwayatPelangganController::class, 'riwayat'])
     ->name('users.history')
     ->middleware('auth');
 
+Route::get('/riwayat/{kode_rental}', [UserRiwayatPelangganController::class, 'detail'])
+    ->name('users.history.detail')
+    ->middleware('auth');
+
 Route::post('/riwayat/{kode_rental}/cancel', [UserRiwayatPelangganController::class, 'cancel'])
     ->name('users.history.cancel')
     ->middleware('auth');
