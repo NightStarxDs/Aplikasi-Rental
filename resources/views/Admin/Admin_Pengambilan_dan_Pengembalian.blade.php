@@ -239,15 +239,24 @@
                                     <td class="px-4 py-3 text-center">
                                         @php
                                             $calculatedLate = $detail->calculated_denda_keterlambatan ?? ($detail->denda_keterlambatan ?? 0);
+                                            $lateInfo = $detail->late_info_text ?? '';
                                         @endphp
                                         @if(in_array($status, ['Dikembalikan', 'Selesai']) || $rental->waktu_kembali_aktual)
-                                            <span class="text-xs text-gray-800">Rp {{ number_format($calculatedLate,0,',','.') }}</span>
+                                            <span class="text-xs text-gray-800 font-medium block">Rp {{ number_format($calculatedLate,0,',','.') }}</span>
+                                            @if($lateInfo)
+                                                <span class="text-[10px] text-red-500 block mt-1">{{ $lateInfo }}</span>
+                                            @endif
                                             <input type="hidden" name="denda_keterlambatan[{{ $detail->kode_detail }}]" value="{{ $calculatedLate }}">
                                         @else
-                                            <div class="flex items-center gap-1 justify-center">
-                                                <span class="text-xs text-gray-500">Rp</span>
-                                                <input name="denda_keterlambatan[{{ $detail->kode_detail }}]" type="number" min="0" value="{{ old('denda_keterlambatan.' . $detail->kode_detail, $detail->denda_keterlambatan ?? $calculatedLate) }}" oninput="hitungTotal()"
-                                                    class="w-28 text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-gray-700">
+                                            <div class="flex flex-col items-center gap-1 justify-center">
+                                                <div class="flex items-center gap-1 justify-center">
+                                                    <span class="text-xs text-gray-500">Rp</span>
+                                                    <input name="denda_keterlambatan[{{ $detail->kode_detail }}]" type="number" min="0" value="{{ old('denda_keterlambatan.' . $detail->kode_detail, $detail->denda_keterlambatan ?? $calculatedLate) }}" oninput="hitungTotal()"
+                                                        class="w-28 text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-gray-700">
+                                                </div>
+                                                @if($lateInfo)
+                                                    <span class="text-[10px] text-red-500 mt-1 max-w-[150px] leading-tight text-center">{{ $lateInfo }}</span>
+                                                @endif
                                             </div>
                                         @endif
                                     </td>

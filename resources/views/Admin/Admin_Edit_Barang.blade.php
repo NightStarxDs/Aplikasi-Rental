@@ -126,32 +126,90 @@
                         <div class="md:col-span-2 flex flex-col gap-3">
                             <div>
                                 <label class="text-sm font-medium text-gray-600">Foto Barang</label>
-                                <p class="mt-0.5 text-xs text-gray-400">Kosongkan jika tidak ingin mengganti. Unggah file baru untuk mengganti foto yang ada.</p>
+                                <p class="mt-0.5 text-xs text-gray-400">Klik ikon 🗑 untuk menandai foto yang ingin dihapus. Unggah file baru untuk mengganti atau menambah foto.</p>
                             </div>
 
                             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                                 @for ($i = 1; $i <= 5; $i++)
                                     @php $fotoLama = $fotosLama->get($i - 1); @endphp
-                                    <div class="flex flex-col gap-1">
+                                    <div class="flex flex-col gap-1" id="foto-slot-{{ $i }}">
                                         <label class="text-sm font-medium text-gray-500">
                                             {{ $i === 1 ? 'Foto Utama' : 'Foto ' . $i }}
                                         </label>
+
+                                        {{-- Hidden input penanda hapus --}}
+                                        <input type="hidden" name="hapus_foto_{{ $i }}" value="0" id="hapus_foto_{{ $i }}_input">
+
                                         @if ($fotoLama)
-                                            <div class="h-24 overflow-hidden rounded-lg border border-gray-200 bg-white">
-                                                <img src="{{ asset('storage/' . $fotoLama) }}" alt="Foto {{ $i }}" class="h-full w-full object-cover">
+                                            {{-- Gambar lama + tombol hapus --}}
+                                            <div class="relative h-28 overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
+                                                 id="existing-foto-{{ $i }}">
+                                                <img src="{{ asset('storage/' . $fotoLama) }}"
+                                                     alt="Foto {{ $i }}"
+                                                     class="h-full w-full object-cover"
+                                                     id="existing-img-{{ $i }}">
+
+                                                {{-- Overlay "Akan Dihapus" --}}
+                                                <div id="hapus-overlay-{{ $i }}"
+                                                     class="absolute inset-0 hidden items-center justify-center bg-red-500/75 rounded-lg backdrop-blur-[1px]">
+                                                    <div class="flex flex-col items-center gap-1">
+                                                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                                                        </svg>
+                                                        <span class="text-white text-xs font-semibold">Akan Dihapus</span>
+                                                        <button type="button" onclick="toggleHapusFoto({{ $i }})"
+                                                            class="mt-0.5 rounded bg-white/30 px-2 py-0.5 text-[10px] font-medium text-white hover:bg-white/50 transition">
+                                                            Batalkan
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                {{-- Tombol Hapus --}}
+                                                <button type="button" onclick="toggleHapusFoto({{ $i }})"
+                                                    id="hapus-btn-{{ $i }}"
+                                                    title="Hapus foto ini"
+                                                    class="absolute top-1.5 right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md hover:bg-red-600 active:scale-95 transition">
+                                                    <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                                        <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                                                    </svg>
+                                                </button>
                                             </div>
                                         @endif
-                                        <label class="group flex w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-gray-300 bg-white py-3 transition hover:border-emerald-500">
+
+                                        {{-- Preview gambar BARU yang dipilih --}}
+                                        <div id="new-preview-{{ $i }}" class="hidden relative h-28 overflow-hidden rounded-lg border-2 border-emerald-400 bg-gray-50 shadow-sm">
+                                            <img id="new-preview-img-{{ $i }}" src="" alt="Preview baru"
+                                                 class="h-full w-full object-cover">
+                                            {{-- Badge "Baru" --}}
+                                            <span class="absolute top-1.5 left-1.5 rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-bold text-white shadow">
+                                                Baru ✓
+                                            </span>
+                                            {{-- Tombol batal preview --}}
+                                            <button type="button" onclick="batalPreview({{ $i }})"
+                                                title="Batal pilih foto baru"
+                                                class="absolute top-1.5 right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-gray-700/80 text-white hover:bg-gray-900 active:scale-95 transition">
+                                                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        {{-- Area unggah --}}
+                                        <label id="upload-label-{{ $i }}"
+                                            class="group flex w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-gray-300 bg-white py-3 transition hover:border-emerald-500">
                                             <svg class="h-5 w-5 text-gray-400 transition group-hover:text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                                 <polyline points="17 8 12 3 7 8"/>
                                                 <line x1="12" y1="3" x2="12" y2="15"/>
                                             </svg>
-                                            <span class="px-2 text-center text-xs text-gray-400 transition group-hover:text-emerald-600">
+                                            <span id="upload-text-{{ $i }}" class="px-2 text-center text-xs text-gray-400 transition group-hover:text-emerald-600">
                                                 {{ $fotoLama ? 'Ganti foto' : 'Unggah foto' }}
                                             </span>
-                                            <input type="file" name="foto_{{ $i }}" accept="image/*" class="hidden">
+                                            <input type="file" name="foto_{{ $i }}" id="foto_input_{{ $i }}"
+                                                accept="image/*" class="hidden"
+                                                onchange="previewFoto({{ $i }}, this)">
                                         </label>
+
                                         @error('foto_' . $i)
                                             <p class="mt-0.5 text-xs text-red-500">{{ $message }}</p>
                                         @enderror
@@ -219,7 +277,7 @@
             const opt = document.createElement('option');
             opt.value       = s;
             opt.textContent = s;
-            if (s === oldSubkategori) opt.selected = true; // pre-select nilai lama
+            if (s === oldSubkategori) opt.selected = true;
             subEl.appendChild(opt);
         });
     }
@@ -238,6 +296,71 @@
     // Jalankan saat halaman load agar data existing langsung tampil
     updateSubkategori();
     hitungHargaJam();
+
+    // ─── Preview gambar baru yang dipilih ────────────────────────────────────
+    function previewFoto(i, input) {
+        if (!input.files || !input.files[0]) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const previewBox = document.getElementById('new-preview-' + i);
+            const previewImg = document.getElementById('new-preview-img-' + i);
+            previewImg.src   = e.target.result;
+            previewBox.classList.remove('hidden');
+
+            // Jika foto lama ditandai hapus, batalkan penghapusannya karena ada foto baru
+            const hapusInput = document.getElementById('hapus_foto_' + i + '_input');
+            if (hapusInput && hapusInput.value === '1') {
+                setHapusFoto(i, false);
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+
+    // ─── Batal pilih foto baru ───────────────────────────────────────────────
+    function batalPreview(i) {
+        const previewBox = document.getElementById('new-preview-' + i);
+        const fileInput  = document.getElementById('foto_input_' + i);
+
+        if (previewBox) previewBox.classList.add('hidden');
+        if (fileInput)  fileInput.value = '';
+    }
+
+    // ─── Toggle hapus foto lama ──────────────────────────────────────────────
+    function toggleHapusFoto(i) {
+        const hapusInput = document.getElementById('hapus_foto_' + i + '_input');
+        if (!hapusInput) return;
+
+        const isMarked = hapusInput.value === '1';
+        setHapusFoto(i, !isMarked);
+    }
+
+    function setHapusFoto(i, mark) {
+        const hapusInput = document.getElementById('hapus_foto_' + i + '_input');
+        const overlay    = document.getElementById('hapus-overlay-' + i);
+        const hapusBtn   = document.getElementById('hapus-btn-' + i);
+
+        if (!hapusInput) return;
+
+        hapusInput.value = mark ? '1' : '0';
+
+        if (overlay) {
+            overlay.classList.toggle('hidden', !mark);
+            overlay.classList.toggle('flex', mark);
+        }
+
+        if (hapusBtn) {
+            hapusBtn.classList.toggle('bg-red-500', !mark);
+            hapusBtn.classList.toggle('hover:bg-red-600', !mark);
+            hapusBtn.classList.toggle('bg-gray-400', mark);
+            hapusBtn.classList.toggle('hover:bg-gray-500', mark);
+        }
+
+        // Jika ditandai hapus, bersihkan juga preview baru (jika ada)
+        if (mark) {
+            batalPreview(i);
+        }
+    }
     </script>
 
 </x-app-layout>

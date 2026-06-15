@@ -157,12 +157,21 @@ class BarangController extends Controller
         $gambar = array_pad($gambar, 5, null);
 
         for ($i = 1; $i <= 5; $i++) {
+            $index = $i - 1;
+
+            // Jika ada foto baru yang diunggah
             if ($request->hasFile("foto_$i")) {
-                $index = $i - 1;
                 if (! empty($gambar[$index])) {
                     Storage::disk('public')->delete($gambar[$index]);
                 }
                 $gambar[$index] = $request->file("foto_$i")->store('barang', 'public');
+            } 
+            // Jika tidak ada foto baru, tapi user menekan tombol hapus (hapus_foto_i = 1)
+            elseif ($request->input("hapus_foto_$i") == '1') {
+                if (! empty($gambar[$index])) {
+                    Storage::disk('public')->delete($gambar[$index]);
+                    $gambar[$index] = null;
+                }
             }
         }
 

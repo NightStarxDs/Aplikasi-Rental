@@ -36,8 +36,14 @@ class TransaksiController extends Controller
         $subtotal = $rental->detailRentals->sum(fn ($detail) => $detail->subtotal ?? 0);
         foreach ($rental->detailRentals as $detail) {
             $detail->calculated_denda_keterlambatan = 0;
+            $detail->late_info_text = null;
             if ($actualReturn) {
-                $detail->calculated_denda_keterlambatan = $detail->hitungDendaKeterlambatan($actualReturn);
+                $lateInfo = $detail->getLateFeeInfo($actualReturn);
+                $detail->calculated_denda_keterlambatan = $lateInfo['fee'];
+                
+                if ($lateInfo['fee'] > 0) {
+                    $detail->late_info_text = $lateInfo['text'];
+                }
             }
         }
 

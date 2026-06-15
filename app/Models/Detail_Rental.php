@@ -64,6 +64,33 @@ class Detail_Rental extends Model implements PerhitunganDenda
         return round($lateUnits * $basePrice * 1.5 * $this->jumlah_barang, 2);
     }
 
+    public function getLateFeeInfo(Carbon $actualReturn): array
+    {
+        $rental = $this->rental;
+        if (! $rental || ! $rental->waktu_kembali || ! $this->barang) {
+            return ['fee' => 0.0, 'text' => 'Tidak ada keterlambatan'];
+        }
+
+        $deadline = Carbon::parse($rental->waktu_kembali);
+        if ($actualReturn->lessThanOrEqualTo($deadline)) {
+            return ['fee' => 0.0, 'text' => 'Tepat waktu'];
+        }
+
+        $isDaily = $rental->isDailyRental();
+        $secondsLate = $deadline->diffInSeconds($actualReturn, false);
+        $unitSeconds = $isDaily ? 86400 : 3600;
+        $lateUnits = max(1, (int) ceil($secondsLate / $unitSeconds));
+        $basePrice = $isDaily ? (float) $this->barang->harga_perhari : (float) $this->barang->harga_perjam;
+        $qty = $this->jumlah_barang;
+        
+        $fee = round($lateUnits * $basePrice * 1.5 * $qty, 2);
+        $unitText = $isDaily ? 'Hari' : 'Jam';
+        
+        $text = "Telat {$lateUnits} {$unitText} (x Rp " . number_format($basePrice,0,',','.') . " x 1.5 denda x {$qty} unit)";
+        
+        return ['fee' => $fee, 'text' => $text, 'lateUnits' => $lateUnits, 'unitText' => $unitText];
+    }
+
     public function hitungDenda_Kerusakan(): float
     {
         return (float) ($this->denda_kerusakan ?? 0);
