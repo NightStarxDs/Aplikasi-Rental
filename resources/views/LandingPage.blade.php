@@ -8,7 +8,7 @@
             <div class="absolute inset-0 flex items-center justify-center px-6 text-center text-white sm:px-10 lg:px-16">
                 <div class="max-w-3xl">
                     <h1 class="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-                        Selamat Datang di <span class="text-green-400">Out</span>Rent
+                        Selamat Datang di<span class="text-green-400">Out</span>Rent</span>
                     </h1>
                     <p class="mt-3 text-base text-white/90 sm:mt-4 sm:text-lg lg:text-2xl">
                         Solusi sewa alat camping dan kamera termudah.   
@@ -370,7 +370,7 @@
         <div class="mx-auto w-full max-w-7xl px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[200px] mb-12">
                 <div>
-                    <h2 class="text-3xl font-bold mb-4 text-gray-900"><span class="text-emerald-600">Out</span>Rent</h2>
+                    <h2 class="text-3xl font-bold mb-4 text-gray-900"><span class="inline-flex items-center"><img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2"><span class="text-emerald-600">Out</span>Rent</span></h2>
                     <p class="text-sm text-gray-600 mb-6 leading-relaxed">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex.
                     </p>
@@ -420,7 +420,7 @@
     <div id="small-footer" class="fixed bottom-0 left-0 w-full bg-white border-t border-emerald-100 py-3 text-sm z-40 transition-transform duration-500 translate-y-0 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)]">
         <div class="flex justify-between items-center px-4 max-w-7xl mx-auto">
             <div class="flex items-center gap-3">
-                <span class="font-bold text-gray-900"><span class="text-emerald-600">Out</span>Rent</span>
+                <span class="font-bold text-gray-900 inline-flex items-center"><img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2"><span class="text-emerald-600">Out</span>Rent</span>
                 <span class="hidden sm:inline text-gray-400">|</span>
                 <span class="hidden sm:inline text-gray-600">Sewa Alat Camping & Kamera</span>
             </div>

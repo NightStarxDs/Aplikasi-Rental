@@ -24,6 +24,15 @@ class PenjualanController extends Controller
             $query->where('subkategori_barang', $request->subkategori);
         }
 
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_barang', 'like', '%' . $search . '%')
+                  ->orWhere('kategori_barang', 'like', '%' . $search . '%')
+                  ->orWhere('subkategori_barang', 'like', '%' . $search . '%');
+            });
+        }
+
         $barang = $query->get();
         
         $checkoutRental = null;

@@ -1,8 +1,8 @@
 <nav class="fixed start-0 top-0 z-20 h-[60px] w-full border-b border-gray-200 bg-white text-gray-800">
     <div class="mx-[40px] flex h-full max-w-[1440px] flex-wrap items-center justify-between">
         <h1 class="font-extrabold text-xl">
-        <a href="/" class="text-gray-950 cursor-pointer block">
-            <span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
+        <a href="/" class="text-gray-950 cursor-pointer inline-flex items-center">
+            <img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2"><span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
         </a>
         </h1>
 
