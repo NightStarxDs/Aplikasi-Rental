@@ -11,20 +11,10 @@
     <div class="px-6 space-y-5">
 
         <!-- Hero Banner -->
-        <div class="grid grid-cols-3 gap-3 h-48">
+        <div class="grid grid-cols-1 gap-3 h-48">
             <div class="col-span-2 rounded-2xl overflow-hidden relative">
-                <img src="{{ asset('images/Test.jpg') }}" alt="Banner Utama"
+                <img src="{{ asset('images/Banner2.png') }}" alt="Banner Utama"
                     class="w-full h-full object-cover bg-no-repeat bg-center">
-            </div>
-            <div class="flex flex-col gap-3">
-                <div class="flex-1 rounded-2xl overflow-hidden">
-                    <img src="{{ asset('images/Test.jpg') }}" alt="Foto 1"
-                        class="w-full h-full object-cover bg-no-repeat bg-center">
-                </div>
-                <div class="flex-1 rounded-2xl overflow-hidden">
-                    <img src="{{ asset('images/Test.jpg') }}" alt="Foto 2"
-                        class="w-full h-full object-cover bg-no-repeat bg-center">
-                </div>
             </div>
         </div>
 

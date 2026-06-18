@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'OutRent') }}</title>
-
+    <link rel="icon" type="image/png" href="{{ asset('images/Logo-Header.png') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
@@ -18,7 +18,7 @@
 <body class="bg-gray-200 font-sans antialiased">
     @include('layouts.navigation3')
 
-    <main class="pt-[70px] pb-16">
+    <main class="pt-[90px] pb-16">
         {{ $slot }}
     </main>
 

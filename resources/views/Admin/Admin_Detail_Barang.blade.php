@@ -18,35 +18,62 @@
         };
     @endphp
 
-    <div class="py-6 px-6 space-y-4" x-data="{ activeFoto: @js($fotoUtama) }">
+    <div class="py-6 px-6 space-y-4" x-data="{
+        fotos: @js($fotos),
+        modalOpen: false,
+        swapFoto(index) {
+            let newFotos = [...this.fotos];
+            let temp = newFotos[0];
+            newFotos[0] = newFotos[index];
+            newFotos[index] = temp;
+            this.fotos = newFotos;
+        },
+        nextFoto() {
+            if (this.fotos.length > 1) {
+                let newFotos = [...this.fotos];
+                let first = newFotos.shift();
+                newFotos.push(first);
+                this.fotos = newFotos;
+            }
+        },
+        prevFoto() {
+            if (this.fotos.length > 1) {
+                let newFotos = [...this.fotos];
+                let last = newFotos.pop();
+                newFotos.unshift(last);
+                this.fotos = newFotos;
+            }
+        }
+    }">
 
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 flex gap-5">
 
             {{-- Foto dengan Thumbnail --}}
-            <div class="flex-shrink-0 flex flex-col gap-2">
-                <div class="w-[295px] h-[250px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center">
-                    <template x-if="activeFoto">
+            <div class="flex-shrink-0 flex flex-col gap-2 relative">
+                <div @click="if(fotos.length > 0) modalOpen = true" class="w-[295px] h-[250px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-emerald-400 transition">
+                    <template x-if="fotos.length > 0">
                         <div class="w-full h-full bg-cover bg-center transition duration-300"
-                            :style="`background-image: url('${activeFoto}')`"></div>
+                            :style="`background-image: url('${fotos[0]}')`"></div>
                     </template>
-                    <template x-if="!activeFoto">
+                    <template x-if="fotos.length === 0">
                         <span class="text-sm text-gray-400">Tidak ada foto</span>
                     </template>
                 </div>
 
-                @if ($fotos->count() > 1)
-                    <div class="grid grid-cols-5 gap-1.5 max-w-[295px]">
-                        @foreach ($fotos as $foto)
-                            <button type="button"
-                                @click="activeFoto = '{{ $foto }}'"
-                                :class="activeFoto === '{{ $foto }}' ? 'border-emerald-500 ring-1 ring-emerald-500' : 'border-gray-200'"
-                                class="aspect-square bg-white border rounded-lg cursor-pointer hover:border-emerald-400 transition bg-cover bg-center"
-                                style="background-image: url('{{ $foto }}');">
-                            </button>
-                        @endforeach
+                <template x-if="fotos.length > 1">
+                    <div class="flex flex-wrap justify-center gap-1.5 w-full max-w-[295px]">
+                        <template x-for="(foto, index) in fotos" :key="'thumb-'+foto">
+                            <template x-if="index > 0">
+                                <button type="button"
+                                    @click="swapFoto(index)"
+                                    class="w-[54px] h-[54px] bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-emerald-400 transition bg-cover bg-center"
+                                    :style="`background-image: url('${foto}');`">
+                                </button>
+                            </template>
+                        </template>
                     </div>
-                @endif
+                </template>
             </div>
 
             {{-- Info --}}
@@ -156,6 +183,55 @@
                 Edit
                 </button>
             </form>
+        </div>
+
+        {{-- Modal Image --}}
+        <div x-show="modalOpen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white p-8" x-transition.opacity style="display: none;">
+            
+            {{-- Tombol Close --}}
+            <button @click="modalOpen = false" class="absolute top-6 right-6 z-10 text-gray-500 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="flex flex-col gap-8 w-full max-w-6xl h-full items-center justify-center" @click.away="modalOpen = false">
+                
+                {{-- Gambar Utama Modal --}}
+                <template x-if="fotos.length > 0">
+                    <div class="relative w-full flex-1 min-h-0 flex items-center justify-center group">
+                        
+                        {{-- Tombol Kiri --}}
+                        <template x-if="fotos.length > 1">
+                            <button @click.stop="prevFoto()" class="absolute left-4 md:left-8 z-20 p-3 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                            </button>
+                        </template>
+
+                        <div class="w-full h-full bg-contain bg-center bg-no-repeat rounded-xl" :style="`background-image: url('${fotos[0]}')`"></div>
+                        
+                        {{-- Tombol Kanan --}}
+                        <template x-if="fotos.length > 1">
+                            <button @click.stop="nextFoto()" class="absolute right-4 md:right-8 z-20 p-3 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </template>
+                    </div>
+                </template>
+
+                {{-- Thumbnail Modal (Bawah) --}}
+                <template x-if="fotos.length > 1">
+                    <div class="flex flex-row gap-4 w-full justify-center overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        <template x-for="(foto, index) in fotos" :key="'modal-'+foto">
+                            <template x-if="index > 0">
+                                <button type="button"
+                                    @click="swapFoto(index)"
+                                    class="w-[70px] h-[70px] flex-shrink-0 bg-white border border-gray-300 rounded-xl cursor-pointer hover:border-emerald-400 hover:ring-2 hover:ring-emerald-400 transition bg-cover bg-center"
+                                    :style="`background-image: url('${foto}');`">
+                                </button>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+            </div>
         </div>
 
 </div>

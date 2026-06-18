@@ -49,6 +49,15 @@ class PenjualanController extends Controller
     {
         $id = $request->input('id');
         $barang = Barang::where('kode_barang', $id)->firstOrFail();
+        
+        $totalPernahDisewa = \App\Models\Detail_Rental::where('kode_barang', $id)
+                            ->whereHas('rental', function ($q) {
+                                $q->whereIn('status_rental', ['Disewa', 'Dikembalikan', 'Selesai']);
+                            })
+                            ->sum('jumlah_barang');
+                            
+        $barang->total_disewa = $totalPernahDisewa;
+
         return view('User.Detail_Barang_Pelanggan', compact('barang'));
     }
     

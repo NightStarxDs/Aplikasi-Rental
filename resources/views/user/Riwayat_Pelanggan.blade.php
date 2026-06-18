@@ -232,6 +232,10 @@
                             
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2">
+                                        <button onclick="showKodeRental('{{ $rental->kode_rental }}', '{{ $user->name }}', 'Rp {{ number_format($rental->total_harga, 0, ',', '.') }}', '{{ \Carbon\Carbon::parse($rental->waktu_sewa)->format('d M Y, H:i') }}', '{{ \Carbon\Carbon::parse($rental->waktu_kembali)->format('d M Y, H:i') }}')" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg transition shrink-0">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                                            Kode Rental
+                                        </button>
                                         <a href="{{ route('users.history.detail', ['kode_rental' => $rental->kode_rental]) }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition shrink-0">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                             Detail
@@ -290,6 +294,8 @@
         </div>
     </div>
 
+    <script src="https://kit.fontawesome.com/f19fb034db.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         let activeCancelCode = null;
 
@@ -313,5 +319,164 @@
             form.action = `/riwayat/${activeCancelCode}/cancel`;
             form.submit();
         }
+
+        // --- Kode Rental Modal Logic ---
+        function showKodeRental(kode, penyewa, total, ambil, kembali) {
+            document.getElementById('modal-kode').innerText = kode;
+            document.getElementById('modal-penyewa').innerText = penyewa;
+            document.getElementById('modal-total').innerText = total;
+            document.getElementById('modal-ambil').innerText = ambil;
+            document.getElementById('modal-kembali').innerText = kembali;
+
+            document.getElementById('canvas-kode').innerText = kode;
+            document.getElementById('canvas-penyewa').innerText = penyewa;
+            document.getElementById('canvas-total').innerText = total;
+            document.getElementById('canvas-ambil').innerText = ambil;
+            document.getElementById('canvas-kembali').innerText = kembali;
+
+            const modal = document.getElementById('kode-rental-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeKodeRentalModal(event) {
+            const modal = document.getElementById('kode-rental-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('download-kode-btn')?.addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            const kode = document.getElementById('modal-kode').innerText;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+            btn.disabled = true;
+
+            const proofElement = document.getElementById('hidden-kode-proof');
+
+            setTimeout(() => {
+                html2canvas(proofElement, {
+                    scale: 3,
+                    backgroundColor: '#ffffff',
+                    useCORS: true,
+                    logging: false,
+                    width: 600,
+                    height: proofElement.offsetHeight
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'Bukti_Rental_' + kode + '.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Berhasil Diunduh';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 2000);
+                }).catch(err => {
+                    console.error("Error generating image", err);
+                    alert("Gagal mengunduh gambar.");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+            }, 100);
+        });
     </script>
+
+    <!-- Global Modal for Kode Rental -->
+    <div id="kode-rental-modal" class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-900/60 backdrop-blur-sm p-4 hidden animate-fade-in" onclick="closeKodeRentalModal(event)">
+        <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all" onclick="event.stopPropagation()">
+            
+            <button onclick="closeKodeRentalModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 mb-3 shadow-sm">
+                    <i class="fa-solid fa-qrcode text-2xl"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-900">Kode Rental Anda</h2>
+                <p class="text-sm text-gray-500 mt-1">Gunakan kode ini sebagai bukti pesanan Anda.</p>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-5 border border-gray-100 mb-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-100 rounded-full blur-2xl opacity-60 pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex flex-col items-center justify-center mb-4 pb-4 border-b border-gray-200">
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Kode Rental</p>
+                        <div id="modal-kode" class="text-3xl font-extrabold text-emerald-600 font-mono tracking-widest bg-emerald-100/50 px-4 py-1.5 rounded-lg border border-emerald-200 shadow-sm">
+                            -
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-gray-500 text-xs uppercase font-semibold">Penyewa</p>
+                            <p id="modal-penyewa" class="font-medium text-gray-800">-</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-xs uppercase font-semibold">Total Harga</p>
+                            <p id="modal-total" class="font-bold text-emerald-600">-</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-xs uppercase font-semibold">Ambil</p>
+                            <p id="modal-ambil" class="font-medium text-gray-800">-</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-xs uppercase font-semibold">Kembali</p>
+                            <p id="modal-kembali" class="font-medium text-gray-800">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center">
+                <button id="download-kode-btn" class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 text-white hover:bg-emerald-700 rounded-xl font-bold transition shadow-sm text-sm">
+                    <i class="fa-solid fa-download"></i>
+                    Unduh Gambar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden element strictly for html2canvas -->
+    <div style="position: absolute; left: -9999px; top: 0;">
+        <div id="hidden-kode-proof" style="width: 600px; padding: 40px; background-color: #ffffff; color: #1f2937; font-family: 'Inter', sans-serif; box-sizing: border-box;">
+            <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 20px;">
+                <h1 style="margin: 0; font-size: 24px; color: #059669; font-weight: 800;">Bukti Penyewaan Barang</h1>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #6b7280;">Aplikasi Penyewaan Alat Camping & Kamera</p>
+            </div>
+
+            <div style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <p style="margin: 0; font-size: 12px; color: #6b7280; text-transform: uppercase; font-weight: bold;">Kode Rental</p>
+                    <p id="canvas-kode" style="margin: 5px 0 0 0; font-size: 28px; font-weight: 900; color: #059669; font-family: monospace; letter-spacing: 2px;">-</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px; display: flex; flex-wrap: wrap; background-color: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                <div style="width: 50%; margin-bottom: 20px;">
+                    <p style="margin: 0; font-size: 12px; color: #6b7280; text-transform: uppercase; font-weight: bold;">Nama Penyewa</p>
+                    <p id="canvas-penyewa" style="margin: 5px 0 0 0; font-size: 15px; font-weight: bold;">-</p>
+                </div>
+                <div style="width: 50%; margin-bottom: 20px;">
+                    <p style="margin: 0; font-size: 12px; color: #6b7280; text-transform: uppercase; font-weight: bold;">Total Harga</p>
+                    <p id="canvas-total" style="margin: 5px 0 0 0; font-size: 15px; font-weight: bold; color: #059669;">-</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="margin: 0; font-size: 12px; color: #6b7280; text-transform: uppercase; font-weight: bold;">Waktu Ambil</p>
+                    <p id="canvas-ambil" style="margin: 5px 0 0 0; font-size: 15px; font-weight: bold;">-</p>
+                </div>
+                <div style="width: 50%;">
+                    <p style="margin: 0; font-size: 12px; color: #6b7280; text-transform: uppercase; font-weight: bold;">Waktu Kembali</p>
+                    <p id="canvas-kembali" style="margin: 5px 0 0 0; font-size: 15px; font-weight: bold;">-</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 35px; font-size: 12px; color: #9ca3af; border-top: 1px solid #f3f4f6; padding-top: 15px; font-weight: 500;">
+                <strong style="color: #059669;">NightStarxDs</strong> &copy; Di-generate pada {{ now()->format('d M Y, H:i') }}
+            </div>
+        </div>
+    </div>
 </x-app3-layout>
