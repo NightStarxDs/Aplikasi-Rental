@@ -165,7 +165,7 @@
                 </label>
             </div>
             <div class="flex items-center gap-6">
-                <div class="text-right">
+                    <div class="text-right">
                     <p class="text-xs text-gray-400">Total ({{ count($selectedItems) }} Produk)</p>
                     <p class="text-sm font-bold text-emerald-700">Rp {{ number_format($this->grandTotal, 0, ',', '.') }}</p>
                 </div>

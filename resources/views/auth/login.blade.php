@@ -11,12 +11,16 @@
     }
 </style>
 
+@php
+    $isRegisterError = $errors->has('name') || old('name') || $errors->has('password_confirmation');
+@endphp
+
 <div id="auth-root" class="font-auth flex min-h-screen items-center justify-center bg-emerald-50 p-6">
     <div class="relative w-full max-w-3xl min-h-auth-card overflow-hidden rounded-2xl border border-emerald-100 shadow-auth-card">
 
         {{-- ══════════ FORM LOGIN (kanan) ══════════ --}}
-        <div id="panel-form-login" class="auth-panel right-0 left-auto z-[2] bg-white">
-            <div id="auth-login-inner">
+        <div id="panel-form-login" class="auth-panel right-0 left-auto {{ $isRegisterError ? 'z-[1]' : 'z-[2]' }} bg-white">
+            <div id="auth-login-inner" class="{{ $isRegisterError ? 'pointer-events-none opacity-0' : '' }}">
                 <h1 class="mb-7 text-center text-xl font-bold uppercase tracking-widest text-emerald-900">Masuk</h1>
 
                 @if (session('status'))
@@ -77,8 +81,8 @@
         </div>
 
         <!-- FORM REGISTER -->
-        <div id="panel-form-register" class="auth-panel left-0 right-auto z-[1] bg-white">
-            <div id="auth-register-inner" class="pointer-events-none opacity-0">
+        <div id="panel-form-register" class="auth-panel left-0 right-auto {{ $isRegisterError ? 'z-[2]' : 'z-[1]' }} bg-white">
+            <div id="auth-register-inner" class="{{ $isRegisterError ? '' : 'pointer-events-none opacity-0' }}">
                 <h1 class="mb-7 text-center text-xl font-bold uppercase tracking-widest text-emerald-900">Daftar</h1>
 
                 <form method="POST" action="{{ route('register') }}">
@@ -146,9 +150,9 @@
         </div>
 
         <!-- PANEL INFO -->
-        <div id="panel-info" class="auth-panel left-0 right-auto z-10 bg-primary">
+        <div id="panel-info" class="auth-panel {{ $isRegisterError ? 'left-auto right-0' : 'left-0 right-auto' }} z-10 bg-primary">
 
-            <div id="info-login">
+            <div id="info-login" class="{{ $isRegisterError ? 'hidden' : '' }}">
                 <span class="mb-4 inline-block w-fit rounded-full bg-emerald-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-emerald-300">Website</span>
                 <h2 class="mb-3 text-3xl font-bold leading-snug text-white">Selamat<br>Datang Di<br>Website Kami</h2>
                 <p class="mb-7 text-sm leading-relaxed text-emerald-300">Siap untuk pengalaman baru? Yuk, buat akunmu dan mulai jelajahi!</p>
@@ -158,7 +162,7 @@
                 </button>
             </div>
 
-            <div id="info-register" class="hidden">
+            <div id="info-register" class="{{ $isRegisterError ? '' : 'hidden' }}">
                 <span class="mb-4 inline-block w-fit rounded-full bg-emerald-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-emerald-300">Website</span>
                 <h2 class="mb-3 text-3xl font-bold leading-snug text-white">Sudah<br>Punya<br>Akun?</h2>
                 <p class="mb-7 text-sm leading-relaxed text-emerald-300">Silakan masuk untuk melanjutkan dan menikmati semua fitur kami.</p>
@@ -183,7 +187,7 @@
     const iReg = document.getElementById('info-register');
 
     let busy = false;
-    let isRegister = false;
+    let isRegister = {{ $isRegisterError ? 'true' : 'false' }};
 
     const AUTH_PANEL_ANIMS = ['animate-auth-panel-right', 'animate-auth-panel-left'];
 
