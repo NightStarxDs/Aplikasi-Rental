@@ -8,7 +8,7 @@
             <div class="absolute inset-0 flex items-center justify-center px-6 text-center text-white sm:px-10 lg:px-16">
                 <div class="max-w-3xl">
                     <h1 class="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-                        Selamat Datang di<span class="text-green-400">Out</span>Rent</span>
+                        Selamat Datang di <span class="text-green-400">Out</span>Rent</span>
                     </h1>
                     <p class="mt-3 text-base text-white/90 sm:mt-4 sm:text-lg lg:text-2xl">
                         Solusi sewa alat camping dan kamera termudah.   

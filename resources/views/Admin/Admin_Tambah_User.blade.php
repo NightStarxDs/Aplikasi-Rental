@@ -134,15 +134,14 @@
                         @enderror
                     </div>
 
-                    {{-- ── Password Baru ── --}}
+                    {{-- ── Password ── --}}
                     <div class="flex flex-col gap-1">
                         <label for="password" class="text-xs font-medium text-gray-500">
-                            Password Baru
-                            <span class="text-gray-400 font-normal">(kosongkan jika tidak diubah)</span>
+                            Password
                         </label>
                         <input type="password" id="password" name="password"
                             value="{{ old('password') }}"
-                            placeholder="Masukkan password baru..."
+                            placeholder="Masukkan password..."
                             class="w-full px-3 py-2 text-sm bg-white border rounded-lg
                                     text-gray-800 placeholder-gray-400
                                     focus:outline-none focus:ring-2 focus:ring-emerald-500/20
@@ -161,7 +160,7 @@
                         <input type="password" id="password_confirmation"
                             name="password_confirmation"
                             value="{{ old('password_confirmation') }}"
-                            placeholder="Ulangi password baru..."
+                            placeholder="Ulangi password..."
                             class="w-full px-3 py-2 text-sm bg-white border border-gray-200
                                     rounded-lg text-gray-800 placeholder-gray-400
                                     focus:outline-none focus:ring-2 focus:ring-emerald-500/20

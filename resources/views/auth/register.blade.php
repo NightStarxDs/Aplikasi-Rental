@@ -24,7 +24,7 @@
                             type="password"
                             name="password"
                             required autocomplete="new-password" 
-                            maxlength="15"
+                            maxlength="30"
                             />
                             
             <x-input-error :messages="$errors->get('password')" class="mt-2" />

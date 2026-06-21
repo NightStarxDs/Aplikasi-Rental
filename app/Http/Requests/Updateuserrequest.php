@@ -22,11 +22,12 @@ class UpdateUserRequest extends FormRequest
             'email'    => [
                 'required',
                 'email',
+                'regex:/^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
                 'max:255',
                 // Abaikan email milik user yang sedang diedit
                 Rule::unique('users', 'email')->ignore($userId, 'id_user'),
             ],
-            'telepon'  => ['nullable', 'string', 'max:20'],
+            'telepon'  => ['nullable', 'string', 'regex:/^\+?[0-9]{10,15}$/', 'max:20'],
             'alamat'   => ['nullable', 'string', 'max:500'],
             'role'     => ['required', 'in:admin,user'],
             // Password opsional saat update
@@ -40,7 +41,9 @@ class UpdateUserRequest extends FormRequest
             'name.required'      => 'Nama wajib diisi.',
             'email.required'     => 'Email wajib diisi.',
             'email.email'        => 'Format email tidak valid.',
+            'email.regex'        => 'Format email mengandung karakter yang tidak diperbolehkan.',
             'email.unique'       => 'Email ini sudah digunakan pengguna lain.',
+            'telepon.regex'      => 'Format telepon tidak valid. Gunakan angka (opsional awalan +) dengan 10-15 digit.',
             'role.required'      => 'Role wajib dipilih.',
             'role.in'            => 'Role harus admin atau user.',
             'password.min'       => 'Password baru minimal 8 karakter.',

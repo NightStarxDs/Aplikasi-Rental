@@ -95,9 +95,11 @@ class Checkout extends Component
                     'status_detail'       => 'Menunggu',
                 ]);
                 
-                // Kurangi stok & sinkronkan status otomatis
-                $barangModel->stok -= $item['qty'];
-                $barangModel->syncStatus();
+                // Kurangi stok & sinkronkan status otomatis HANYA JIKA BUKAN COD
+                if ($this->paymentMethod !== 'COD') {
+                    $barangModel->stok -= $item['qty'];
+                    $barangModel->syncStatus();
+                }
                 
                 // Hapus barang yang berhasil dicheckout dari keranjang (session)
                 $cart = session()->get('cart', []);

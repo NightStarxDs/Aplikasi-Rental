@@ -22,11 +22,12 @@ class ProfileUpdateRequest extends FormRequest
                 'required',
                 'string',
                 'email',
+                'regex:/^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
                 'max:255',
                 Rule::unique('users', 'email')
                     ->ignore($this->user()->id_user, 'id_user'),
             ],
-            'telepon' => ['nullable', 'string', 'max:20'],
+            'telepon' => ['nullable', 'string', 'regex:/^\+?[0-9]{10,15}$/', 'max:20'],
             'alamat' => ['nullable', 'string', 'max:255'],
         ];
     }

@@ -103,12 +103,16 @@ class TransaksiController extends Controller
                 $rental->notifikasi_pembatalan = true;
                 $rental->save();
 
-                // Kembalikan stok barang
-                foreach ($rental->detailRentals as $detail) {
-                    $barang = $detail->barang;
-                    if ($barang) {
-                        $barang->stok += $detail->jumlah_barang;
-                        $barang->syncStatus();
+                // Kembalikan stok barang HANYA JIKA:
+                // 1. Status sudah 'Disewa' (stok dipotong saat ambil/checkout) ATAU
+                // 2. Status 'Diajukan' TAPI bukan COD (karena selain COD, stok dipotong di awal checkout)
+                if ($rental->status_rental === 'Disewa' || ($rental->status_rental === 'Diajukan' && $rental->metode_pembayaran !== 'COD')) {
+                    foreach ($rental->detailRentals as $detail) {
+                        $barang = $detail->barang;
+                        if ($barang) {
+                            $barang->stok += $detail->jumlah_barang;
+                            $barang->syncStatus();
+                        }
                     }
                 }
 
@@ -131,12 +135,41 @@ class TransaksiController extends Controller
         }
 
         if ($action === 'ambil') {
-            $rental->status_rental = 'Disewa';
-            $rental->waktu_sewa = $rental->waktu_sewa ?? now();
-            $rental->save();
+            DB::beginTransaction();
+            try {
+                // Jika pesanan COD dan masih Diajukan, kurangi stok sekarang
+                if ($rental->status_rental === 'Diajukan' && $rental->metode_pembayaran === 'COD') {
+                    // Cek ketersediaan stok terlebih dahulu
+                    foreach ($rental->detailRentals as $detail) {
+                        $barang = $detail->barang;
+                        if (!$barang || $barang->stok < $detail->jumlah_barang) {
+                            return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                                ->with('error', 'Stok barang ' . ($barang->nama_barang ?? '') . ' tidak mencukupi untuk pesanan COD ini. Barang mungkin sudah diambil pelanggan lain.');
+                        }
+                    }
 
-            return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
-                ->with('success', 'Transaksi berhasil diperbarui menjadi Disewa.');
+                    // Jika stok aman, kurangi stok
+                    foreach ($rental->detailRentals as $detail) {
+                        $barang = $detail->barang;
+                        if ($barang) {
+                            $barang->stok -= $detail->jumlah_barang;
+                            $barang->syncStatus();
+                        }
+                    }
+                }
+
+                $rental->status_rental = 'Disewa';
+                $rental->waktu_sewa = $rental->waktu_sewa ?? now();
+                $rental->save();
+                DB::commit();
+
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('success', 'Transaksi berhasil diperbarui menjadi Disewa.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('Pengambilan_dan_Pengembalian', ['kode_rental' => $rental->kode_rental])
+                    ->with('error', 'Gagal memproses pengambilan: ' . $e->getMessage());
+            }
         }
 
         if ($action === 'kembali') {
