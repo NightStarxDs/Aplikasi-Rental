@@ -234,9 +234,18 @@ class BarangController extends Controller
     {
         $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
 
+        // Hapus foto-foto dari storage agar tidak membebani server
+        if (!empty($barang->gambar_barang)) {
+            foreach ($barang->gambar_barang as $foto) {
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($foto)) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($foto);
+                }
+            }
+        }
+
         $barang->delete();
 
         return redirect()->route('Inventaris')
                         ->with('success', 'Barang berhasil dihapus');
-}
+    }
 }

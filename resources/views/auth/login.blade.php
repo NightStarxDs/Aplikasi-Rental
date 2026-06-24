@@ -13,6 +13,8 @@
 
 @php
     $isRegisterError = $errors->has('name') || old('name') || $errors->has('password_confirmation');
+    $hasLoginError = !$isRegisterError && ($errors->has('email') || $errors->has('password'));
+    $hasRegisterError = $isRegisterError && $errors->any();
 @endphp
 
 <div id="auth-root" class="font-auth flex min-h-screen items-center justify-center bg-emerald-50 p-6">
@@ -33,7 +35,7 @@
                     @csrf
 
                     <div class="mb-3.5">
-                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ $errors->has('email') ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
+                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ $hasLoginError ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
                             <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
                             </svg>
@@ -41,11 +43,10 @@
                                 required autofocus autocomplete="username"
                                 class="flex-1 border-none bg-transparent text-sm font-medium text-emerald-900 outline-none placeholder-emerald-300 focus:ring-0" />
                         </div>
-                        @error('email') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-3.5">
-                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ $errors->has('password') ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
+                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ $hasLoginError ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
                             <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
                             </svg>
@@ -59,7 +60,8 @@
                                 </svg>
                             </button>
                         </div>
-                        @error('password') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                        @if(!$isRegisterError && $errors->has('password')) <p class="mt-1 text-xs text-red-500">{{ $errors->first('password') }}</p> @endif
+                        @if(!$isRegisterError && $errors->has('email')) <p class="mt-1 text-xs text-red-500">{{ $errors->first('email') }}</p> @endif
                     </div>
 
                     <div class="mb-6 flex items-center justify-between">
@@ -89,7 +91,7 @@
                     @csrf
 
                     <div class="mb-3.5">
-                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ $errors->has('name') ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
+                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ ($isRegisterError && $errors->has('name')) ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
                             <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
                             </svg>
@@ -97,11 +99,11 @@
                                 required autocomplete="name"
                                 class="flex-1 border-none bg-transparent text-sm font-medium text-emerald-900 outline-none placeholder-emerald-300 focus:ring-0" />
                         </div>
-                        @error('name') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                        @if($isRegisterError && $errors->has('name')) <p class="mt-1 text-xs text-red-500">{{ $errors->first('name') }}</p> @endif
                     </div>
 
                     <div class="mb-3.5">
-                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ $errors->has('email') ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
+                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ ($isRegisterError && $errors->has('email')) ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
                             <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
                             </svg>
@@ -109,11 +111,11 @@
                                 required autocomplete="username"
                                 class="flex-1 border-none bg-transparent text-sm font-medium text-emerald-900 outline-none placeholder-emerald-300 focus:ring-0" />
                         </div>
-                        @error('email') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                        @if($isRegisterError && $errors->has('email')) <p class="mt-1 text-xs text-red-500">{{ $errors->first('email') }}</p> @endif
                     </div>
 
                     <div class="mb-3.5">
-                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ $errors->has('password') ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
+                        <div class="flex h-12 items-center gap-2 rounded-xl border bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 {{ ($isRegisterError && ($errors->has('password') || $errors->has('password_confirmation'))) ? 'border-red-400 bg-red-50' : 'border-emerald-200' }}">
                             <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
                             </svg>
@@ -127,18 +129,19 @@
                                 </svg>
                             </button>
                         </div>
-                        @error('password') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-6">
-                        <div class="flex h-12 items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
+                        <div class="flex h-12 items-center gap-2 rounded-xl border {{ ($isRegisterError && ($errors->has('password') || $errors->has('password_confirmation'))) ? 'border-red-400 bg-red-50' : 'border-emerald-200 bg-emerald-50' }} px-3 transition-all focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
                             <svg class="h-4 w-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                             <input type="password" name="password_confirmation" placeholder="Konfirmasi Kata Sandi"
                                 required autocomplete="new-password"
                                 class="flex-1 border-none bg-transparent text-sm font-medium text-emerald-900 outline-none placeholder-emerald-300 focus:ring-0" />
+                                <button type="button" onclick="togglePw('pw-reg')" class="text-emerald-400 transition-colors hover:text-emerald-600">
                         </div>
+                        @if($isRegisterError && $errors->has('password')) <p class="mt-1 text-xs text-red-500">{{ $errors->first('password') }}</p> @endif
                     </div>
 
                     <button type="submit"

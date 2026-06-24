@@ -13,7 +13,7 @@ class PenjualanController extends Controller
     {
         
         $query = Barang::where('status_barang', '!=', 'Tidak Tersedia')
-                       ->where('stok', '>', 0);
+                    ->where('stok', '>', 0);
 
         
         if ($request->has('kategori') && $request->kategori != '') {

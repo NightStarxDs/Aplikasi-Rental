@@ -126,7 +126,7 @@
             this.showModal = false;
             setTimeout(() => {
                 this.ulasanModal = true;
-            }, 3000);
+            }, 100); // Delay to ensure the first modal closes before opening the second
         },
         submitUlasan() {
             if (this.rating < 1 || this.rating > 5) return;

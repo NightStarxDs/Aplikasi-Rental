@@ -148,12 +148,12 @@
         <div class="flex items-center gap-2">
 
             {{-- Tombol Hapus --}}
-            <form action="{{ route('barang.destroy', $barang->kode_barang) }}" method="POST">
+            <form id="form-hapus-barang" action="{{ route('barang.destroy', $barang->kode_barang) }}" method="POST">
                 @csrf
                 @method('DELETE')
 
-                <button type="submit"
-                    onclick="return confirm('Yakin ingin menghapus barang ini?')"
+                <button type="button"
+                    onclick="confirmDelete()"
                     class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-red-50 text-red-700 border border-red-100 rounded-lg hover:bg-red-100 transition">
 
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
@@ -234,5 +234,29 @@
             </div>
         </div>
 
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete() {
+            Swal.fire({
+                title: 'Hapus Barang?',
+                text: "Apakah Anda yakin ingin menghapus barang ini? Data yang dihapus tidak dapat dikembalikan.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                customClass: {
+                    popup: 'rounded-2xl',
+                    confirmButton: 'rounded-lg text-sm font-semibold px-5 py-2.5',
+                    cancelButton: 'rounded-lg text-sm font-semibold px-5 py-2.5',
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-hapus-barang').submit();
+                }
+            });
+        }
+    </script>
 </x-app-layout>

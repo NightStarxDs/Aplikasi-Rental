@@ -173,7 +173,7 @@
                     Kembali ke Keranjang
                 </a>
                 <button 
-                    wire:click="processCheckout" 
+                    onclick="confirmCheckout()"
                     wire:loading.attr="disabled"
                     class="min-w-40 rounded-lg inline-flex justify-center items-center gap-2 bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/70 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed">
                     <span wire:loading.remove wire:target="processCheckout">Proses Pembayaran</span>
@@ -184,6 +184,47 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmCheckout() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Konfirmasi Checkout',
+                html: `
+                    <p class="text-gray-700 text-sm mb-3">
+                        Apakah Anda yakin ingin melakukan checkout transaksi ini?
+                    </p>
+                    <div class="text-left bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900 leading-relaxed">
+                        <p class="font-bold text-amber-700 mb-2 border-b border-amber-200 pb-1">⚠️ Ketentuan Keterlambatan & Kerusakan</p>
+                        
+                        <p class="font-semibold mb-1">Keterlambatan Pengembalian:</p>
+                        <ul class="list-disc list-inside space-y-1 mb-2 ml-1 text-amber-800">
+                            <li>Demi kenyamanan bersama, kami memberikan <strong>waktu toleransi 1 Jam</strong> dari jadwal pengembalian.</li>
+                            <li>Jika melewati waktu toleransi, akan dikenakan denda keterlambatan sebesar <strong>150% dari tarif sewa (per jam atau per hari)</strong> dikali jumlah barang.</li>
+                            <li class="text-amber-600 italic mt-1">Contoh: Tarif sewa Rp100.000/jam. Jika terlambat lebih dari 1 jam, denda yang dihitung adalah Rp150.000/jam keterlambatan.</li>
+                        </ul>
+
+                        <p class="font-semibold mt-3 mb-1">Kerusakan atau Kehilangan:</p>
+                        <p class="ml-1 text-amber-800">Denda keterlambatan dihitung terpisah dari denda kerusakan. Jika terjadi kerusakan/kehilangan, biaya akan disesuaikan dengan harga perbaikan atau harga barang tersebut.</p>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Checkout Sekarang',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#047857',
+                cancelButtonColor: '#6b7280',
+                reverseButtons: true,
+                customClass: {
+                    popup: 'rounded-2xl',
+                    confirmButton: 'rounded-lg text-sm font-semibold px-5 py-2.5',
+                    cancelButton: 'rounded-lg text-sm font-semibold px-5 py-2.5',
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.call('processCheckout');
+                }
+            });
+        }
+    </script>
 
     @if($showDataIncompleteModal)
     <!-- Modal Incomplete Data -->

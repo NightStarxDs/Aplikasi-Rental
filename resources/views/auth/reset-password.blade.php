@@ -9,6 +9,7 @@
 
                 <form method="POST" action="{{ route('password.store') }}" class="mt-6 space-y-4">
                     @csrf
+                    <input type="hidden" name="email" value="{{ request()->query('email') }}">
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                     <div>
