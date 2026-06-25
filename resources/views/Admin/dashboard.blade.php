@@ -20,6 +20,9 @@
             'Kamera' => 0,
             'Camping' => 0,
         ]);
+        $pendapatanBulanIni = data_get($stats ?? [], 'pendapatan_bulan_ini', 0);
+        $pendapatanTahunIni = data_get($stats ?? [], 'pendapatan_tahun_ini', 0);
+        $userTerlambat = data_get($stats ?? [], 'user_terlambat', 0);
     @endphp
 
     <div class="px-6 py-6">
@@ -88,6 +91,58 @@
 
         <div class="mt-6">
             <div class="mb-4 flex items-center justify-between gap-3">
+                <h2 class="text-lg font-semibold text-gray-800">Keuangan & Kepatuhan</h2>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <article class="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Pendapatan Bulan Ini</p>
+                            <p class="mt-2 text-2xl font-semibold text-gray-800">Rp {{ number_format($pendapatanBulanIni, 0, ',', '.') }}</p>
+                        </div>
+                        <div class="rounded-lg bg-indigo-50 p-2 text-indigo-700">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-200 hover:shadow-md">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Pendapatan Tahun Ini</p>
+                            <p class="mt-2 text-2xl font-semibold text-gray-800">Rp {{ number_format($pendapatanTahunIni, 0, ',', '.') }}</p>
+                        </div>
+                        <div class="rounded-lg bg-teal-50 p-2 text-teal-700">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M3 3v18h18"/>
+                                <path d="m19 9-5 5-4-4-3 3"/>
+                            </svg>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-md">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">User Terlambat (Saat ini)</p>
+                            <p class="mt-2 text-2xl font-semibold text-gray-800">{{ number_format($userTerlambat) }}</p>
+                        </div>
+                        <div class="rounded-lg bg-red-50 p-2 text-red-700">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <div class="mb-4 flex items-center justify-between gap-3">
                 <h2 class="text-lg font-semibold text-gray-800">Statistik Tambahan</h2>
             </div>
 
@@ -139,5 +194,97 @@
                 </article>
             </div>
         </div>
+        <div class="mt-6">
+            <div class="mb-4 flex items-center justify-between gap-3">
+                <h2 class="text-lg font-semibold text-gray-800">Export Laporan Penjualan (Cashflow)</h2>
+            </div>
+            
+            <article class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                <form action="{{ route('admin.export.cashflow') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <div>
+                            <label for="jenis_rentang" class="mb-1 block text-sm font-medium text-gray-700">Rentang Waktu</label>
+                            <select name="jenis_rentang" id="jenis_rentang" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                                <option value="bulan">Per Bulan</option>
+                                <option value="minggu">Per Minggu (Bulan Berjalan)</option>
+                                <option value="tahun">Per Tahun</option>
+                                <option value="custom">Rentang Khusus</option>
+                            </select>
+                        </div>
+                        
+                        <div id="filter-bulan" class="filter-group block">
+                            <label for="bulan" class="mb-1 block text-sm font-medium text-gray-700">Bulan</label>
+                            <select name="bulan" id="bulan" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                                @for($i = 1; $i <= 12; $i++)
+                                    <option value="{{ $i }}" {{ now()->month == $i ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                                @endfor
+                            </select>
+                        </div>
+
+                        <div id="filter-tahun" class="filter-group block">
+                            <label for="tahun" class="mb-1 block text-sm font-medium text-gray-700">Tahun</label>
+                            <select name="tahun" id="tahun" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                                @for($i = now()->year; $i >= now()->year - 5; $i--)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+
+                        <div id="filter-custom-start" class="filter-group hidden">
+                            <label for="start_date" class="mb-1 block text-sm font-medium text-gray-700">Tanggal Mulai</label>
+                            <input type="date" name="start_date" id="start_date" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                        </div>
+
+                        <div id="filter-custom-end" class="filter-group hidden">
+                            <label for="end_date" class="mb-1 block text-sm font-medium text-gray-700">Tanggal Akhir</label>
+                            <input type="date" name="end_date" id="end_date" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" class="inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Export ke CSV
+                        </button>
+                    </div>
+                </form>
+            </article>
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jenisRentang = document.getElementById('jenis_rentang');
+            const filterBulan = document.getElementById('filter-bulan');
+            const filterTahun = document.getElementById('filter-tahun');
+            const filterCustomStart = document.getElementById('filter-custom-start');
+            const filterCustomEnd = document.getElementById('filter-custom-end');
+
+            function updateFilters() {
+                const val = jenisRentang.value;
+                // Sembunyikan semua dulu
+                filterBulan.classList.add('hidden');
+                filterTahun.classList.add('hidden');
+                filterCustomStart.classList.add('hidden');
+                filterCustomEnd.classList.add('hidden');
+
+                if (val === 'bulan' || val === 'minggu') {
+                    filterBulan.classList.remove('hidden');
+                    filterTahun.classList.remove('hidden');
+                } else if (val === 'tahun') {
+                    filterTahun.classList.remove('hidden');
+                } else if (val === 'custom') {
+                    filterCustomStart.classList.remove('hidden');
+                    filterCustomEnd.classList.remove('hidden');
+                }
+            }
+
+            jenisRentang.addEventListener('change', updateFilters);
+        });
+    </script>
 </x-app-layout>

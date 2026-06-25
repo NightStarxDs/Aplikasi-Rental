@@ -128,8 +128,6 @@ Route::delete('/barang/{kode_barang}', [BarangController::class, 'destroy'])
     ->name('barang.destroy');
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-
-Route::resource('users', PelangganController::class)->except(['show']);
-
-
+    Route::resource('users', PelangganController::class)->except(['show']);
+    Route::post('/export-cashflow', [\App\Http\Controllers\Admin\ExportController::class, 'exportCashflow'])->name('export.cashflow');
 });

@@ -61,6 +61,22 @@ class DashboardController extends Controller
             $barangPerSubkategori[$item->kategori_barang][$item->subkategori_barang] = $item->jumlah;
         }
 
+        // 6. Pendapatan Bulan Ini
+        $pendapatanBulanIni = Rental::where('status_rental', 'Selesai')
+            ->whereMonth('waktu_kembali_aktual', now()->month)
+            ->whereYear('waktu_kembali_aktual', now()->year)
+            ->sum(DB::raw('total_harga + total_denda'));
+
+        // 7. Pendapatan Tahun Ini
+        $pendapatanTahunIni = Rental::where('status_rental', 'Selesai')
+            ->whereYear('waktu_kembali_aktual', now()->year)
+            ->sum(DB::raw('total_harga + total_denda'));
+
+        // 8. User dengan status keterlambatan (Sedang disewa tapi melewati batas waktu_kembali)
+        $userTerlambat = Rental::where('status_rental', 'Disewa')
+            ->where('waktu_kembali', '<', now())
+            ->count();
+
         $stats = [
             'total_barang'          => $totalBarang,
             'penyewa_aktif'         => $penyewaAktif,
@@ -68,6 +84,9 @@ class DashboardController extends Controller
             'jumlah_transaksi'      => $jumlahTransaksi,
             'barang_per_kategori'   => $barangPerKategori,
             'barang_per_subkategori'=> $barangPerSubkategori,
+            'pendapatan_bulan_ini'  => $pendapatanBulanIni,
+            'pendapatan_tahun_ini'  => $pendapatanTahunIni,
+            'user_terlambat'        => $userTerlambat,
         ];
 
         return view('Admin.dashboard', compact('stats'));
