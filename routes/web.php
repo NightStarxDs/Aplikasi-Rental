@@ -11,6 +11,9 @@ use App\Http\Controllers\User\RiwayatPelangganController as UserRiwayatPelanggan
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\User\KeranjangController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\MidtransCallbackController;
+
 
 
 Route::get('/penjualan', [PenjualanController::class, 'index'])
@@ -22,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Keranjang/tambah/{kode_barang}', [PenjualanController::class, 'addToCart'])->name('cart.add');
     Route::get('/checkout/sukses/{kode_rental}', [PenjualanController::class, 'checkoutSuccess'])->name('checkout.success');
     Route::post('/ulasan', [PenjualanController::class, 'storeUlasan'])->name('ulasan.store');
+    Route::get('/checkout', [PaymentController::class, 'createTransaction']);
 });
 
 Route::get('/', function () {
@@ -131,3 +135,5 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('users', PelangganController::class)->except(['show']);
     Route::post('/export-cashflow', [\App\Http\Controllers\Admin\ExportController::class, 'exportCashflow'])->name('export.cashflow');
 });
+
+Route::post('/api/midtrans/callback', [MidtransCallbackController::class, 'callback']);

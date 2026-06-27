@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement(
-            "ALTER TABLE `rental` MODIFY COLUMN `status_rental` ENUM('Diajukan', 'Disewa', 'Dikembalikan', 'Selesai', 'Dibatalkan') NOT NULL DEFAULT 'Diajukan'"
+            "ALTER TABLE `rental` MODIFY COLUMN `status_rental` ENUM('Menunggu Pembayaran', 'Diajukan', 'Disewa', 'Dikembalikan', 'Selesai', 'Dibatalkan') NOT NULL DEFAULT 'Menunggu Pembayaran'"
         );
     }
 

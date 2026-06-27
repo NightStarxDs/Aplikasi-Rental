@@ -9,6 +9,8 @@ use App\Models\Detail_Rental;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class Checkout extends Component
 {
@@ -16,9 +18,9 @@ class Checkout extends Component
 
     public $checkoutData = [];
     public $paymentMethod = 'COD';
-    public $buktiPembayaran;
     public $isLoading = false;
     public $showDataIncompleteModal = false;
+    public $snapToken;
 
     public function mount()
     {
@@ -38,25 +40,16 @@ class Checkout extends Component
             return;
         }
 
-        // Validation
-        if ($this->paymentMethod === 'QRIS' || $this->paymentMethod === 'Transfer Bank') {
-            $this->validate([
-                'buktiPembayaran' => 'required|image|max:2048', // 2MB Max
-            ], [
-                'buktiPembayaran.required' => 'Bukti pembayaran wajib diunggah untuk metode ini.',
-                'buktiPembayaran.image' => 'Bukti pembayaran harus berupa gambar.',
-                'buktiPembayaran.max' => 'Ukuran bukti pembayaran maksimal 2MB.',
-            ]);
+        // Validation for payment method
+        if (!in_array($this->paymentMethod, ['COD', 'Midtrans'])) {
+            $this->paymentMethod = 'COD';
         }
 
         $this->isLoading = true;
 
         DB::beginTransaction();
         try {
-            $buktiPath = null;
-            if ($this->buktiPembayaran) {
-                $buktiPath = $this->buktiPembayaran->store('bukti_pembayaran', 'public');
-            }
+            $statusRental = $this->paymentMethod === 'Midtrans' ? 'Menunggu Pembayaran' : 'Diajukan';
 
             $rental = Rental::create([
                 'id_user' => Auth::id(), 
@@ -65,9 +58,9 @@ class Checkout extends Component
                 'waktu_kembali_aktual' => $this->checkoutData['waktu_kembali'],
                 'total_harga' => $this->checkoutData['total_harga'],
                 'total_denda' => 0.0,
-                'status_rental' => 'Diajukan',
+                'status_rental' => $statusRental,
                 'metode_pembayaran' => $this->paymentMethod,
-                'bukti_pembayaran' => $buktiPath,
+                'bukti_pembayaran' => null,
             ]);
 
             foreach ($this->checkoutData['items'] as $kodeBarang => $item) {
@@ -95,24 +88,47 @@ class Checkout extends Component
                     'status_detail'       => 'Menunggu',
                 ]);
                 
-                // Kurangi stok & sinkronkan status otomatis HANYA JIKA BUKAN COD
-                if ($this->paymentMethod !== 'COD') {
-                    $barangModel->stok -= $item['qty'];
-                    $barangModel->syncStatus();
+                // Kurangi stok & sinkronkan status otomatis HANYA JIKA COD (Midtrans akan dikurangi saat success)
+                if ($this->paymentMethod === 'COD') {
+                    
+                    // Hapus barang yang berhasil dicheckout dari keranjang (session)
+                    $cart = session()->get('cart', []);
+                    if(isset($cart[$kodeBarang])) {
+                        unset($cart[$kodeBarang]);
+                    }
+                    session()->put('cart', $cart);
                 }
-                
-                // Hapus barang yang berhasil dicheckout dari keranjang (session)
-                $cart = session()->get('cart', []);
-                if(isset($cart[$kodeBarang])) {
-                    unset($cart[$kodeBarang]);
-                }
-                session()->put('cart', $cart);
             }
 
-            // Bersihkan checkout data
-            session()->forget('checkout_data');
+            if ($this->paymentMethod === 'COD') {
+                session()->forget('checkout_data');
+            }
 
             DB::commit();
+
+            if ($this->paymentMethod === 'Midtrans') {
+                // Set Konfigurasi Midtrans
+                Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+                Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+                Config::$isSanitized = env('MIDTRANS_IS_SANITIZED', true);
+                Config::$is3ds = env('MIDTRANS_IS_3DS', true);
+
+                $params = [
+                    'transaction_details' => [
+                        'order_id' => $rental->kode_rental,
+                        'gross_amount' => (int) $this->checkoutData['total_harga'],
+                    ],
+                    'customer_details' => [
+                        'first_name' => Auth::user()->name,
+                        'email' => Auth::user()->email,
+                        'phone' => Auth::user()->telepon ?? Auth::user()->phone,
+                    ],
+                ];
+
+                $this->snapToken = Snap::getSnapToken($params);
+                $this->dispatch('snap-pay', token: $this->snapToken, order_id: $rental->kode_rental);
+                return;
+            }
 
             return redirect()->route('checkout.success', ['kode_rental' => $rental->kode_rental]);
 
@@ -121,6 +137,45 @@ class Checkout extends Component
             session()->flash('error', 'Gagal memproses pembayaran: ' . $e->getMessage());
             $this->isLoading = false;
         }
+    }
+
+    #[Livewire\Attributes\On('payment-success')]
+    public function handlePaymentSuccess($orderId)
+    {
+        $rental = Rental::with('detailRentals')->find($orderId);
+        if ($rental && $rental->status_rental === 'Menunggu Pembayaran') {
+            $rental->status_rental = 'Diajukan';
+            $rental->save();
+            
+            foreach($rental->detailRentals as $detail) {
+                $barangModel = \App\Models\Barang::find($detail->kode_barang);
+                if ($barangModel) {
+                    $barangModel->stok -= $detail->jumlah_barang;
+                    $barangModel->syncStatus();
+                }
+                
+                $cart = session()->get('cart', []);
+                if(isset($cart[$detail->kode_barang])) {
+                    unset($cart[$detail->kode_barang]);
+                }
+                session()->put('cart', $cart);
+            }
+            session()->forget('checkout_data');
+        }
+        
+        return redirect()->route('checkout.success', ['kode_rental' => $orderId]);
+    }
+
+    #[Livewire\Attributes\On('payment-cancelled')]
+    public function handlePaymentCancelled($orderId)
+    {
+        $rental = Rental::find($orderId);
+        if ($rental && $rental->status_rental === 'Menunggu Pembayaran') {
+            $rental->detailRentals()->delete();
+            $rental->delete();
+        }
+        
+        $this->isLoading = false;
     }
 
     public function render()

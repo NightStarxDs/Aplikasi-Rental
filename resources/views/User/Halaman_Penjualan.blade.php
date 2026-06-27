@@ -177,11 +177,19 @@
 
             <!-- Success Message -->
             <div class="text-center mb-6">
-                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 mb-3 shadow-sm">
-                    <i class="fa-solid fa-check text-2xl"></i>
-                </div>
-                <h2 class="text-xl font-bold text-gray-900">Checkout Berhasil!</h2>
-                <p class="text-sm text-gray-500 mt-1">Gunakan kode rental di bawah ini sebagai bukti saat pengambilan barang.</p>
+                @if($checkoutRental->status_rental === 'Menunggu Pembayaran')
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-100 text-amber-600 mb-3 shadow-sm">
+                        <i class="fa-solid fa-clock text-2xl"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900">Pesanan Dibuat!</h2>
+                    <p class="text-sm text-gray-500 mt-1">Selesaikan pembayaran Anda agar pesanan dapat diproses lebih lanjut.</p>
+                @else
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 mb-3 shadow-sm">
+                        <i class="fa-solid fa-check text-2xl"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900">Checkout Berhasil!</h2>
+                    <p class="text-sm text-gray-500 mt-1">Gunakan kode rental di bawah ini sebagai bukti saat pengambilan barang.</p>
+                @endif
             </div>
 
             <!-- Visible Info -->

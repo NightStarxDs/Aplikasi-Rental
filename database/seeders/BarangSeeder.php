@@ -9,35 +9,37 @@ class BarangSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        $barangData = [
+        $data = [
             [
                 'kode_barang' => 273,
-                'gambar_barang' => '["barang/0qR31bo3S2eWctZGW8syr8nK8UD75sOJBEyDZKRA.jpg","barang/yI5Hzep2NEXUZxqGGelbPr9HiVfIYZVeUqbp13kC.jpg","barang/B8PMRNl3D8pb5GCjs2RKwSBFAOjwyR3qQB3YQ8Ge.jpg","barang/f4wpmMG2ndXqw330KS8TheMCjiWSfyQ1EMqdisnH.jpg","barang/iqKBw9PrsghUy6g24dLvnYuqCALrrxLJ5SVtwU44.jpg"]',
+                'gambar_barang' => '["barang/0qR31bo3S2eWctZGW8syr8nK8UD75sOJBEyDZKRA.jpg","barang/xtUgfsDQPDQTnq60LeTXw9lZEXR5xct11P8DYoCk.webp","barang/fjzO2hIkIc3LEjKsiB1ff7ZsQvf9Z39mvOnQ7cwP.webp","barang/mQxv2LxTM8HTlp8ccI7elnlhiK8zYJfA9hGLdhF2.webp"]',
                 'nama_barang' => 'Canon EOS 3000D Kit 18-55mm',
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'DSLR Cam',
                 'deskripsi_barang' => 'Kamera DSLR pemula yang sangat mudah digunakan, ramah baterai, cocok untuk tugas kuliah atau dokumentasi kasual.',
-                'stok' => '-2',
-                'harga_perjam' => 4166.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 100000.00,
+                'harga_perjam' => 4166.67,
                 'catatan_kondisi_barang' => 'Fisik 90%, fungsi normal, lensa bebas jamur.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 274,
-                'gambar_barang' => '["barang/ougn1UNB1TVb7Eu0vY8v37BpZFspfdBKDbVx5AV9.png","barang/0nhqOZKq32wLp8MXfC2eZNnGs2adSBSaAcDa8B0F.png","barang/bEKE5of7ZMmle0iOwzCzX0sCwBplDiT4HvgQ8lza.png","barang/LhX0ak87AVJVcDilA7xEVDBJ5OR0HWhBjK8sTCp4.png","barang/fsRnh7836k1x03nS4Wc6Wlm6fDO2F6DdFEpVYvgI.png"]',
+                'gambar_barang' => '["barang/ougn1UNB1TVb7Eu0vY8v37BpZFspfdBKDbVx5AV9.png","barang/le4NngNBxVtnIChRNyIplegoSdpwSUQUOviJiu5O.webp","barang/znkYFhSd4lf8x2FpcaYA6ptSdk9VeDOoxZpoOnMZ.webp","barang/TUZLBEyBcqGUkvgB3fzzelv1GP4LnKz0yHBlXxl8.webp"]',
                 'nama_barang' => 'Canon EOS 850D (Body Only)',
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'DSLR Cam',
                 'deskripsi_barang' => 'DSLR kelas menengah dengan sistem autofokus cepat (45 titik silang), bagus untuk foto aksi atau olahraga.',
-                'stok' => '0',
-                'harga_perjam' => 6250.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 150000.00,
+                'harga_perjam' => 6250.00,
                 'catatan_kondisi_barang' => 'Karet grip rapat, sensor bersih, tombol responsif.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 275,
@@ -46,24 +48,24 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'DSLR Cam',
                 'deskripsi_barang' => 'DSLR semi-profesional yang tangguh di segala cuaca (weather-sealed), sangat handal untuk dibawa hunting foto ke alam liar.',
-                'stok' => '2',
-                'harga_perjam' => 7500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 180000.00,
+                'harga_perjam' => 7500.00,
                 'catatan_kondisi_barang' => 'Shutter count rendah, bodi kokoh, ada sedikit lecet pemakaian wajar.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 276,
-                'gambar_barang' => '["barang/pDWrbgMpiKRwDfHGNxBIRGsNaJxW3LRdfNYQ0WHG.webp","barang/ldaLDn1WHTRVgI4PrkC9ShRz0um1v8AQyjxwzwCW.webp","barang/41fliifQdPMoTjWlAISaYSev0jy4laMvg4CmuU1F.webp","barang/DIQGEFYc8jah0VAP0Bug9lbyMccUVr5nLEQdzmL6.webp","barang/KhE01ss69jM973SRv5Ce8TAceIrPAZoLYAphxxSc.webp"]',
+                'gambar_barang' => '["barang/pDWrbgMpiKRwDfHGNxBIRGsNaJxW3LRdfNYQ0WHG.webp","barang/DEgJewMFuGdhEHS2wMl4txQnqDX6hH3fawYlbMtm.webp","barang/RcHmWwU1hONQuCOC0HmW23EnkyXAvZLmp1i6Ljpb.webp","barang/qDwpZpQLfA2gzUCUTG5IdZflQVkmVEMAkVOWIvlC.webp","barang/LVMDCsQQ8rDaXmi4wx9IWr6NKuV50ZjCsLBXMOAW.webp"]',
                 'nama_barang' => 'Sony Alpha a6400 (Body Only)',
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Mirrorless Cam',
                 'deskripsi_barang' => 'Mirrorless APS-C paling populer untuk vlogger. Layar bisa ditekuk 180 derajat ke depan dan autofokusnya mengunci mata secara real-time.',
-                'stok' => '4',
-                'harga_perjam' => 6250.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 150000.00,
+                'harga_perjam' => 6250.00,
                 'catatan_kondisi_barang' => 'Sensor bersih, layar no-vignette, siap pakai.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 277,
@@ -72,11 +74,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Mirrorless Cam',
                 'deskripsi_barang' => 'Kamera Full-Frame standar industri rental. Sangat kuat untuk foto komersial, wedding, maupun video cinematic di kondisi minim cahaya.',
-                'stok' => '3',
-                'harga_perjam' => 12500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 300000.00,
+                'harga_perjam' => 12500.00,
                 'catatan_kondisi_barang' => 'Karet jempol agak melar dikit, fungsi 100% normal, sensor bersih.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 278,
@@ -85,11 +87,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Mirrorless Cam',
                 'deskripsi_barang' => 'Kamera mirrorless dengan desain retro yang estetik. Keunggulannya punya Film Simulation bawaan, jadi hasil foto tidak perlu diedit lagi.',
-                'stok' => '2',
-                'harga_perjam' => 5833.33,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 140000.00,
+                'harga_perjam' => 5833.33,
                 'catatan_kondisi_barang' => 'Mulus total, semua dial berfungsi dengan presisi.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 279,
@@ -98,11 +100,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Video Cam',
                 'deskripsi_barang' => 'Kamera berspesifikasi bioskop mini. Memiliki kipas internal jadi anti-overheat saat dipakai syuting seharian penuh.',
-                'stok' => '2',
-                'harga_perjam' => 10416.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 250000.00,
+                'harga_perjam' => 10416.67,
                 'catatan_kondisi_barang' => 'Lengkap dengan top handle, lubang ulir baut cage aman.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 280,
@@ -111,24 +113,24 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Video Cam',
                 'deskripsi_barang' => 'Legenda kamera video indie dengan stabilizer bodi (IBIS) yang sangat tenang, sanggup merekam video 10-bit internal.',
-                'stok' => '3',
-                'harga_perjam' => 6666.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 160000.00,
+                'harga_perjam' => 6666.67,
                 'catatan_kondisi_barang' => 'Sensor aman, dual slot memori berfungsi normal.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 281,
-                'gambar_barang' => '["barang/TjXnMwgTX7YT9YDleCMSXN1kcfzjb0XDlKxEhgBR.jpg","barang/25ADx3FyN1taUI8Z0ukltThVLhEV96863mvkZFyu.jpg","barang/MVxZvXOT1CTsNZL6zvqwzyr5NJ63cRMBYXWaxuMv.jpg","barang/SnaWv4CunJ3S1ARa0Mr1sxqYt4AnmcVabx05dH8v.jpg","barang/osz0dYjzHdRCEEybZ4Wkbtf8iQ6xhbpBe1gqmTTH.jpg"]',
+                'gambar_barang' => '["barang/nLc4lRw6ornJY3LaJsJpBk4ecYNnrr6By1e2iQB6.png","barang/25ADx3FyN1taUI8Z0ukltThVLhEV96863mvkZFyu.jpg","barang/MVxZvXOT1CTsNZL6zvqwzyr5NJ63cRMBYXWaxuMv.jpg","barang/SnaWv4CunJ3S1ARa0Mr1sxqYt4AnmcVabx05dH8v.jpg"]',
                 'nama_barang' => 'BMPCC 4K (Pocket Cinema)',
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Video Cam',
                 'deskripsi_barang' => 'Khusus untuk videografer profesional yang ingin hasil video mentah (RAW) dengan warna sinematik tingkat tinggi.',
-                'stok' => '1',
-                'harga_perjam' => 11666.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 280000.00,
+                'harga_perjam' => 11666.67,
                 'catatan_kondisi_barang' => 'Layar sentuh normal, baterai bawaan agak boros.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 282,
@@ -137,11 +139,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Action Cam',
                 'deskripsi_barang' => 'Kamera aksi kasta tertinggi. Sangat cocok dipasangkan ke helm motovlog atau dibawa basah-basahan saat camping di air terjun.',
-                'stok' => '5',
-                'harga_perjam' => 5000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 120000.00,
+                'harga_perjam' => 5000.00,
                 'catatan_kondisi_barang' => 'Lencana depan dipasang tempered glass, backdoor rapat anti air.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 283,
@@ -150,11 +152,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Action Cam',
                 'deskripsi_barang' => 'Saingan berat GoPro dengan sensor lebih besar, sangat unggul untuk merekam aksi outdoor di sore atau malam hari.',
-                'stok' => '3',
-                'harga_perjam' => 4166.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 100000.00,
+                'harga_perjam' => 4166.67,
                 'catatan_kondisi_barang' => 'Mount magnetik kuat, bodi mulus.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 284,
@@ -163,11 +165,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Action Cam',
                 'deskripsi_barang' => 'Kamera aksi 360 derajat. Bisa merekam segala arah sekaligus, cocok untuk membuat konten kreatif tanpa pusing memikirkan arah kamera.',
-                'stok' => '2',
-                'harga_perjam' => 5416.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 130000.00,
+                'harga_perjam' => 5416.67,
                 'catatan_kondisi_barang' => 'Lensa cembung mulus tanpa baret (wajib pakai lens guard).',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 285,
@@ -176,11 +178,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Lensa',
                 'deskripsi_barang' => 'Lensa lebar premium. Sangat tajam, pas sekali dipasang ke Sony a6400 atau FX30 untuk vlogging jarak dekat atau foto pemandangan malam bintang.',
-                'stok' => '3',
-                'harga_perjam' => 2500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 60000.00,
+                'harga_perjam' => 2500.00,
                 'catatan_kondisi_barang' => 'Optik bersih, no fog, no jamur.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 286,
@@ -189,11 +191,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Lensa',
                 'deskripsi_barang' => 'Lensa potret esensial. Memberikan efek latar belakang blur (bokeh) yang sangat halus untuk memisahkan objek dengan objek di belakangnya.',
-                'stok' => '4',
-                'harga_perjam' => 1666.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 40000.00,
+                'harga_perjam' => 1666.67,
                 'catatan_kondisi_barang' => 'Fokus cepat, kelengkapan lensa + hood.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 287,
@@ -202,11 +204,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Lensa',
                 'deskripsi_barang' => 'Lensa zoom serbaguna bukaan konstan f/2.8. Ini adalah upgrade terbaik untuk menggantikan lensa bawaan (kit) bagi pengguna Sony A7 III.',
-                'stok' => '2',
-                'harga_perjam' => 4166.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 100000.00,
+                'harga_perjam' => 4166.67,
                 'catatan_kondisi_barang' => 'Karet kencang, fungsi zoom smooth.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 288,
@@ -215,11 +217,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Aksesoris Kamera',
                 'deskripsi_barang' => 'Penyeimbang elektrik agar hasil video dari kamera mirrorless Anda mulus seperti pergerakan kamera di film bioskop.',
-                'stok' => '2',
-                'harga_perjam' => 3333.33,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 80000.00,
+                'harga_perjam' => 3333.33,
                 'catatan_kondisi_barang' => 'Motor gimbal kuat, kalibrasi normal.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 289,
@@ -228,11 +230,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Aksesoris Kamera',
                 'deskripsi_barang' => 'Tripod berbahan aluminium lightweight. Ringan dibawa mendaki tetapi cukup kokoh menopang beban kamera DSLR maupun Mirrorless.',
-                'stok' => '10',
-                'harga_perjam' => 833.33,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 20000.00,
+                'harga_perjam' => 833.33,
                 'catatan_kondisi_barang' => 'Kunci kaki-kaki seret dan kuat, panhead lancar.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 290,
@@ -241,11 +243,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Aksesoris Kamera',
                 'deskripsi_barang' => 'Kartu memori super cepat, wajib digunakan jika penyewa mengambil kamera video bit-rate tinggi.',
-                'stok' => '15',
-                'harga_perjam' => 625.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 15000.00,
+                'harga_perjam' => 625.00,
                 'catatan_kondisi_barang' => 'Pin emas bersih, kecepatan baca/tulis normal.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 291,
@@ -254,11 +256,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Lighting',
                 'deskripsi_barang' => 'Lampu LED mini saku portable yang suhunya bisa diatur (kuning ke putih). Bisa dipasang di atas bodi kamera.',
-                'stok' => '6',
-                'harga_perjam' => 833.33,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 20000.00,
+                'harga_perjam' => 833.33,
                 'catatan_kondisi_barang' => 'Semua titik LED menyala, baterai internal normal.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 292,
@@ -267,11 +269,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Lighting',
                 'deskripsi_barang' => 'Lampu studio continuous berdaya 60 Watt yang sangat terang. Wajib dipasangkan dengan tripod lampu.',
-                'stok' => '2',
-                'harga_perjam' => 2500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 60000.00,
+                'harga_perjam' => 2500.00,
                 'catatan_kondisi_barang' => 'Kipas pendingin lampu halus, lampu tidak kedip.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 293,
@@ -280,11 +282,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Lighting',
                 'deskripsi_barang' => 'Lampu melingkar yang memberikan efek cahaya estetik berbentuk bulat di bola mata objek.',
-                'stok' => '5',
-                'harga_perjam' => 3750.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 25000.00,
+                'harga_perjam' => 3750.00,
                 'catatan_kondisi_barang' => 'Kabel USB utuh, remote kontrol warna lampu berfungsi.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 294,
@@ -293,11 +295,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Audio',
                 'deskripsi_barang' => 'Mikrofon jepit tanpa kabel isi 2 transmitter. Tinggal pasang di kerah baju untuk mendapatkan suara vlog atau wawancara yang bersih.',
-                'stok' => '4',
-                'harga_perjam' => 13500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 90000.00,
+                'harga_perjam' => 13500.00,
                 'catatan_kondisi_barang' => 'Baterai awet, kedua transmitter tersinkronisasi dengan baik.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 295,
@@ -306,11 +308,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Audio',
                 'deskripsi_barang' => 'Mikrofon yang ditancapkan langsung di atas kamera. Berfungsi menangkap suara fokus dari arah depan.',
-                'stok' => '3',
-                'harga_perjam' => 7500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 50000.00,
+                'harga_perjam' => 7500.00,
                 'catatan_kondisi_barang' => 'Busa peredam angin utuh, kabel audio sensitif normal.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 296,
@@ -319,12 +321,14 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Kamera',
                 'subkategori_barang' => 'Audio',
                 'deskripsi_barang' => 'Alternatif mic wireless dual-channel yang lebih ekonomis namun memiliki karakter suara yang tebal dan jernih.',
-                'stok' => '3',
-                'harga_perjam' => 9000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 60000.00,
+                'harga_perjam' => 9000.00,
                 'catatan_kondisi_barang' => 'Klip jepitan utuh, charging case berfungsi baik.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
+            
+            // ================== DATA ALAT CAMPING ==================
             [
                 'kode_barang' => 297,
                 'gambar_barang' => '',
@@ -332,11 +336,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Tenda',
                 'deskripsi_barang' => 'Tenda camping double layer berkapasitas 2 orang. Sangat kokoh menahan angin kencang dan rembesan air hujan.',
-                'stok' => '8',
-                'harga_perjam' => 6000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 40000.00,
+                'harga_perjam' => 6000.00,
                 'catatan_kondisi_barang' => 'Pasak lengkap, frame utuh tidak ada yang retak, kain bersih.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 298,
@@ -345,11 +349,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Tenda',
                 'deskripsi_barang' => 'Tenda keluarga kapasitas 4 orang dilengkapi dengan teras depan yang luas untuk menaruh barang atau memasak.',
-                'stok' => '5',
-                'harga_perjam' => 9000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 60000.00,
+                'harga_perjam' => 9000.00,
                 'catatan_kondisi_barang' => 'Bebas bocor, resleting lancar, tali pengencang lengkap.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 299,
@@ -358,11 +362,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Tenda',
                 'deskripsi_barang' => 'Tenda dome berukuran jumbo untuk kelompok besar. Atap tinggi membuat ruang gerak di dalam tenda menjadi sangat leluasa.',
-                'stok' => '3',
-                'harga_perjam' => 13500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 90000.00,
+                'harga_perjam' => 13500.00,
                 'catatan_kondisi_barang' => 'Kondisi wangi habis dicuci, jahitan seal aman.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 300,
@@ -371,11 +375,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Peralatan Tidur',
                 'deskripsi_barang' => 'Kantung tidur berbahan polar bulu tebal. Sangat hangat untuk menahan suhu dingin pegunungan di malam hari.',
-                'stok' => '10',
-                'harga_perjam' => 3000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 20000.00,
-                'catatan_kondisi_barang' => 'Resleting normal, bahan bersih dan wangi laundry.',
-                'status_barang' => 'Tersedia'
+                'harga_perjam' => 3000.00,
+                'catatan_kondisi_barang' => 'Resleting normal, bahan bersih and wangi laundry.',
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 301,
@@ -384,11 +388,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Peralatan Tidur',
                 'deskripsi_barang' => 'Matras tiup otomatis yang empuk, menghindari badan sakit karena menyentuh permukaan tanah yang bergelombang atau berkerikil.',
-                'stok' => '6',
-                'harga_perjam' => 4500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 30000.00,
+                'harga_perjam' => 4500.00,
                 'catatan_kondisi_barang' => 'Tidak ada kebocoran udara, termasuk pompa portable.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 302,
@@ -397,11 +401,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Peralatan Tidur',
                 'deskripsi_barang' => 'Kasur angin ukuran besar, cocok ditaruh di dalam tenda kapasitas 4-6 orang untuk kenyamanan maksimal.',
-                'stok' => '3',
-                'harga_perjam' => 7500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 50000.00,
+                'harga_perjam' => 7500.00,
                 'catatan_kondisi_barang' => 'Katup udara rapat, beludru atas bersih.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 303,
@@ -410,11 +414,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Peralatan Memasak',
                 'deskripsi_barang' => 'Kompor lipat mini portable berbahan bakar gas kaleng. Desain anti angin (windproof) dengan pelindung kelopak.',
-                'stok' => '10',
-                'harga_perjam' => 3000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 20000.00,
+                'harga_perjam' => 3000.00,
                 'catatan_kondisi_barang' => 'Pemantik listrik menyala normal, keran gas sensitif baik.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 304,
@@ -423,11 +427,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Peralatan Memasak',
                 'deskripsi_barang' => 'Satu set panci dan wajan camping berbahan anodized aluminium ringan anti lengket. Lengkap untuk kebutuhan makan berkelompok.',
-                'stok' => '8',
-                'harga_perjam' => 3750.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 25000.00,
+                'harga_perjam' => 3750.00,
                 'catatan_kondisi_barang' => 'Gagang panci kokoh, permukaan dalam tidak ada baret parah.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 305,
@@ -436,11 +440,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Peralatan Memasak',
                 'deskripsi_barang' => 'Set alat masak mini yang ringkas khusus solo hiker atau mendaki berdua.',
-                'stok' => '5',
-                'harga_perjam' => 2250.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 15000.00,
+                'harga_perjam' => 2250.00,
                 'catatan_kondisi_barang' => 'Kondisi lengkap dengan jaring pembungkus.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 306,
@@ -449,11 +453,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Penerangan',
                 'deskripsi_barang' => 'Lampu gantung tenda dengan baterai isi ulang. Memiliki kecerahan tinggi dan mode redup untuk tidur.',
-                'stok' => '12',
-                'harga_perjam' => 1500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 10000.00,
+                'harga_perjam' => 1500.00,
                 'catatan_kondisi_barang' => 'Casing mulus, port charger micro USB normal.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 307,
@@ -462,11 +466,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Penerangan',
                 'deskripsi_barang' => 'Senter genggam dengan fokus yang bisa diatur (*zoomable*). Sangat terang untuk membelah kabut malam.',
-                'stok' => '8',
-                'harga_perjam' => 2250.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 15000.00,
+                'harga_perjam' => 2250.00,
                 'catatan_kondisi_barang' => 'Termasuk charger baterai desktop dan lensa warna konverter.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 308,
@@ -475,11 +479,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Penerangan',
                 'deskripsi_barang' => 'Lampu kepala standar pendakian profesional. Hemat baterai dan posisi sudut sorot bisa ditekuk ke bawah.',
-                'stok' => '4',
-                'harga_perjam' => 4500.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 30000.00,
+                'harga_perjam' => 4500.00,
                 'catatan_kondisi_barang' => 'Tali karet kepala masih kencang, kompartemen baterai bersih.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 309,
@@ -488,11 +492,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Power',
                 'deskripsi_barang' => 'Penyimpan daya kapasitas besar untuk mengisi ulang baterai HP atau lampu tenda selama 2-3 hari di hutan.',
-                'stok' => '7',
-                'harga_perjam' => 3000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 20000.00,
+                'harga_perjam' => 3000.00,
                 'catatan_kondisi_barang' => 'Dual output USB berfungsi, indikator LED menyala presisi.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Tersedia',
             ],
             [
                 'kode_barang' => 310,
@@ -501,11 +505,11 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Power',
                 'deskripsi_barang' => 'Panel surya lipat yang bisa digantung di tas carrier untuk mengisi daya perangkat elektronik langsung dari sinar matahari.',
-                'stok' => '2',
-                'harga_perjam' => 12000.00,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 80000.00,
+                'harga_perjam' => 12000.00,
                 'catatan_kondisi_barang' => 'Kain pembungkus bersih, sirkuit solar cell tidak ada yang retak.',
-                'status_barang' => 'Tersedia'
+                'status_barang' => 'Sedikit',
             ],
             [
                 'kode_barang' => 311,
@@ -514,20 +518,14 @@ class BarangSeeder extends Seeder
                 'kategori_barang' => 'Alat Camping',
                 'subkategori_barang' => 'Power',
                 'deskripsi_barang' => 'Generator listrik mini berbahan bakar bensin untuk kebutuhan event outdoor skala besar di tengah area camping.',
-                'stok' => '5',
-                'harga_perjam' => 10416.67,
+                'stok' => rand(1, 20),
                 'harga_perhari' => 250000.00,
+                'harga_perjam' => 10416.67,
                 'catatan_kondisi_barang' => 'Tarikan starter ringan, output tegangan stabil.',
-                'status_barang' => 'Sedikit'
+                'status_barang' => 'Sedikit',
             ]
         ];
 
-        // Membersihkan tabel sebelum di-seed (opsional, hapus jika tidak perlu)
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('barang')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        // Memasukkan data
-        DB::table('barang')->insert($barangData);
+        DB::table('barang')->insert($data);
     }
 }

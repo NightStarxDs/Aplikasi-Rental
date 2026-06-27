@@ -1,4 +1,5 @@
 <div class="min-h-screen bg-slate-100/80 p-3 lg:p-4">
+    <script src="{{ env('MIDTRANS_IS_PRODUCTION', false) ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <div class="mx-auto max-w-6xl space-y-4">
         
         {{-- Flash Messages --}}
@@ -83,64 +84,13 @@
                             <span class="text-sm font-medium {{ $paymentMethod === 'COD' ? 'text-emerald-700' : 'text-slate-700' }}">COD (Bayar di Tempat)</span>
                         </label>
 
-                        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition {{ $paymentMethod === 'Transfer Bank' ? 'border-emerald-600 bg-emerald-50 shadow-sm' : 'border-slate-300 bg-white hover:border-emerald-300' }}">
-                            <input type="radio" wire:model.live="paymentMethod" name="payment_method" value="Transfer Bank" class="w-4 h-4 text-emerald-600 border-gray-300 focus:ring-emerald-500">
-                            <span class="text-sm font-medium {{ $paymentMethod === 'Transfer Bank' ? 'text-emerald-700' : 'text-slate-700' }}">Transfer Bank</span>
+                        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition {{ $paymentMethod === 'Midtrans' ? 'border-emerald-600 bg-emerald-50 shadow-sm' : 'border-slate-300 bg-white hover:border-emerald-300' }}">
+                            <input type="radio" wire:model.live="paymentMethod" name="payment_method" value="Midtrans" class="w-4 h-4 text-emerald-600 border-gray-300 focus:ring-emerald-500">
+                            <span class="text-sm font-medium {{ $paymentMethod === 'Midtrans' ? 'text-emerald-700' : 'text-slate-700' }}">Online Payment (Midtrans)</span>
                         </label>
 
-                        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition {{ $paymentMethod === 'QRIS' ? 'border-emerald-600 bg-emerald-50 shadow-sm' : 'border-slate-300 bg-white hover:border-emerald-300' }}">
-                            <input type="radio" wire:model.live="paymentMethod" name="payment_method" value="QRIS" class="w-4 h-4 text-emerald-600 border-gray-300 focus:ring-emerald-500">
-                            <span class="text-sm font-medium {{ $paymentMethod === 'QRIS' ? 'text-emerald-700' : 'text-slate-700' }}">QRIS</span>
-                        </label>
+                        
                     </div>
-
-                    {{-- Info Tujuan Pembayaran --}}
-                    @if($paymentMethod === 'QRIS')
-                        <div class="mt-4 p-4 border border-slate-200 bg-white rounded-lg flex flex-col items-center justify-center">
-                            <p class="text-sm font-semibold text-slate-800 mb-2">Scan QRIS Berikut</p>
-                            <div class="w-40 h-40 bg-slate-100 border border-slate-200 rounded flex items-center justify-center p-2 mb-2">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=AplikasiRentalQRIS" alt="QRIS Code" class="w-full h-full object-contain">
-                            </div>
-                            <p class="text-xs text-slate-500">a.n Dwi Agung</p>
-                        </div>
-                    @elseif($paymentMethod === 'Transfer Bank')
-                        <div class="mt-4 p-4 border border-slate-200 bg-white rounded-lg">
-                            <p class="text-sm font-semibold text-slate-800 mb-3">Transfer ke salah satu rekening berikut:</p>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <div class="p-3 border border-slate-100 bg-slate-50 rounded-lg text-center">
-                                    <p class="text-xs font-semibold text-blue-800 uppercase tracking-wider mb-1">BCA</p>
-                                    <p class="text-sm font-bold text-slate-800 tracking-widest">1234567890</p>
-                                    <p class="text-xs text-slate-500 mt-1">a.n Dwi Agung</p>
-                                </div>
-                                <div class="p-3 border border-slate-100 bg-slate-50 rounded-lg text-center">
-                                    <p class="text-xs font-semibold text-orange-600 uppercase tracking-wider mb-1">BNI</p>
-                                    <p class="text-sm font-bold text-slate-800 tracking-widest">1234567890</p>
-                                    <p class="text-xs text-slate-500 mt-1">a.n Dwi Agung</p>
-                                </div>
-                                <div class="p-3 border border-slate-100 bg-slate-50 rounded-lg text-center">
-                                    <p class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">Mandiri</p>
-                                    <p class="text-sm font-bold text-slate-800 tracking-widest">1234567890</p>
-                                    <p class="text-xs text-slate-500 mt-1">a.n Dwi Agung</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Upload Bukti Pembayaran untuk QRIS / Transfer Bank --}}
-                    @if($paymentMethod === 'QRIS' || $paymentMethod === 'Transfer Bank')
-                        <div class="mt-4 p-4 border border-emerald-100 bg-emerald-50/30 rounded-lg">
-                            <p class="text-sm font-medium text-slate-800 mb-2">Upload Bukti Pembayaran</p>
-                            <input type="file" wire:model="buktiPembayaran" class="block w-full text-sm text-slate-500
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-md file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-emerald-50 file:text-emerald-700
-                                hover:file:bg-emerald-100
-                            "/>
-                            <div wire:loading wire:target="buktiPembayaran" class="text-xs text-emerald-600 mt-2">Uploading...</div>
-                            @error('buktiPembayaran') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                    @endif
 
                     <div class="mt-4 rounded-md bg-amber-50 p-3 border border-amber-200">
                         <p class="text-xs text-amber-800 font-medium italic">Note: Untuk jaminan penyewaan, kami akan meminta KTM/KTP asli Anda sebagai jaminan utama pada saat pengambilan barang.</p>
@@ -224,6 +174,36 @@
                 }
             });
         }
+    </script>
+
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            @this.on('snap-pay', (event) => {
+                const snapToken = event.token;
+                const orderId = event.order_id;
+                snap.pay(snapToken, {
+                    onSuccess: function(result) {
+                        @this.call('handlePaymentSuccess', orderId);
+                    },
+                    onPending: function(result) {
+                        window.location.href = '/checkout/sukses/' + result.order_id;
+                    },
+                    onError: function(result) {
+                        Swal.fire('Gagal!', 'Pembayaran gagal.', 'error');
+                        @this.call('handlePaymentCancelled', orderId);
+                    },
+                    onClose: function() {
+                        @this.call('handlePaymentCancelled', orderId);
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Dibatalkan',
+                            text: 'Pembayaran dibatalkan, Anda dapat melanjutkan checkout atau kembali berbelanja.',
+                            confirmButtonColor: '#047857'
+                        });
+                    }
+                });
+            });
+        });
     </script>
 
     @if($showDataIncompleteModal)

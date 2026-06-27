@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (! auth()->check() || ! auth()->user()->isAdmin()) {
             return redirect()->route('penjualan.index')->with('error', 'Anda tidak memiliki akses ke dashboard admin.');
@@ -61,21 +61,54 @@ class DashboardController extends Controller
             $barangPerSubkategori[$item->kategori_barang][$item->subkategori_barang] = $item->jumlah;
         }
 
-        // 6. Pendapatan Bulan Ini
-        $pendapatanBulanIni = Rental::where('status_rental', 'Selesai')
-            ->whereMonth('waktu_kembali_aktual', now()->month)
-            ->whereYear('waktu_kembali_aktual', now()->year)
-            ->sum(DB::raw('total_harga + total_denda'));
+        // 6. Pendapatan Filter (Bulan Ini by default)
+        $jenisRentang = $request->input('jenis_rentang', 'bulan');
+        
+        $pendapatanQuery = Rental::where('status_rental', 'Selesai');
+        
+        $labelPendapatan = 'Pendapatan Bulan Ini';
 
-        // 7. Pendapatan Tahun Ini
+        if ($jenisRentang === 'bulan') {
+            $bulan = $request->input('bulan', now()->month);
+            $tahun = $request->input('tahun', now()->year);
+            $pendapatanQuery->whereMonth('waktu_kembali_aktual', $bulan)
+                            ->whereYear('waktu_kembali_aktual', $tahun);
+            $labelPendapatan = 'Pendapatan Bulan ' . date('F', mktime(0, 0, 0, $bulan, 1)) . ' ' . $tahun;
+        } elseif ($jenisRentang === 'minggu') {
+            $bulan = $request->input('bulan', now()->month);
+            $tahun = $request->input('tahun', now()->year);
+            $startOfWeek = now()->startOfWeek();
+            $endOfWeek = now()->endOfWeek();
+            $pendapatanQuery->whereMonth('waktu_kembali_aktual', $bulan)
+                            ->whereYear('waktu_kembali_aktual', $tahun)
+                            ->whereBetween('waktu_kembali_aktual', [$startOfWeek, $endOfWeek]);
+            $labelPendapatan = 'Pendapatan Minggu Ini';
+        } elseif ($jenisRentang === 'tahun') {
+            $tahun = $request->input('tahun', now()->year);
+            $pendapatanQuery->whereYear('waktu_kembali_aktual', $tahun);
+            $labelPendapatan = 'Pendapatan Tahun ' . $tahun;
+        } elseif ($jenisRentang === 'custom') {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            if ($startDate && $endDate) {
+                $pendapatanQuery->whereBetween('waktu_kembali_aktual', [$startDate, $endDate]);
+                $labelPendapatan = 'Pendapatan (' . $startDate . ' - ' . $endDate . ')';
+            }
+        } else {
+            $pendapatanQuery->whereMonth('waktu_kembali_aktual', now()->month)
+                            ->whereYear('waktu_kembali_aktual', now()->year);
+        }
+
+        $pendapatanBulanIni = $pendapatanQuery->sum(DB::raw('total_harga + total_denda'));
+
+        // 7. Pendapatan Denda (Sepanjang waktu dari rental yang Selesai)
         $pendapatanTahunIni = Rental::where('status_rental', 'Selesai')
-            ->whereYear('waktu_kembali_aktual', now()->year)
-            ->sum(DB::raw('total_harga + total_denda'));
+            ->sum('total_denda');
 
         // 8. User dengan status keterlambatan (Sedang disewa tapi melewati batas waktu_kembali)
-        $userTerlambat = Rental::where('status_rental', 'Disewa')
+        $userTerlambat = Rental::with('user')->where('status_rental', 'Disewa')
             ->where('waktu_kembali', '<', now())
-            ->count();
+            ->get();
 
         $stats = [
             'total_barang'          => $totalBarang,
@@ -86,6 +119,7 @@ class DashboardController extends Controller
             'barang_per_subkategori'=> $barangPerSubkategori,
             'pendapatan_bulan_ini'  => $pendapatanBulanIni,
             'pendapatan_tahun_ini'  => $pendapatanTahunIni,
+            'label_pendapatan'      => $labelPendapatan,
             'user_terlambat'        => $userTerlambat,
         ];
 

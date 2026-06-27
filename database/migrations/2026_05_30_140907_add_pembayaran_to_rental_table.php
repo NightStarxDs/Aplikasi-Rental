@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('rental', function (Blueprint $table) {
-            $table->enum('metode_pembayaran', ['QRIS', 'Transfer Bank', 'COD'])->nullable()->after('total_denda');
+            $table->enum('metode_pembayaran', ['Midtrans', 'QRIS', 'Transfer Bank', 'COD'])->nullable()->after('total_denda');
             $table->string('bukti_pembayaran')->nullable()->after('metode_pembayaran');
         });
     }
