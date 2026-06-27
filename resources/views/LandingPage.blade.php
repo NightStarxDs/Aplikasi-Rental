@@ -417,22 +417,31 @@
         </div>
     </footer>
 
-    <div id="small-footer" class="fixed bottom-0 left-0 w-full bg-white border-t border-emerald-100 py-3 text-sm z-40 transition-transform duration-500 translate-y-0 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)]">
-        <div class="flex justify-between items-center px-4 max-w-7xl mx-auto">
-            <div class="flex items-center gap-3">
-                <span class="font-bold text-gray-900 inline-flex items-center"><img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2"><span class="text-emerald-600">Out</span>Rent</span>
-                <span class="hidden sm:inline text-gray-400">|</span>
-                <span class="hidden sm:inline text-gray-600">Sewa Alat Camping & Kamera</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-gray-500 hidden md:inline">Copyright &copy; 2025</span>
-                <button onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full transition-all shadow-sm shadow-emerald-600/30 flex items-center gap-1.5 font-medium">
-                    Lihat Footer
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-            </div>
+    <div id="small-footer" class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-sm border-t border-emerald-100 py-3 text-sm z-40 transition-transform duration-500 translate-y-0 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.08)]">
+    <div class="grid grid-cols-3 items-center px-4 max-w-[1600px] mx-auto">
+        <!-- Left: Logo + Brand -->
+        <div class="flex items-center gap-2">
+            <span class="font-bold text-gray-900 inline-flex items-center">
+                <img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2">
+                <span class="text-emerald-600">Out</span>Rent
+            </span>
+        </div>
+
+        <!-- Center: Tagline -->
+        <div class="flex justify-center">
+            <span class="text-gray-500 tracking-wide whitespace-nowrap">Sewa Alat Camping & Kamera</span>
+        </div>
+
+        <!-- Right: Copyright + Button -->
+        <div class="flex items-center justify-end gap-4">
+            <span class="text-gray-400 hidden md:inline tracking-wide">Copyright &copy; 2025</span>
+            <button onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})" class="text-xs bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-2 rounded-full transition-all duration-200 shadow-sm shadow-emerald-600/20 hover:shadow-emerald-600/40 flex items-center gap-1.5 font-medium">
+                Lihat Footer
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
         </div>
     </div>
+</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
