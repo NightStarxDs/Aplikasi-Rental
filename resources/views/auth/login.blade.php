@@ -153,11 +153,20 @@
         </div>
 
         <!-- PANEL INFO -->
-        <div id="panel-info" class="auth-panel {{ $isRegisterError ? 'left-auto right-0' : 'left-0 right-auto' }} z-10 bg-primary">
+        <div id="panel-info" class="auth-panel {{ $isRegisterError ? 'left-auto right-0' : 'left-0 right-auto' }} z-10 overflow-hidden bg-emerald-900">
+            {{-- Background image --}}
+            <div class="pointer-events-none absolute inset-0 bg-cover bg-center"
+                style="background-image: url('{{ asset('images/kamera-login.jpg') }}');"></div>
+
+            {{-- Overlay emerald gelap --}}
+            <div class="pointer-events-none absolute inset-0 bg-emerald-900/80"></div>
+
+            {{-- Konten harus relative agar muncul di atas overlay --}}
+            <div class="relative z-10">
 
             <div id="info-login" class="{{ $isRegisterError ? 'hidden' : '' }}">
-                <span class="mb-4 inline-block w-fit rounded-full bg-emerald-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-emerald-300">Website</span>
-                <h2 class="mb-3 text-3xl font-bold leading-snug text-white">Selamat<br>Datang Di<br>Website Kami</h2>
+                <span class="mb-4 inline-block w-fit rounded-full bg-emerald-800 px-3 py-1 text-xs font-semibold text-emerald-300">Masuk</span>
+                <h2 class="mb-3 text-3xl font-bold leading-snug text-white">Selamat<br>Datang Di<br><span class="text-white font-bold bg-gradient-to-r from-emerald-500 to-emerald-700 px-2 rounded-lg">OUTRENT</span></h2>
                 <p class="mb-7 text-sm leading-relaxed text-emerald-300">Siap untuk pengalaman baru? Yuk, buat akunmu dan mulai jelajahi!</p>
                 <button type="button" onclick="switchToRegister()"
                     class="w-fit rounded-xl border border-emerald-400 px-6 py-2.5 text-sm font-semibold text-emerald-200 transition-colors hover:bg-emerald-800 focus:outline-none">
@@ -166,18 +175,18 @@
             </div>
 
             <div id="info-register" class="{{ $isRegisterError ? '' : 'hidden' }}">
-                <span class="mb-4 inline-block w-fit rounded-full bg-emerald-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-emerald-300">Website</span>
-                <h2 class="mb-3 text-3xl font-bold leading-snug text-white">Sudah<br>Punya<br>Akun?</h2>
+                <span class="mb-4 inline-block w-fit rounded-full bg-emerald-800 px-3 py-1 text-xs font-semibold text-emerald-300">Daftar</span>
+                <h2 class="mb-3 text-3xl font-bold leading-snug text-white">Kamu<br>Sudah Punya<br>Akun?</h2>
                 <p class="mb-7 text-sm leading-relaxed text-emerald-300">Silakan masuk untuk melanjutkan dan menikmati semua fitur kami.</p>
                 <button type="button" onclick="switchToLogin()"
                     class="w-fit rounded-xl border border-emerald-400 px-6 py-2.5 text-sm font-semibold text-emerald-200 transition-colors hover:bg-emerald-800 focus:outline-none">
                     Masuk Sekarang
                 </button>
             </div>
-
         </div>
-
-    </div>
+    </div> {{-- end relative z-10 --}}
+</div> {{-- end panel-info --}}
+</div>
 </div>
 
 <script>
