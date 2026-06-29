@@ -180,26 +180,51 @@
         document.addEventListener('livewire:initialized', () => {
             @this.on('snap-pay', (event) => {
                 const snapToken = event.token;
-                const orderId = event.order_id;
+                const tempOrderId = event.temp_order_id;
+
+                // Flag untuk mencegah onClose menghapus state
+                // jika onSuccess/onPending/onError sudah lebih dulu terpanggil.
+                // Midtrans selalu memanggil onClose setelah popup tertutup,
+                // termasuk setelah onSuccess — tanpa flag ini, handlePaymentCancelled
+                // akan dipanggil SETELAH handlePaymentSuccess, membersihkan nonce
+                // dan memungkinkan hard refresh memicu ulang transaksi.
+                let paymentCallbackFired = false;
+
                 snap.pay(snapToken, {
                     onSuccess: function(result) {
-                        @this.call('handlePaymentSuccess', orderId);
+                        paymentCallbackFired = true;
+                        @this.call('handlePaymentSuccess', tempOrderId, result);
                     },
                     onPending: function(result) {
-                        window.location.href = '/checkout/sukses/' + result.order_id;
-                    },
-                    onError: function(result) {
-                        Swal.fire('Gagal!', 'Pembayaran gagal.', 'error');
-                        @this.call('handlePaymentCancelled', orderId);
-                    },
-                    onClose: function() {
-                        @this.call('handlePaymentCancelled', orderId);
+                        // VA/QRIS: instruksi pembayaran sudah dibuat di Midtrans,
+                        // tapi user belum benar-benar bayar. Tetap batalkan rental
+                        // karena kita tidak membuat rental pada tahap ini.
+                        paymentCallbackFired = true;
+                        @this.call('handlePaymentCancelled', tempOrderId);
                         Swal.fire({
                             icon: 'info',
-                            title: 'Dibatalkan',
-                            text: 'Pembayaran dibatalkan, Anda dapat melanjutkan checkout atau kembali berbelanja.',
+                            title: 'Pembayaran Belum Selesai',
+                            text: 'Anda belum menyelesaikan pembayaran. Silakan coba lagi saat siap membayar.',
                             confirmButtonColor: '#047857'
                         });
+                    },
+                    onError: function(result) {
+                        paymentCallbackFired = true;
+                        @this.call('handlePaymentCancelled', tempOrderId);
+                        Swal.fire('Gagal!', 'Pembayaran gagal. Silakan coba lagi.', 'error');
+                    },
+                    onClose: function() {
+                        // Hanya batalkan jika tidak ada callback lain yang sudah terpanggil.
+                        // Ini mencegah onClose menghapus state setelah onSuccess.
+                        if (!paymentCallbackFired) {
+                            @this.call('handlePaymentCancelled', tempOrderId);
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Dibatalkan',
+                                text: 'Pembayaran dibatalkan. Anda dapat mencoba lagi kapan saja.',
+                                confirmButtonColor: '#047857'
+                            });
+                        }
                     }
                 });
             });
