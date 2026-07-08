@@ -307,9 +307,15 @@
                 </a>
 
                 <div class="flex items-center gap-2">
-                    @if(!in_array($status, ['Selesai', 'Dibatalkan']))
+                    @if($status === 'Diajukan')
                         <button type="button" onclick="showCancelConfirmation()"
                             class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 rounded-lg hover:bg-red-700 transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                            Batalkan Transaksi
+                        </button>
+                    @elseif(in_array($status, ['Disewa', 'Dikembalikan', 'Selesai']))
+                        <button type="button" disabled
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-red-400 border border-red-400 rounded-lg cursor-not-allowed">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                             Batalkan Transaksi
                         </button>
