@@ -57,11 +57,11 @@
                                 <h3 class="text-4xl font-bold leading-tight sm:text-5xl">Alat Camping</h3>
                                 <p class="mt-1 text-lg text-white/90 sm:text-2xl">Mulai dari Rp99rb/hari</p>
                                 <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:gap-3">
-                                    <a href="#"
+                                    <a href="{{ route('penjualan.index') }}"
                                         class="rounded-md bg-emerald-700 px-6 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-emerald-600">
                                         Order Now
                                     </a>
-                                    <a href="#"
+                                    <a href="{{ route('penjualan.index') }}"
                                         class="rounded-md bg-white px-6 py-2.5 text-center text-sm font-semibold text-gray-800 transition hover:bg-gray-100">
                                         Learn More
                                     </a>
@@ -79,11 +79,11 @@
                                 <h3 class="text-4xl font-bold leading-tight sm:text-5xl">Kamera</h3>
                                 <p class="mt-1 text-lg text-white/90 sm:text-2xl">Mulai dari Rp129rb/hari</p>
                                 <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:gap-3">
-                                    <a href="#"
+                                    <a href="{{ route('penjualan.index') }}"
                                         class="rounded-md bg-emerald-700 px-6 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-emerald-600">
                                         Order Now
                                     </a>
-                                    <a href="#"
+                                    <a href="{{ route('penjualan.index') }}"
                                         class="rounded-md bg-white px-6 py-2.5 text-center text-sm font-semibold text-gray-800 transition hover:bg-gray-100">
                                         Learn More
                                     </a>
@@ -101,11 +101,11 @@
                                 <h3 class="text-4xl font-bold leading-tight sm:text-5xl">Perlengkapan</h3>
                                 <p class="mt-1 text-lg text-white/90 sm:text-2xl">Mulai dari Rp79rb/hari</p>
                                 <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:gap-3">
-                                    <a href="#"
+                                    <a href="{{ route('penjualan.index') }}"
                                         class="rounded-md bg-emerald-700 px-6 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-emerald-600">
                                         Order Now
                                     </a>
-                                    <a href="#"
+                                    <a href="{{ route('penjualan.index') }}"
                                         class="rounded-md bg-white px-6 py-2.5 text-center text-sm font-semibold text-gray-800 transition hover:bg-gray-100">
                                         Learn More
                                     </a>
@@ -368,7 +368,7 @@
 
     <footer id="section-6" class="w-full bg-gradient-to-b from-emerald-50/80 to-white pt-16 border-t border-emerald-50">
         <div class="mx-auto w-full max-w-7xl px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[200px] mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 lg:gap-[200px] mb-12">
                 <div>
                     <h2 class="text-3xl font-bold mb-4 text-gray-900"><span class="inline-flex items-center"><img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2"><span class="text-emerald-600">Out</span>Rent</span></h2>
                     <p class="text-sm text-gray-600 mb-6 leading-relaxed">
@@ -376,36 +376,36 @@
                     </p>
                 </div>
 
-                <div id="NavSection" class="grid lg:grid-cols-3">
+                <div id="NavSection" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-4">
                 <div>
                     <h3 class="text-base font-bold text-gray-900 mb-4">Produk</h3>
                     <ul class="space-y-3 text-sm text-gray-600">
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Kamera</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Lensa</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Aksesoris Kamera</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Lightning & Audio</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Tenda</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Peralatan Memasak</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Peralatan Tidur</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Penerangan & Power</a></li>
+                        <li><a href="{{ route('penjualan.index', ['kategori' => 'Kamera']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Kamera</a></li>
+                        <li><a href="{{ route('penjualan.index', ['subkategori' => 'Lensa']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Lensa</a></li>
+                        <li><a href="{{ route('penjualan.index', ['subkategori' => 'Aksesoris Kamera']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Aksesoris Kamera</a></li>
+                        <li><a href="{{ route('penjualan.index', ['subkategori' => 'Lighting']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Lightning & Audio</a></li>
+                        <li><a href="{{ route('penjualan.index', ['subkategori' => 'Tenda']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Tenda</a></li>
+                        <li><a href="{{ route('penjualan.index', ['subkategori' => 'Peralatan Memasak']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Peralatan Memasak</a></li>
+                        <li><a href="{{ route('penjualan.index', ['subkategori' => 'Peralatan Tidur']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Peralatan Tidur</a></li>
+                        <li><a href="{{ route('penjualan.index', ['subkategori' => 'Penerangan']) }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Penerangan & Power</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h3 class="text-base font-bold text-gray-900 mb-4">Informasi</h3>
                     <ul class="space-y-3 text-sm text-gray-600">
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Tentang Kami</a></li>
+                        <li><a href="{{ route('about') }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Tentang Kami</a></li>
                         <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Blog & Tips</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Kebijakan Privasi</a></li>
+                        <li><a href="{{ route('privacy') }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Kebijakan Privasi</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h3 class="text-base font-bold text-gray-900 mb-4">Bantuan</h3>
                     <ul class="space-y-3 text-sm text-gray-600">
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Cara Pemesanan</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Hubungi Layanan Pelanggan</a></li>
-                        <li><a href="#" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Kebijakan Privasi</a></li>
+                        <li><a href="#section-3" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Cara Pemesanan</a></li>
+                        <li><a href="{{ route('contact') }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Hubungi Layanan Pelanggan</a></li>
+                        <li><a href="{{ route('privacy') }}" class="hover:text-emerald-700 transition-colors underline decoration-emerald-200 underline-offset-4">Kebijakan Privasi</a></li>
                     </ul>
                 </div>
                 </div>
@@ -418,7 +418,7 @@
     </footer>
 
     <div id="small-footer" class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-sm border-t border-emerald-100 py-3 text-sm z-40 transition-transform duration-500 translate-y-0 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.08)]">
-    <div class="grid grid-cols-3 items-center px-4 max-w-[1600px] mx-auto">
+    <div class="flex justify-between sm:grid sm:grid-cols-3 items-center px-4 max-w-[1600px] mx-auto gap-4">
         <!-- Left: Logo + Brand -->
         <div class="flex items-center gap-2">
             <span class="font-bold text-gray-900 inline-flex items-center">
@@ -428,7 +428,7 @@
         </div>
 
         <!-- Center: Tagline -->
-        <div class="flex justify-center">
+        <div class="hidden sm:flex justify-center">
             <span class="text-gray-500 tracking-wide whitespace-nowrap">Sewa Alat Camping & Kamera</span>
         </div>
 

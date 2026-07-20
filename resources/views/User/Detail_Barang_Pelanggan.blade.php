@@ -92,11 +92,11 @@
 
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
-            <div class="flex gap-5">
+            <div class="flex flex-col md:flex-row gap-5">
 
             {{-- Foto dengan Thumbnail --}}
-            <div class="flex-shrink-0 flex flex-col gap-2 relative">
-                <div @click="if(fotos.length > 0) modalOpen = true" class="w-[295px] h-[250px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-emerald-400 transition">
+            <div class="w-full md:w-[350px] lg:w-[400px] flex-shrink-0 flex flex-col items-center md:items-start gap-2 relative">
+                <div @click="if(fotos.length > 0) modalOpen = true" class="w-full h-[300px] sm:h-[350px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-emerald-400 transition">
                     <template x-if="fotos.length > 0">
                         <div class="w-full h-full bg-cover bg-center transition duration-300"
                             :style="`background-image: url('${fotos[0]}')`"></div>
@@ -107,7 +107,7 @@
                 </div>
 
                 <template x-if="fotos.length > 1">
-                    <div class="flex flex-wrap justify-center gap-1.5 w-full max-w-[295px]">
+                    <div class="flex flex-wrap justify-center gap-1.5 w-full">
                         <template x-for="(foto, index) in fotos" :key="'thumb-'+foto">
                             <template x-if="index > 0">
                                 <button type="button"
@@ -194,7 +194,7 @@
         </div>
 
         {{-- Stat Cards --}}
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
                 <p class="text-xs text-gray-500 mb-1">Telah Disewa</p>
                 <div class="flex items-baseline gap-1">

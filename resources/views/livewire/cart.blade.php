@@ -32,13 +32,13 @@
 
         {{-- Input Per Jam --}}
         @if($kategori === 'jam')
-            <div id="panel-jam" class="grid grid-cols-2 gap-3">
+            <div id="panel-jam" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-medium text-gray-500">Tanggal Sewa</label>
                     <input type="date" wire:model.live="jam_tgl"
                         class="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition">
                 </div>
-                <div class="col-span-2 flex flex-col gap-1">
+                <div class="col-span-1 sm:col-span-2 flex flex-col gap-1">
                     <label class="text-xs font-medium text-gray-500">
                         Durasi (Jam)
                         <span class="text-gray-400 font-normal ml-1">Maks. 23 jam — lebih dari itu gunakan Per Hari</span>
@@ -55,7 +55,7 @@
             </div>
         @else
             {{-- Input Per Hari --}}
-            <div id="panel-hari" class="grid grid-cols-2 gap-3">
+            <div id="panel-hari" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-medium text-gray-500">Tanggal Mulai Sewa</label>
                     <input type="date" wire:model.live="hari_tgl_mulai"
@@ -81,9 +81,10 @@
 
     {{-- Tabel Produk --}}
     <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-
-        {{-- Header Tabel --}}
-        <div class="grid grid-cols-12 gap-2 px-4 py-3 bg-gray-50 border-b border-gray-200">
+        <div class="overflow-x-auto">
+            <div class="min-w-[800px]">
+                {{-- Header Tabel --}}
+                <div class="grid grid-cols-12 gap-2 px-4 py-3 bg-gray-50 border-b border-gray-200">
             <div class="col-span-1 flex items-center">
                 <input type="checkbox" wire:model.live="pilihSemua"
                     @checked($pilihSemua)
@@ -154,8 +155,11 @@
             </div>
         @endforelse
 
+            </div>
+        </div>
+
         {{-- Footer Tabel --}}
-        <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-t border-gray-200">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 bg-gray-50 border-t border-gray-200">
             <div class="flex items-center gap-2">
                 <input type="checkbox" id="pilihSemuaBottom" wire:model.live="pilihSemua"
                     @checked($pilihSemua)
@@ -164,7 +168,7 @@
                     Pilih Semua Barang
                 </label>
             </div>
-            <div class="flex items-center gap-6">
+            <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 sm:gap-6">
                     <div class="text-right">
                     <p class="text-xs text-gray-400">Total ({{ count($selectedItems) }} Produk)</p>
                     <p class="text-sm font-bold text-emerald-700">Rp {{ number_format($this->grandTotal, 0, ',', '.') }}</p>

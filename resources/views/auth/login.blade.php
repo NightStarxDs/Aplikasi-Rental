@@ -21,7 +21,7 @@
     <div class="relative w-full max-w-3xl min-h-auth-card overflow-hidden rounded-2xl border border-emerald-100 shadow-auth-card">
 
         {{-- ══════════ FORM LOGIN (kanan) ══════════ --}}
-        <div id="panel-form-login" class="auth-panel right-0 left-auto {{ $isRegisterError ? 'z-[1]' : 'z-[2]' }} bg-white">
+        <div id="panel-form-login" class="auth-panel flex right-0 left-auto {{ $isRegisterError ? 'z-[1]' : 'z-[2]' }} bg-white">
             <div id="auth-login-inner" class="{{ $isRegisterError ? 'pointer-events-none opacity-0' : '' }}">
                 <h1 class="mb-7 text-center text-xl font-bold uppercase tracking-widest text-emerald-900">Masuk</h1>
 
@@ -78,12 +78,17 @@
                         class="w-full rounded-xl bg-emerald-800 py-3 text-sm font-semibold text-white transition-all hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 active:scale-95">
                         Masuk
                     </button>
+
+                    <!-- Mobile toggle -->
+                    <div class="mt-6 text-center md:hidden">
+                        <p class="text-sm text-emerald-600">Belum punya akun? <button type="button" onclick="switchToRegister()" class="font-bold hover:underline">Daftar Sekarang</button></p>
+                    </div>
                 </form>
             </div>
         </div>
 
         <!-- FORM REGISTER -->
-        <div id="panel-form-register" class="auth-panel left-0 right-auto {{ $isRegisterError ? 'z-[2]' : 'z-[1]' }} bg-white">
+        <div id="panel-form-register" class="auth-panel flex left-0 right-auto {{ $isRegisterError ? 'z-[2]' : 'z-[1]' }} bg-white">
             <div id="auth-register-inner" class="{{ $isRegisterError ? '' : 'pointer-events-none opacity-0' }}">
                 <h1 class="mb-7 text-center text-xl font-bold uppercase tracking-widest text-emerald-900">Daftar</h1>
 
@@ -148,12 +153,17 @@
                         class="w-full rounded-xl bg-emerald-800 py-3 text-sm font-semibold text-white transition-all hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 active:scale-95">
                         Daftar
                     </button>
+
+                    <!-- Mobile toggle -->
+                    <div class="mt-6 text-center md:hidden">
+                        <p class="text-sm text-emerald-600">Sudah punya akun? <button type="button" onclick="switchToLogin()" class="font-bold hover:underline">Masuk Sekarang</button></p>
+                    </div>
                 </form>
             </div>
         </div>
 
         <!-- PANEL INFO -->
-        <div id="panel-info" class="auth-panel {{ $isRegisterError ? 'left-auto right-0' : 'left-0 right-auto' }} z-10 overflow-hidden bg-emerald-900">
+        <div id="panel-info" class="auth-panel hidden md:flex {{ $isRegisterError ? 'left-auto right-0' : 'left-0 right-auto' }} z-10 overflow-hidden bg-emerald-900">
             {{-- Background image --}}
             <div class="pointer-events-none absolute inset-0 bg-cover bg-center"
                 style="background-image: url('{{ asset('images/kamera-login.jpg') }}');"></div>

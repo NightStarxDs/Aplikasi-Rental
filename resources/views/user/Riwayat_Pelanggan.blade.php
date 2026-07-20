@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-4 gap-4 pt-4 border-t border-dashed border-gray-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-dashed border-gray-200">
 
                     <div>
                         <p class="text-xs text-gray-400 mb-1">ID Pengguna</p>
@@ -99,7 +99,7 @@
 
                 </div>
 
-                <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-dashed border-gray-200">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 pt-4 border-t border-dashed border-gray-200">
 
                     <div class="bg-gray-50 rounded-lg px-4 py-3">
                         <p class="text-xs text-gray-400 mb-1">Total Transaksi</p>
@@ -133,9 +133,9 @@
                 Riwayat Transaksi
             </p>
 
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <div class="bg-white border border-gray-200 rounded-xl overflow-x-auto">
 
-                <table class="w-full text-sm text-left">
+                <table class="w-full text-sm text-left min-w-[900px]">
                     <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
                             <th class="px-4 py-3">No</th>
@@ -410,7 +410,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-center sm:text-left">
                         <div>
                             <p class="text-gray-500 text-xs uppercase font-semibold">Penyewa</p>
                             <p id="modal-penyewa" class="font-medium text-gray-800">-</p>

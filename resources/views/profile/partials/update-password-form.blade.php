@@ -35,7 +35,7 @@
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex flex-col sm:flex-row items-center gap-4">
             <x-primary-button class="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl shadow-sm hover:shadow-md transition duration-200 transform hover:-translate-y-0.5">
                 {{ __('Simpan Perubahan') }}
             </x-primary-button>

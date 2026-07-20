@@ -115,8 +115,8 @@
                 </div>
             </div>
             
-            <div class="mt-6 flex justify-between items-center border-t border-slate-100 pt-5">
-                <a href="{{ route('Keranjang') }}" class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-800">
+            <div class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-3 border-t border-slate-100 pt-5">
+                <a href="{{ route('Keranjang') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-800">
                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                         <polyline points="15 18 9 12 15 6"/>
                     </svg>
@@ -125,7 +125,7 @@
                 <button 
                     onclick="confirmCheckout()"
                     wire:loading.attr="disabled"
-                    class="min-w-40 rounded-lg inline-flex justify-center items-center gap-2 bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/70 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed">
+                    class="w-full sm:w-auto min-w-40 rounded-lg inline-flex justify-center items-center gap-2 bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/70 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed">
                     <span wire:loading.remove wire:target="processCheckout">Proses Pembayaran</span>
                     <span wire:loading wire:target="processCheckout">Memproses...</span>
                 </button>

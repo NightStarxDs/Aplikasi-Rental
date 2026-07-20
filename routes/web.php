@@ -20,6 +20,12 @@ Route::get('/penjualan', [PenjualanController::class, 'index'])
     ->name('penjualan.index');
 Route::match(['get', 'post'], '/Detail_Barang_Pelanggan', [PenjualanController::class, 'Detail_Barang'])->name('Detail_Barang_Pelanggan');
 
+// Static Pages
+Route::view('/tentang-kami', 'pages.about')->name('about');
+Route::view('/kontak', 'pages.contact')->name('contact');
+Route::view('/kebijakan-privasi', 'pages.privacy')->name('privacy');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/Keranjang', [KeranjangController::class, 'index'])->name('Keranjang');
     Route::post('/Keranjang/tambah/{kode_barang}', [PenjualanController::class, 'addToCart'])->name('cart.add');
@@ -31,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
     $reviews = \App\Models\Ulasan::with('user')->orderBy('kode_ulasan', 'desc')->get();
     return view('LandingPage', compact('reviews'));
-});
+})->name('home');
 
 Route::get('/login2', function () {
     return view('login');

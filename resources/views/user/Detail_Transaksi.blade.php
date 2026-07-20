@@ -58,7 +58,7 @@
         Kembali
     </a>
 
-    <div class="mx-6 md:mx-10 py-6 space-y-5">
+    <div class="mx-4 md:mx-10 py-6 space-y-5">
 
         {{-- ─── Header ─── --}}
         <div class="flex items-center justify-between">
@@ -85,7 +85,7 @@
         <div>
             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Detail Penyewa</p>
             <div class="bg-white border border-gray-200 rounded-xl p-5">
-                <div class="grid grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <p class="text-xs text-gray-400 mb-1">Nama Pelanggan</p>
                         <p class="text-sm font-medium text-gray-800">{{ optional($rental->user)->name ?? '-' }}</p>
@@ -99,7 +99,7 @@
                         <p class="text-sm font-medium text-gray-800">{{ optional($rental->user)->email ?? '-' }}</p>
                     </div>
                 </div>
-                <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-dashed border-gray-200">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 pt-4 border-t border-dashed border-gray-200">
                     <div>
                         <p class="text-xs text-gray-400 mb-1">Tanggal Sewa</p>
                         <p class="text-sm font-medium text-gray-800">{{ optional($rental->waktu_sewa)->format('d M Y, H:i') ?? '-' }}</p>
@@ -140,8 +140,8 @@
         {{-- ─── Detail Produk ─── --}}
         <div>
             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Detail Produk</p>
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                <table class="w-full text-sm text-left">
+            <div class="bg-white border border-gray-200 rounded-xl overflow-x-auto">
+                <table class="w-full text-sm text-left min-w-[700px]">
                     <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
                             <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-2/5">Barang</th>
@@ -222,8 +222,8 @@
         @if($showCondition)
             <div>
                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Kondisi Barang</p>
-                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                    <table class="w-full text-sm text-left">
+                <div class="bg-white border border-gray-200 rounded-xl overflow-x-auto">
+                    <table class="w-full text-sm text-left min-w-[700px]">
                         <thead class="bg-gray-50 border-b border-gray-200">
                             <tr>
                                 <th class="px-4 py-3 text-xs font-semibold text-gray-500 w-1/4">Nama Barang</th>
