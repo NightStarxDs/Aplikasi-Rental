@@ -95,8 +95,8 @@
             <div class="flex flex-col md:flex-row gap-5">
 
             {{-- Foto dengan Thumbnail --}}
-            <div class="w-full md:w-[350px] lg:w-[400px] flex-shrink-0 flex flex-col items-center md:items-start gap-2 relative">
-                <div @click="if(fotos.length > 0) modalOpen = true" class="w-full h-[300px] sm:h-[350px] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-emerald-400 transition">
+            <div class="w-full md:w-1/3 lg:w-96 flex-shrink-0 flex flex-col items-center md:items-start gap-2 relative">
+                <div @click="if(fotos.length > 0) modalOpen = true" class="w-full aspect-square sm:aspect-[4/3] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-emerald-400 transition">
                     <template x-if="fotos.length > 0">
                         <div class="w-full h-full bg-cover bg-center transition duration-300"
                             :style="`background-image: url('${fotos[0]}')`"></div>

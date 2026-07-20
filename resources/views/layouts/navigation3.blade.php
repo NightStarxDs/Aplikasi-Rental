@@ -1,4 +1,4 @@
-<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white border-b shadow-sm">
+<header class="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-4 md:px-6 py-3 bg-white border-b shadow-sm">
     <div class="flex-shrink-0 inline-flex gap-2 items-center">
         <h1 class="font-extrabold text-xl">
             <a href="/" class="text-gray-950 cursor-pointer inline-flex items-center">
@@ -7,7 +7,7 @@
         </h1>
     </div>
 
-    <div class="flex items-center flex-grow mx-8 gap-4">
+    <div class="order-3 w-full mt-3 md:order-none md:w-auto md:mt-0 flex items-center flex-grow md:mx-8 gap-4">
         <form action="{{ route('penjualan.index') }}" method="GET" class="relative flex-grow">
             <x-text-input type="text" name="search" value="{{ request('search') }}" placeholder="Cari tenda, kamera, aksesoris..." class="w-full pr-10" />
             <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-emerald-600 hover:text-emerald-800 transition-colors">
@@ -18,7 +18,7 @@
         </form>
     </div>
 
-    <div class="flex items-center gap-4">
+    <div class="order-2 md:order-none flex items-center gap-2 md:gap-4">
         <a href="{{ route('Keranjang') }}" class="flex items-center">
         <button class="relative border border-transparent hover:border-emerald-200 hover:bg-emerald-50 rounded-md p-1 transition-colors">
             <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

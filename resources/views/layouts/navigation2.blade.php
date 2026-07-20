@@ -1,5 +1,5 @@
 <nav class="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white text-gray-800">
-    <div class="flex h-[60px] w-full max-w-[1440px] mx-auto px-4 md:px-6 items-center justify-between">
+    <div class="flex flex-wrap min-h-[60px] w-full max-w-[1440px] mx-auto px-4 md:px-6 items-center justify-between py-2 md:py-0">
         <h1 class="font-extrabold text-xl flex items-center">
             <a href="/" class="text-gray-950 cursor-pointer inline-flex items-center">
                 <img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2">
@@ -17,7 +17,7 @@
             </svg>
         </button>
 
-        <div id="mega-menu-full" class="hidden w-full md:flex md:w-auto md:order-1  absolute top-[60px] left-0 right-0 bg-white border-b border-gray-200 shadow-md px-6 py-4 md:static md:bg-transparent md:border-0 md:shadow-none md:p-0">
+        <div id="mega-menu-full" class="hidden w-full md:flex md:w-auto md:order-1 bg-white border-b border-gray-200 shadow-md px-6 py-4 md:static md:bg-transparent md:border-0 md:shadow-none md:p-0 mt-2 md:mt-0">
             <ul class="flex flex-col font-medium md:flex-row md:items-center md:space-x-8 rtl:space-x-reverse">
                 <li>
                     <a href="{{ route('home') }}"
