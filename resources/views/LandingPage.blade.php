@@ -372,7 +372,7 @@
                 <div>
                     <h2 class="text-3xl font-bold mb-4 text-gray-900"><span class="inline-flex items-center"><img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2"><span class="text-emerald-600">Out</span>Rent</span></h2>
                     <p class="text-sm text-gray-600 mb-6 leading-relaxed">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex.
+                        OutRent adalah platform penyewaan alat camping dan kamera terpercaya untuk menemani setiap petualangan dan momen dokumentasi terbaik Anda dengan mudah, aman, dan terjangkau.
                     </p>
                 </div>
 

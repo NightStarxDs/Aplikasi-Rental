@@ -222,7 +222,7 @@
                 </div>
             </div>
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
-                <p class="text-xs text-gray-500 mb-1">Stok Tersedia Jelek</p>
+                <p class="text-xs text-gray-500 mb-1">Stok Tersedia</p>
                 <div class="flex items-baseline gap-1">
                     <p class="text-base font-semibold text-gray-800">{{ $barang->stok }}</p>
                     <p class="text-sm text-gray-500">Unit</p>
