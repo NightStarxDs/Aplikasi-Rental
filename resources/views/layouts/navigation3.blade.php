@@ -1,5 +1,40 @@
-<header class="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-4 md:px-6 py-3 bg-white border-b shadow-sm">
-    <div class="flex-shrink-0 inline-flex gap-2 items-center">
+<header class="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-4 md:px-6 py-3 bg-white border-b shadow-sm relative">
+    <style>
+        /* Fallback Tailwind classes for md: prefix */
+        @media (min-width: 768px) {
+            .md\:order-none { order: 0 !important; }
+            .md\:w-auto { width: auto !important; } 
+            .md\:mt-0 { margin-top: 0 !important; }
+            .md\:mx-8 { margin-left: 2rem !important; margin-right: 2rem !important; }
+            .md\:me-0 { margin-inline-end: 0 !important; }
+            .md\:gap-4 { gap: 1rem !important; }
+            .md\:px-6 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+        }
+        
+        /* Global fallbacks */
+        .flex-grow { flex-grow: 1 !important; }
+        .justify-between { justify-content: space-between !important; }
+        
+        /* Mobile fallbacks */
+        @media (max-width: 767px) {
+            .order-2 { order: 2 !important; }
+            .order-3 { order: 3 !important; }
+            .flex-wrap { flex-wrap: wrap !important; }
+            .w-full { width: 100% !important; }
+            .flex-grow { flex-grow: 1 !important; }
+        }
+
+        /* Dropdown positioning fallback */
+        #user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 1rem;
+            margin-top: 0.5rem;
+        }
+        .user-dropdown-active { display: block !important; }
+    </style>
+    
+    <div class="flex-shrink-0 inline-flex gap-2 items-center" style="flex: 0 0 auto;">
         <h1 class="font-extrabold text-xl">
             <a href="/" class="text-gray-950 cursor-pointer inline-flex items-center">
                 <img src="{{ asset('images/OutRent-Logo.png') }}" alt="Logo" class="h-[1.8em] w-auto mr-2"><span class="text-gray-950 transition-colors duration-200 hover:text-emerald-300">Out</span>Rent
@@ -7,9 +42,10 @@
         </h1>
     </div>
 
-    <div class="order-3 w-full mt-3 md:order-none md:w-auto md:mt-0 flex items-center flex-grow md:mx-8 gap-4">
-        <form action="{{ route('penjualan.index') }}" method="GET" class="relative flex-grow">
-            <x-text-input type="text" name="search" value="{{ request('search') }}" placeholder="Cari tenda, kamera, aksesoris..." class="w-full pr-10" />
+    <!-- Search Bar -->
+    <div class="order-3 mt-3 md:order-none md:mt-0 flex items-center gap-4" style="flex: 1 1 auto; margin-left: 2rem; margin-right: 2rem; min-width: 250px;">
+        <form action="{{ route('penjualan.index') }}" method="GET" class="relative" style="width: 100%;">
+            <x-text-input type="text" name="search" value="{{ request('search') }}" placeholder="Cari tenda, kamera, aksesoris..." class="w-full pr-10" style="width: 100%;" />
             <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-emerald-600 hover:text-emerald-800 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -18,7 +54,8 @@
         </form>
     </div>
 
-    <div class="order-2 md:order-none flex items-center gap-2 md:gap-4">
+    <!-- Right Actions -->
+    <div class="order-2 md:order-none flex items-center gap-2 md:gap-4" style="flex: 0 0 auto;">
         <a href="{{ route('Keranjang') }}" class="flex items-center">
         <button class="relative border border-transparent hover:border-emerald-200 hover:bg-emerald-50 rounded-md p-1 transition-colors">
             <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -116,4 +153,27 @@
                 </nav>
             @endif
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userMenuBtn = document.getElementById('user-menu-button');
+            const userDropdown = document.getElementById('user-dropdown');
+            
+            if (userMenuBtn && userDropdown) {
+                userMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('hidden');
+                    userDropdown.classList.toggle('user-dropdown-active');
+                });
+                
+                // Close when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                        userDropdown.classList.add('hidden');
+                        userDropdown.classList.remove('user-dropdown-active');
+                    }
+                });
+            }
+        });
+    </script>
 </header>

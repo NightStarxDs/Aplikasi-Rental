@@ -29,6 +29,20 @@
         Kembali
     </a>
 
+    <style>
+        /* Fallback untuk class Tailwind yang tidak ter-compile di production */
+        .card-info-utama { display: flex; flex-direction: column; gap: 1.25rem; }
+        .card-foto-wrapper { width: 100%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; position: relative; }
+        
+        @media (min-width: 768px) {
+            .card-info-utama { flex-direction: row; }
+            .card-foto-wrapper { width: 33.333%; align-items: flex-start; }
+        }
+        @media (min-width: 1024px) {
+            .card-foto-wrapper { width: 24rem; } /* lg:w-96 (384px) */
+        }
+    </style>
+
     <div class="py-6 px-6 pt-15 space-y-4" x-data="{
         fotos: @js($fotos),
         modalOpen: false,
@@ -92,11 +106,12 @@
 
         {{-- Card Info Utama --}}
         <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
-            <div class="flex flex-col md:flex-row gap-5">
+            <div class="card-info-utama flex-col gap-5">
 
             {{-- Foto dengan Thumbnail --}}
-            <div class="w-full md:w-1/3 lg:w-96 flex-shrink-0 flex flex-col items-center md:items-start gap-2 relative">
+            <div class="card-foto-wrapper flex-shrink-0 relative">
                 <div @click="if(fotos.length > 0) modalOpen = true" class="w-full aspect-square sm:aspect-[4/3] rounded-xl bg-white border border-gray-200 overflow-hidden flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-emerald-400 transition">
+
                     <template x-if="fotos.length > 0">
                         <div class="w-full h-full bg-cover bg-center transition duration-300"
                             :style="`background-image: url('${fotos[0]}')`"></div>
@@ -122,18 +137,19 @@
             </div>
 
                 {{-- Info + Kuantitas + Tombol --}}
-                <div class="flex flex-col justify-between flex-1 gap-3">
+                <div class="flex flex-col flex-1 gap-8">
+
 
                     {{-- Info Barang --}}
                     <div class="flex flex-col gap-2">
                         <div class="flex items-center gap-2">
-                        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
-                            {{ $barang->kategori_barang }} 
-                        </span>
-                        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
-                            {{ $barang->subkategori_barang }} 
-                        </span>
-                    </div>
+                            <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
+                                {{ $barang->kategori_barang }} 
+                            </span>
+                            <span class="inline-block px-2 py-0.5 text-xs font-medium bg-white border border-gray-200 rounded text-gray-500 w-fit">
+                                {{ $barang->subkategori_barang }} 
+                            </span>
+                        </div>
                         <p class="text-5xl font-bold text-gray-800">{{ $barang->nama_barang }}</p>
                         <p class="text-3xl font-semibold text-emerald-700">
                             Rp {{ number_format($barang->harga_perhari, 0, ',', '.') }}
@@ -143,7 +159,7 @@
                             Rp {{ number_format($barang->harga_perjam, 0, ',', '.') }}
                             <span class="text-base font-normal text-gray-400">/ Jam</span>
                         </p>
-                    
+                    </div>{{-- END Info Barang --}}
 
                     {{-- Kuantitas & Tombol --}}
                     <div class="flex flex-col gap-3">
@@ -172,26 +188,27 @@
                                 @endif
                             </p>
                         </div>
-                    </div>
-                        <form action="{{ route('cart.add', $barang->kode_barang) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="qty" id="qty-input" value="1">
-                        <div class="flex items-center gap-2">
-                            <x-primary-button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg transition">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                                    <line x1="3" y1="6" x2="21" y2="6"/>
-                                    <path d="M16 10a4 4 0 0 1-8 0"/>
-                                </svg>
-                                Tambah Keranjang
-                            </x-primary-button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
 
-            </div>
-        </div>
+                        <form action="{{ route('cart.add', $barang->kode_barang) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="qty" id="qty-input" value="1">
+                            <div class="flex items-center gap-2">
+                                <x-primary-button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg transition">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                        <line x1="3" y1="6" x2="21" y2="6"/>
+                                        <path d="M16 10a4 4 0 0 1-8 0"/>
+                                    </svg>
+                                    Tambah Keranjang
+                                </x-primary-button>
+                            </div>
+                        </form>
+                    </div>{{-- END Kuantitas & Tombol --}}
+
+                </div>{{-- END Info + Kuantitas + Tombol --}}
+
+            </div>{{-- END flex row --}}
+        </div>{{-- END Card Info Utama --}}
 
         {{-- Stat Cards --}}
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -205,7 +222,7 @@
                 </div>
             </div>
             <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
-                <p class="text-xs text-gray-500 mb-1">Stok Tersedia</p>
+                <p class="text-xs text-gray-500 mb-1">Stok Tersedia Jelek</p>
                 <div class="flex items-baseline gap-1">
                     <p class="text-base font-semibold text-gray-800">{{ $barang->stok }}</p>
                     <p class="text-sm text-gray-500">Unit</p>
@@ -221,7 +238,7 @@
         </div>
 
         {{-- Deskripsi --}}
-        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 mb-10">
             <h2 class="text-sm font-semibold text-gray-700 mb-2">Deskripsi Barang</h2>
             <p class="text-sm text-gray-500 leading-relaxed">
                 {{ $barang->deskripsi_barang ?: 'Tidak ada deskripsi untuk barang ini.' }}

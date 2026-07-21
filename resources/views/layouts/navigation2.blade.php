@@ -1,4 +1,30 @@
 <nav class="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white text-gray-800">
+    <style>
+        /* Fallback Tailwind classes for md: prefix since they are missing in production compiled CSS */
+        @media (min-width: 768px) {
+            .md\:hidden { display: none !important; }
+            .md\:flex { display: flex !important; }
+            .md\:w-auto { width: auto !important; }
+            .md\:order-1 { order: 1 !important; }
+            .md\:static { position: static !important; }
+            .md\:bg-transparent { background-color: transparent !important; }
+            .md\:border-0 { border-width: 0 !important; }
+            .md\:shadow-none { box-shadow: none !important; }
+            .md\:p-0 { padding: 0 !important; }
+            .md\:pb-1 { padding-bottom: 0.25rem !important; }
+            .md\:mt-0 { margin-top: 0 !important; }
+            .md\:flex-row { flex-direction: row !important; }
+            .md\:items-center { align-items: center !important; }
+            .md\:space-x-8 > :not([hidden]) ~ :not([hidden]) {
+                --tw-space-x-reverse: 0;
+                margin-right: calc(2rem * var(--tw-space-x-reverse));
+                margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+            }
+        }
+        /* Make sure JS toggle works (if Flowbite is absent) */
+        .mobile-menu-active { display: block !important; }
+        .mega-menu-active { display: block !important; }
+    </style>
     <div class="flex flex-wrap min-h-[60px] w-full max-w-[1440px] mx-auto px-4 md:px-6 items-center justify-between py-2 md:py-0">
         <h1 class="font-extrabold text-xl flex items-center">
             <a href="/" class="text-gray-950 cursor-pointer inline-flex items-center">
@@ -123,4 +149,30 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle main mobile menu toggle
+            const mainToggleBtn = document.querySelector('[data-collapse-toggle="mega-menu-full"]');
+            const mainMenu = document.getElementById('mega-menu-full');
+            
+            if (mainToggleBtn && mainMenu) {
+                mainToggleBtn.addEventListener('click', function() {
+                    mainMenu.classList.toggle('hidden');
+                    mainMenu.classList.toggle('mobile-menu-active');
+                });
+            }
+
+            // Handle Katalog mega menu dropdown toggle
+            const megaDropdownBtn = document.getElementById('mega-menu-full-dropdown-button');
+            const megaDropdown = document.getElementById('mega-menu-full-dropdown');
+            
+            if (megaDropdownBtn && megaDropdown) {
+                megaDropdownBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    megaDropdown.classList.toggle('hidden');
+                    megaDropdown.classList.toggle('mega-menu-active');
+                });
+            }
+        });
+    </script>
 </nav>

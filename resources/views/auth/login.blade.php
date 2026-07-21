@@ -9,6 +9,44 @@
         -webkit-box-shadow: 0 0 0 30px #f0fdf4 inset !important;
         -webkit-text-fill-color: #064e3b !important;
     }
+
+    /* ── Auth Panel: desktop = absolute 50%, mobile = full width relative ── */
+    .auth-panel {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 50%;
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem 2.75rem;
+    }
+
+    /* Mobile override: full width, relative positioning */
+    @media (max-width: 767px) {
+        #auth-root > div {
+            min-height: 100svh;
+            border-radius: 0;
+        }
+
+        /* Sembunyikan panel info secara paksa di mobile (menghindari bocor display flex) */
+        #panel-info {
+            display: none !important;
+        }
+
+        .auth-panel {
+            position: relative !important;
+            width: 100% !important;
+            left: auto !important;
+            right: auto !important;
+            height: auto !important;
+            padding: 2rem 1.5rem !important;
+        }
+
+        /* Sembunyikan panel yang tidak aktif di mobile */
+        .auth-panel.mobile-hidden {
+            display: none !important;
+        }
+    }
 </style>
 
 @php
@@ -17,11 +55,12 @@
     $hasRegisterError = $isRegisterError && $errors->any();
 @endphp
 
-<div id="auth-root" class="font-auth flex min-h-screen items-center justify-center bg-emerald-50 p-6">
+<div id="auth-root" class="font-auth flex min-h-screen items-center justify-center bg-emerald-50 p-4 md:p-6">
     <div class="relative w-full max-w-3xl min-h-auth-card overflow-hidden rounded-2xl border border-emerald-100 shadow-auth-card">
 
-        {{-- ══════════ FORM LOGIN (kanan) ══════════ --}}
-        <div id="panel-form-login" class="auth-panel flex right-0 left-auto {{ $isRegisterError ? 'z-[1]' : 'z-[2]' }} bg-white">
+        {{-- ══════════ FORM LOGIN ══════════ --}}
+        <div id="panel-form-login"
+            class="auth-panel flex right-0 left-auto {{ $isRegisterError ? 'z-[1] mobile-hidden' : 'z-[2]' }} bg-white">
             <div id="auth-login-inner" class="{{ $isRegisterError ? 'pointer-events-none opacity-0' : '' }}">
                 <h1 class="mb-7 text-center text-xl font-bold uppercase tracking-widest text-emerald-900">Masuk</h1>
 
@@ -88,7 +127,8 @@
         </div>
 
         <!-- FORM REGISTER -->
-        <div id="panel-form-register" class="auth-panel flex left-0 right-auto {{ $isRegisterError ? 'z-[2]' : 'z-[1]' }} bg-white">
+        <div id="panel-form-register"
+            class="auth-panel flex left-0 right-auto {{ $isRegisterError ? 'z-[2]' : 'z-[1] mobile-hidden' }} bg-white">
             <div id="auth-register-inner" class="{{ $isRegisterError ? '' : 'pointer-events-none opacity-0' }}">
                 <h1 class="mb-7 text-center text-xl font-bold uppercase tracking-widest text-emerald-900">Daftar</h1>
 
@@ -144,7 +184,6 @@
                             <input type="password" name="password_confirmation" placeholder="Konfirmasi Kata Sandi"
                                 required autocomplete="new-password"
                                 class="flex-1 border-none bg-transparent text-sm font-medium text-emerald-900 outline-none placeholder-emerald-300 focus:ring-0" />
-                                <button type="button" onclick="togglePw('pw-reg')" class="text-emerald-400 transition-colors hover:text-emerald-600">
                         </div>
                         @if($isRegisterError && $errors->has('password')) <p class="mt-1 text-xs text-red-500">{{ $errors->first('password') }}</p> @endif
                     </div>
@@ -162,7 +201,7 @@
             </div>
         </div>
 
-        <!-- PANEL INFO -->
+        <!-- PANEL INFO (hanya tampil di desktop md+) -->
         <div id="panel-info" class="auth-panel hidden md:flex {{ $isRegisterError ? 'left-auto right-0' : 'left-0 right-auto' }} z-10 overflow-hidden bg-emerald-900">
             {{-- Background image --}}
             <div class="pointer-events-none absolute inset-0 bg-cover bg-center"
@@ -198,6 +237,7 @@
 </div> {{-- end panel-info --}}
 </div>
 </div>
+
 
 <script>
     const panelInfo = document.getElementById('panel-info');
@@ -257,6 +297,10 @@
         fReg.style.zIndex = '2';
         fLogin.style.zIndex = '1';
 
+        // Mobile: swap visibility
+        fLogin.classList.add('mobile-hidden');
+        fReg.classList.remove('mobile-hidden');
+
         anchorPanelLeft();
         runFormFade(loginInner, 'out');
         window.setTimeout(() => runFormFade(regInner, 'in'), 140);
@@ -282,6 +326,10 @@
         fLogin.style.zIndex = '2';
         fReg.style.zIndex = '1';
 
+        // Mobile: swap visibility
+        fReg.classList.add('mobile-hidden');
+        fLogin.classList.remove('mobile-hidden');
+
         anchorPanelRight();
         runFormFade(regInner, 'out');
         window.setTimeout(() => runFormFade(loginInner, 'in'), 140);
@@ -301,6 +349,7 @@
             busy = false;
         }, 620);
     }
+
 
     function togglePw(id) {
         const el = document.getElementById(id);

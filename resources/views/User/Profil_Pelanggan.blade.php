@@ -17,7 +17,7 @@
     <div class="py-10">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-8">   
 
-            
+
             <div class="bg-white rounded-2xl border border-emerald-100 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.05)] overflow-hidden relative">
                 <!-- Decorative subtle glow -->
                 <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-full blur-3xl opacity-50 z-0 transform translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
